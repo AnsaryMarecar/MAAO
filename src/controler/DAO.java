@@ -7,6 +7,7 @@ package controler;
  * @author mansa
  *
  */
+import Connection.Mysql_connect;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,20 +16,20 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 public abstract class DAO<T> {
-	protected 	Connection 			connect 			= null;
+	public	 	Connection 			connect 			= Mysql_connect.getInstance();  
 	private 	Statement 			statement 			= null;
 	protected 	PreparedStatement 	preparedStatement 	= null;
 	private 	ResultSet 			resultSet 			= null;
 	
 	public DAO() throws Exception {
 		try {
-			// This will load the MySQL driver, each DB has its own driver
+		/**	// This will load the MySQL driver, each DB has its own driver
 	        Class.forName("com.mysql.jdbc.Driver");
 	        // Setup the connection with the DB
 	        this.connect = DriverManager
 	                  .getConnection("jdbc:mysql://localhost:3306/maao?"
 	                  + "user=root&password=");
-	        System.out.println("co ok");
+	        System.out.println("co ok"); **/
 		}
 		catch (Exception e) {
 	            throw e;
@@ -38,6 +39,7 @@ public abstract class DAO<T> {
 	    }
 	}
 
+			
 	 private void close() {
 	        try {
 	            if (resultSet != null) {

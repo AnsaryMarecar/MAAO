@@ -7,3 +7,5 @@
 /model/
 /mysql-connector-java-5.1.21.jar
 /view/
+/DBConnect.class
+/Connection/
