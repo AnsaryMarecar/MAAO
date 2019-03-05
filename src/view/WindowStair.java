@@ -81,32 +81,7 @@ public class WindowStair extends Window<Stair>{
 	}
 	class BoutonListener implements ActionListener{
 		  public void actionPerformed(ActionEvent e) {
-			  /**
-		    DAOStair daoStair;
-			try {
-				daoStair = new DAOStair();
-				Stair stair = new Stair(name_textField.getText());
-		        try {
-					if(daoStair.create(stair)) {
-						information_label.setOpaque(true);
-						information_label.setBackground(Color.green);
-						information_label.setText("Congratulation, your value is added");
-						//actualis JTab
-					}else {
-						information_label.setOpaque(true);
-						information_label.setBackground(Color.red);
-						information_label.setText("Sorry, but you can't insert an existant data.");
-						//error_optionpane = new JOptionPane();
-					    //JOptionPane.showMessageDialog(null, "Sorry, but you can't insert an existant data.", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
-					}
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			} catch (Exception e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			} */
+			
 		  }	 
 	}
 	
@@ -158,11 +133,10 @@ public class WindowStair extends Window<Stair>{
 		if(line_number>=0) {
 			try {
 				if(!name_stair.trim().equals("")) {
-					System.out.println("update action");
 					stair = new Stair(id_stair,name_stair);
 					daostair = new DAOStair();
 					if(daostair.update(stair)) {
-						System.out.println("update action daostair");
+						this.update_table();
 						this.initialise_table();
 						to_return = true;
 					}
