@@ -157,7 +157,7 @@ public class WindowStair extends Window<Stair>{
 		Stair	 stair;
 		if(line_number>=0) {
 			try {
-				if(name_stair.trim() !="") {
+				if(!name_stair.trim().equals("")) {
 					System.out.println("update action");
 					stair = new Stair(id_stair,name_stair);
 					daostair = new DAOStair();
@@ -165,16 +165,17 @@ public class WindowStair extends Window<Stair>{
 						System.out.println("update action daostair");
 						this.initialise_table();
 						to_return = true;
-					}else {
-						JOptionPane.showMessageDialog(null, "Sorry, but you can't insert an existant data.", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
 					}
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Sorry, but you can't update without a name.", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}else {
-			JOptionPane.showMessageDialog(null, "Sorry, but you can't add without a name.", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Sorry, but you can't insert an existant data.", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
 		}
 		return to_return;
 	}
@@ -208,7 +209,7 @@ public class WindowStair extends Window<Stair>{
 		// TODO Auto-generated method stub
 		boolean to_return = false;
 		String text = nameadd_textField.getText().trim();
-		if(text=="") {
+		if(text.trim().equals("")) {
 			JOptionPane.showMessageDialog(null, "Sorry, but you can't add without a name.", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
 		}
 		else {
