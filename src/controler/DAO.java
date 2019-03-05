@@ -15,10 +15,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 public abstract class DAO<T> {
-	protected Connection 		connect 			= null;
-	private Statement 			statement 			= null;
-	private PreparedStatement 	preparedStatement 	= null;
-	private ResultSet 			resultSet 			= null;
+	protected 	Connection 			connect 			= null;
+	private 	Statement 			statement 			= null;
+	protected 	PreparedStatement 	preparedStatement 	= null;
+	private 	ResultSet 			resultSet 			= null;
 	
 	public DAO() throws Exception {
 		try {
@@ -38,12 +38,27 @@ public abstract class DAO<T> {
 	    }
 	}
 
-	
+	 private void close() {
+	        try {
+	            if (resultSet != null) {
+	                resultSet.close();
+	            }
+
+	            if (statement != null) {
+	                statement.close();
+	            }
+
+	            if (connect != null) {
+	                connect.close();
+	            }
+	        } catch (Exception e) {
+	        }
+	 }
+	 
 	public abstract boolean create(T obj) 		throws SQLException;
 	public abstract boolean delete(int id)	 	throws SQLException;
 	public abstract boolean update(T obj) 		throws SQLException;
 	public abstract boolean ifFind(T obj) 		throws SQLException;
 	public abstract T find(int id) 				throws SQLException;
-	public abstract void close()				throws SQLException;
 	public abstract ArrayList<T> presentData() 	throws SQLException;
 }

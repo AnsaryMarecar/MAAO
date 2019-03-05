@@ -8,11 +8,7 @@ import java.util.ArrayList;
 import model.Stair;
 
 public class DAOStair extends DAO<Stair>{
-	/** 
-	 * 
-	 */
-	private PreparedStatement preparedStatement = null;
-	
+
 	/** 
 	 * 
 	 */
@@ -98,12 +94,6 @@ public class DAOStair extends DAO<Stair>{
         	to_return = true;
         }
 		return to_return;
-	}
-
-	@Override
-	public void close() throws SQLException {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
