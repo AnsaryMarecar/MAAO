@@ -5,29 +5,35 @@ package Connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
- * @author PC
+ * @author @mansa
  *
  */
 public class Mysql_connect {
 	/**
 	 * URL connexion
 	 */
-	private static String url = "jdbc:mysql://localhost:3306/maao";
+	private static 	String 		url 		= "jdbc:mysql://localhost:3306/maao";
 	/**
 	 * Name user
 	 */
-	private static String user = "root";
+	private static 	String 		user 		= "root";
 	/**
 	 * password user
 	 */
-	private static String password = "";
+	private static 	String 		password 	= ""	;
 	/**
 	 * Objet Connection
 	 */
-	private static Connection connect;
+	private static 	Connection 	connect				;
+	
+	private 		Statement 	statement	= null	;
+	private 		ResultSet 	resultSet 	= null	;
 	
 	/**
 	 * 
@@ -52,5 +58,21 @@ public class Mysql_connect {
 			}
 		}		
 		return connect;	
-	}	
+	}
+	
+	private void close() {
+		try {
+			if (resultSet != null) {
+				resultSet.close();
+			}
+			if(statement != null) {
+				statement.close();
+			}
+			if (connect != null) {
+				connect.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	 }
 }
