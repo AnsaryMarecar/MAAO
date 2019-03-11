@@ -1,11 +1,4 @@
-/Connect.class
 /Main.class
-/MySQLAccess.class
-/Test.class
-/TestJDBC.class
 /controler/
 /model/
-/mysql-connector-java-5.1.21.jar
 /view/
-/DBConnect.class
-/Connection/

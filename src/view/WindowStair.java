@@ -27,7 +27,6 @@ import controler.DAO;
 import controler.DAOStair;
 import model.Stair;
 
-
 /**
  * @author mansa
  *
@@ -40,8 +39,6 @@ public class WindowStair extends Window<Stair>{
 	private JTextField 	nameupdate_textField 		= new JTextField();
 	private JLabel 		nameupdate_label			= new JLabel("Update a stair name : ");
 	
-	
-	  
 	public WindowStair() {
 		super();
 		this.setTitle("MAAO - Configuration stair");

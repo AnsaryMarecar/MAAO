@@ -18,6 +18,7 @@ public class Mysql_connect {
 	/**
 	 * URL connexion
 	 */
+    
 	private static 	String 		url 		= "jdbc:mysql://localhost:3306/maao";
 	/**
 	 * Name user
@@ -28,12 +29,12 @@ public class Mysql_connect {
 	 */
 	private static 	String 		password 	= ""	;
 	/**
-	 * Objet Connection
+	 * Object Connection
 	 */
 	private static 	Connection 	connect				;
 	
-	private 		Statement 	statement	= null	;
-	private 		ResultSet 	resultSet 	= null	;
+	private static 	Statement 	statement	= null	;
+	private static	ResultSet 	resultSet 	= null	;
 	
 	/**
 	 * 
@@ -41,7 +42,6 @@ public class Mysql_connect {
 	 * @return
 	 */
 	public static Connection getInstance(){
-		
         // Setup the connection with the DB
       
 		if(connect == null){
@@ -74,5 +74,7 @@ public class Mysql_connect {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	 }
+	}
+	
+
 }

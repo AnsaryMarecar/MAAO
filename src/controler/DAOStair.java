@@ -13,8 +13,8 @@ public class DAOStair extends DAO<Stair>{
 	 * 
 	 */
 	public DAOStair() throws Exception {
-		super();
 		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	// Add Stair in database
