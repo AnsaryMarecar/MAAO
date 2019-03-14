@@ -10,7 +10,9 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.sql.ResultSet;
+
 import java.util.ArrayList;
 
 import javax.lang.model.element.Element;
@@ -25,115 +27,160 @@ import javax.swing.table.DefaultTableModel;
 
 import controler.DAO;
 import controler.DAOStair;
+import controler.DataSource;
 import model.Stair;
 
+import java.sql.Connection;
 /**
- * @author mansa
+ * 
+ */
+
+/**
+ * @author ansary
  *
  */
 public class WindowStair extends Window<Stair>{
 	
-	private JTextField 	nameadd_textField 			= new JTextField();
-	private JLabel 		nameadd_label				= new JLabel("Add a stair name : ");
+	// forms atribut add name
+	private JTextField 	nameadd_textField 			= new JTextField()						;
+	private JLabel 		nameadd_label				= new JLabel("Add a stair name : ")		;
 	
-	private JTextField 	nameupdate_textField 		= new JTextField();
-	private JLabel 		nameupdate_label			= new JLabel("Update a stair name : ");
+	// forms atribut update name
+	private JTextField 	nameupdate_textField 		= new JTextField()						;
+	private JLabel 		nameupdate_label			= new JLabel("Update a stair name : ")	;
 	
-	public WindowStair() {
-		super();
-		this.setTitle("MAAO - Configuration stair");
-		this.setTitle_label("Configuration stair");
-	   
-		Font police = new Font("Arial", Font.BOLD, 14);
+	// connexion atribut
+	private Connection c ;
+	
+	public WindowStair(Connection c) {
+		// TODO Auto-generated constructor stub
+		
+		// general use
+		super(c)														;
+		this.c = c														;
+		this.setTitle("MAAO - Configuration stair id : "+c)				;
+		this.setTitle_label("Configuration stair")						;   
+		Font police = new Font("Arial", Font.BOLD, 14)					;
+		
 		// form add
-		nameadd_textField.setFont(police);
-		nameadd_textField.setPreferredSize(new Dimension(150, 30));
-		nameadd_textField.setForeground(Color.BLUE);
-		super.addform_panel.add(nameadd_label);
-		super.addform_panel.add(nameadd_textField);
-		
+		nameadd_textField.setFont(police)								;
+		nameadd_textField.setPreferredSize(new Dimension(150, 30))		;
+		nameadd_textField.setForeground(Color.BLUE)						;
+		super.addform_panel.add(nameadd_label)							;
+		super.addform_panel.add(nameadd_textField)						;
+			
 		// form update
-		nameupdate_textField.setFont(police);
-		nameupdate_textField.setPreferredSize(new Dimension(150, 30));
-		nameupdate_textField.setForeground(Color.BLUE);
-		super.updateform_panel.add(nameupdate_label);
-		super.updateform_panel.add(nameupdate_textField);
-		super.updateform_panel.add(this.getFupdate_button());
-		this.nameupdate_textField.setVisible(false);
-		this.nameupdate_label.setVisible(false);
-		this.getFupdate_button().setVisible(false);
-		
+		nameupdate_textField.setFont(police)							;
+		nameupdate_textField.setPreferredSize(new Dimension(150, 30))	;
+		nameupdate_textField.setForeground(Color.BLUE)					;
+		super.updateform_panel.add(nameupdate_label)					;
+		super.updateform_panel.add(nameupdate_textField)				;
+		super.updateform_panel.add(this.getFupdate_button())			;
+		this.nameupdate_textField.setVisible(false)						;
+		this.nameupdate_label.setVisible(false)							;
+		this.getFupdate_button().setVisible(false)						;
+			
 		// table
 		this.getW_dtm().addColumn("Id"	);
 		this.getW_dtm().addColumn("Nom"	);
 		this.initialise_table();
 		w_table = new JTable(this.getW_dtm()); 
-		//table placement (study how to put in window class) ?
-	    super.getComponent_panel().add(super.getW_table(), BorderLayout.CENTER);
+		super.getComponent_panel().add(super.getW_table(), BorderLayout.CENTER);
 		
-	    this.setVisible(true);
-	    
-	}
+		// visibility
+		this.setVisible(true);
+	} 
+
 	class BoutonListener implements ActionListener{
-		  public void actionPerformed(ActionEvent e) {
-			
-		  }	 
+		public void actionPerformed(ActionEvent e) {
+			if("Disconnect".equals(e.getActionCommand())) { // disconnect button actionned
+				
+	        	DataSource.remetConex(c)			; 
+				dispose()											; //close window
+				DataSource.clotAtr(c)				; 
+			}
+		}
 	}
 	
 	@Override
+	/*
+	 * (non-Javadoc)
+	 * @see view.Window#add_table(java.lang.Object)
+	 * object method : add element in the JTable
+	 */
 	public void add_table(Stair obj) {
 		// TODO Auto-generated method stub
 		this.getW_dtm().addRow(new String[]{String.valueOf(obj.getStair_id()),obj.getStair_name()}); 
 	}
+	
 	@Override
+	/*
+	 * (non-Javadoc)
+	 * @see view.Window#update_table()
+	 * object method : update element in the JTable
+	 */
 	public void update_table() {
 		// TODO Auto-generated method stub
-		this.nameupdate_textField.setVisible(false);
-		this.nameupdate_label.setVisible(false);
-		this.getFupdate_button().setVisible(false);
+		this.nameupdate_textField.setVisible(false)	;
+		this.nameupdate_label.setVisible(false)		;
+		this.getFupdate_button().setVisible(false)	;
 	}
+	
 	@Override
+	/**
+	 * Object method : initialize the table after an extraction in the database
+	 */
 	public void initialise_table() {
 		// TODO Auto-generated method stub
-		DAOStair daostair;
-		this.getW_dtm().setRowCount(0);
-		ArrayList<Stair> list;
+		DAOStair daostair					;
+		this.getW_dtm().setRowCount(0)		;
+		ArrayList<Stair> list				;	
 		try {
-			daostair = new DAOStair();
-			list = daostair.presentData();
+			daostair = new DAOStair(c)		;
+			list = daostair.presentData()	;
+			
 			for(int i = 0 ; i<list.size(); i++) {
-				this.add_table(list.get(i));
-			}
+				this.add_table(list.get(i))	;
+			}		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-
 	@Override
+	
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		//non used there
 	}
+	
 	@Override
+	/*
+	 * (non-Javadoc)
+	 * @see view.Window#update_action()
+	 * object method : action do after push the ubdate button
+	 */
 	public boolean update_action() {
 		// TODO Auto-generated method stub
 		boolean  to_return 		= false;
 		int 	 line_number 	= this.getW_table().getSelectedRow();
 		int 	 id_stair		= Integer.decode( (String) this.getW_dtm().getValueAt(line_number, 0) );
 		String	 name_stair		= (String) this.nameupdate_textField.getText().trim();
-		DAOStair daostair;
-		Stair	 stair;
+		DAOStair daostair	;
+		Stair	 stair		;
 		if(line_number>=0) {
 			try {
 				if(!name_stair.trim().equals("")) {
-					stair = new Stair(id_stair,name_stair);
-					daostair = new DAOStair();
+					stair = new Stair(id_stair,name_stair)	;
+					daostair = new DAOStair(c)				;
 					if(daostair.update(stair)) {
-						this.update_table();
-						this.initialise_table();
-						to_return = true;
+						this.update_table()					;
+						this.initialise_table()				;
+						to_return = true					;
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Sorry, but you can't insert an existant data.", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 				else {
@@ -144,52 +191,58 @@ public class WindowStair extends Window<Stair>{
 				e.printStackTrace();
 			}
 		}else {
-			JOptionPane.showMessageDialog(null, "Sorry, but you can't insert an existant data.", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Please, select a line for update", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
 		}
 		return to_return;
 	}
 	
 	@Override
+	/**
+	 * object method : action do after a click of a delete button
+	 */
 	public boolean delete_action() {
 		// TODO Auto-generated method stub
-		boolean to_return 	= false;
+		boolean to_return 	= false								;
 		int line_number 	= this.getW_table().getSelectedRow();
-		int id_stair		= -1;
+		int id_stair		= -1								;
 		if(line_number>=0) {
 			DAO daostair;
 			try {
-				daostair = new DAOStair();
+				daostair = new DAOStair(c);
 				
 				id_stair = Integer.decode( (String) this.getW_dtm().getValueAt(line_number, 0) );
 				if(daostair.delete(id_stair)) {
-					delete_table(line_number);
-					to_return = true;
+					delete_table(line_number)	;
+					to_return = true			;
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e.printStackTrace()				;
 			}
 		}	
 		return to_return;
 	}
 	
 	@Override
+	/**
+	 * object method : action do after add button
+	 */
 	public boolean add_action() {
 		// TODO Auto-generated method stub
-		boolean to_return = false;
+		boolean to_return = false						;
 		String text = nameadd_textField.getText().trim();
 		if(text.trim().equals("")) {
 			JOptionPane.showMessageDialog(null, "Sorry, but you can't add without a name.", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
 		}
 		else {
-			Stair stair = new Stair(text);
-			DAO daostair;
+			Stair stair = new Stair(text)				;
+			DAO daostair								;
 			try {
-				daostair = new DAOStair();
+				daostair = new DAOStair(c)				;
 				if(daostair.create(stair)) {
-					this.initialise_table();
-					this.update_table();
-					to_return = true; 
+					this.initialise_table()				;
+					this.update_table()					;
+					to_return = true					;
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Sorry, but you can't insert an existant data.", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
@@ -201,15 +254,18 @@ public class WindowStair extends Window<Stair>{
 		}
 		return to_return;
 	}
+	
 	@Override
+	/**
+	 * Object method : do visible update form when update button is clicked
+	 */
 	public void update_on(int line_number) {
 		// TODO Auto-generated method stub
-		int 	 id_stair		= Integer.decode( (String) this.getW_dtm().getValueAt(line_number, 0) );
-		String	 name_stair		= (String) this.getW_dtm().getValueAt(line_number, 1);
-		this.nameupdate_textField.setText(name_stair);
-		this.nameupdate_label.setVisible(true);
-		this.nameupdate_textField.setVisible(true);
-		this.getFupdate_button().setVisible(true);
+		int 	 id_stair		= Integer.decode( (String) this.getW_dtm().getValueAt(line_number, 0) )	;
+		String	 name_stair		= (String) this.getW_dtm().getValueAt(line_number, 1)					;
+		this.nameupdate_textField.setText(name_stair)													;
+		this.nameupdate_label.setVisible(true)															;
+		this.nameupdate_textField.setVisible(true)														;
+		this.getFupdate_button().setVisible(true)														;
 	}
-
 }

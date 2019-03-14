@@ -4,7 +4,7 @@ package model;
  */
 
 /**
- * @author mansa
+ * @author melissa
  *
  */
 public class Stair{
