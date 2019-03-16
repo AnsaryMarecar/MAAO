@@ -4,18 +4,19 @@ package model;
  */
 
 /**
- * @author melissa
+ * @author melissa.oussadi
  *
  */
 public class Stair{
 	
-	private int stair_id;
-	private String stair_name;
+	private int 	stair_id;
+	private String 	stair_name;
 	
 	public int getStair_id() {
 		// TODO Auto-generated method stub
 		return this.stair_id;
 	}
+	
 	public void setStair_id(int stair_id) {
 		// TODO Auto-generated method stub
 		this.stair_id = stair_id;
@@ -33,7 +34,6 @@ public class Stair{
 	}
 	
 	public Stair() {
-		super();
 	}
 	
 	public Stair(int astair_id, String astair_name) {

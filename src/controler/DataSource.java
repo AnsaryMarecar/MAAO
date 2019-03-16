@@ -4,7 +4,7 @@
 package controler;
 
 /**
- * @author Oussama & Amine
+ * @author Oussama.bouachrine
  *
  */
 import java.sql.*;
@@ -20,16 +20,13 @@ public class DataSource extends JDBCConnectionPool{
 		
 	}
 	
-	public static Connection renvoieConex() {
+	public static Connection returnConex() {
 		return (jd.getConnection());	
 	}
 	
 	public static void remetConex(Connection con) {
-		System.out.println(jd.retourner(con));
-	}
-	
-	public static void clotAtr(Connection con){
+		System.out.println(jd.backCo(con));
 		
-		jd.fermerConnection(con);
 	}
+
 }

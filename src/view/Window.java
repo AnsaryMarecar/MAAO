@@ -28,7 +28,9 @@ import java.sql.Connection;
 import model.Stair;
 
 /**
- * @author ansary & melissa
+ * 
+ * <p>Frame abstract (father of most of configuration element) </p>
+ * @author melissa.oussadi
  * @param <T>
  *
  */
@@ -47,7 +49,7 @@ public abstract class Window<T> extends JFrame implements ActionListener{
 	private 	JButton 			update_button 		= new JButton("Update"		);
 	private 	JButton 			fupdate_button 		= new JButton("Submit"		);
 	private 	JButton 			delete_button 		= new JButton("Delete"		);
-	protected 	JButton 			disconnect_button 	= new JButton("Disconnect"	);
+	private 	JButton 			disconnect_button 	= new JButton("Disconnect"	);
 	
 	//Other element
 	private 	JLabel				title_label			= new JLabel()				 ;
@@ -62,11 +64,16 @@ public abstract class Window<T> extends JFrame implements ActionListener{
 			}
 	};
 	
+	/**
+	 * 
+	 * @param c
+	 * @author melissa.oussadi
+	 */
 	public Window(Connection c){
 		//Generality
 		this.setSize(1000, 500)									 			 ;
 	    this.setLocationRelativeTo(null)						 			 ;               
-	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)		 			 ;
+	    this.setDefaultCloseOperation(this.EXIT_ON_CLOSE)		 			 ;
 	    
 	    //north placement
 	    addform_panel.setLayout(new FlowLayout())				 			 ;
@@ -103,6 +110,7 @@ public abstract class Window<T> extends JFrame implements ActionListener{
 	
 	/**
 	 *	@Override ButonListener ActionListener
+	 *	@author melissa.oussadi
 	 */
 	class ButonListener implements ActionListener{
 	    public void actionPerformed(ActionEvent e) {
@@ -130,6 +138,10 @@ public abstract class Window<T> extends JFrame implements ActionListener{
 	        	System.out.println("update")						;
 	        	setVisible(true)									;
 	        }
+	        else if("Disconnect".equals(e.getActionCommand())) { // disconnect button actionned
+				DataSource.remetConex(DataSource.useConnect())		;
+				dispose()											;
+			}
 	    }
 	}
     public abstract boolean add_action		(				)		;

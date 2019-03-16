@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 
 /**
  * @author Oussama & Amine
- *
+ * @deprecated class deprecated
  */
 public class ConnectionBDD {
 	protected 	static Connection 	connect = null						;

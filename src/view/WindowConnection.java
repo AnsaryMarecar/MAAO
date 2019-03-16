@@ -4,13 +4,14 @@
 package view;
 
 /**
- * @author Oussama , Corrected by : Ansary MARECAR
+ * <p>Frame of connexion</p>
+ * 
+ * @author oussama.bouachrine 
  *
  */
 import javax.swing.*;
 
-import controler.DataSource;
-import controler.ReadFichier;
+import controler.ReadFileXML;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -32,13 +33,19 @@ public class WindowConnection extends JFrame implements ActionListener {
 	
 	// other attribut
 	public	static Connection c									;
-	public	ReadFichier r										;
+	public	ReadFileXML r										;
 	
-	public WindowConnection(int i) {
+	/**
+	 * <p>constructor</p>
+	 * 
+	 * @author oussama.bouachrine 
+	 */
+	public WindowConnection(Connection c) {
 		// General
-		super("Data Connection Interface number : "+i)			;
-		this.setSize(800,800)									;
+		super("Data Connection Interface")			;
+		this.setSize(300,300)									;
 		this.setLocationRelativeTo(null)						;
+		this.setResizable(false);
 		
 		// Label use in the interface connection
 		title_label	= new JLabel("Welcome To MAAO Interface",SwingConstants.CENTER)	;
@@ -84,15 +91,23 @@ public class WindowConnection extends JFrame implements ActionListener {
 		this.setVisible(true);
 	}
 	
+	/**
+	 * <p>evenement</p>
+	 * 
+	 * @author oussama.bouachrine 
+	 *
+	 */
 	public void actionPerformed(ActionEvent event) {
 		// if connection clicked
 		if(event.getSource() == connection_button) {
 			champ1 	= id_textfield.getText()					;
 			champ2 	= password_textfield.getText()				;
-			r		= new ReadFichier()							;
+			r		= new ReadFileXML()							;
 			// read XML File
 			try {
-				r.readFile(champ1,champ2)						;
+				if(r.readFile(champ1,champ2))	{
+					this.dispose();
+				}
 			} catch (Exception e) {
 			}			
 		}
@@ -101,6 +116,5 @@ public class WindowConnection extends JFrame implements ActionListener {
 			id_textfield.setText("")							;
 			password_textfield.setText("")						;
 		}
-		
 	}
 }

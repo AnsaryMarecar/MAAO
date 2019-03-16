@@ -27,7 +27,6 @@ import javax.swing.table.DefaultTableModel;
 
 import controler.DAO;
 import controler.DAOStair;
-import controler.DataSource;
 import model.Stair;
 
 import java.sql.Connection;
@@ -36,7 +35,9 @@ import java.sql.Connection;
  */
 
 /**
- * @author ansary
+ * <p>Frame herited by Window<T> for the management of the Stairs  </p>
+ * 
+ * @author ansary.marecar
  *
  */
 public class WindowStair extends Window<Stair>{
@@ -92,21 +93,15 @@ public class WindowStair extends Window<Stair>{
 	} 
 
 	class BoutonListener implements ActionListener{
-		public void actionPerformed(ActionEvent e) {
-			if("Disconnect".equals(e.getActionCommand())) { // disconnect button actionned
-				
-	        	DataSource.remetConex(c)			; 
-				dispose()											; //close window
-				DataSource.clotAtr(c)				; 
-			}
-		}
+		  public void actionPerformed(ActionEvent e) {		
+		  }
 	}
 	
 	@Override
-	/*
-	 * (non-Javadoc)
-	 * @see view.Window#add_table(java.lang.Object)
-	 * object method : add element in the JTable
+	/**
+	 * <p>Add a row</p>
+	 * 
+	 * @author ansary.marecar
 	 */
 	public void add_table(Stair obj) {
 		// TODO Auto-generated method stub
@@ -114,10 +109,10 @@ public class WindowStair extends Window<Stair>{
 	}
 	
 	@Override
-	/*
-	 * (non-Javadoc)
-	 * @see view.Window#update_table()
-	 * object method : update element in the JTable
+	/**
+	 * <p>After the validation of an update, take element update non visible</p>
+	 * 
+	 * @author ansary.marecar
 	 */
 	public void update_table() {
 		// TODO Auto-generated method stub
@@ -128,7 +123,9 @@ public class WindowStair extends Window<Stair>{
 	
 	@Override
 	/**
-	 * Object method : initialize the table after an extraction in the database
+	 * <p>initialize the table after an extraction in the database</p>
+	 * 
+	 * @author ansary.marecar
 	 */
 	public void initialise_table() {
 		// TODO Auto-generated method stub
@@ -149,17 +146,16 @@ public class WindowStair extends Window<Stair>{
 	}
 	
 	@Override
-	
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		//non used there
 	}
 	
 	@Override
-	/*
-	 * (non-Javadoc)
-	 * @see view.Window#update_action()
-	 * object method : action do after push the ubdate button
+	/**
+	 * <p>action do after push the update button</p>
+	 * 
+	 * @author ansary.marecar
 	 */
 	public boolean update_action() {
 		// TODO Auto-generated method stub
@@ -198,7 +194,9 @@ public class WindowStair extends Window<Stair>{
 	
 	@Override
 	/**
-	 * object method : action do after a click of a delete button
+	 * <p>action do after a click of a delete button</p>
+	 * 
+	 * @author ansary.marecar
 	 */
 	public boolean delete_action() {
 		// TODO Auto-generated method stub
@@ -225,7 +223,9 @@ public class WindowStair extends Window<Stair>{
 	
 	@Override
 	/**
-	 * object method : action do after add button
+	 * <p>action do after add button</p>
+	 * 
+	 * @author ansary.marecar
 	 */
 	public boolean add_action() {
 		// TODO Auto-generated method stub
@@ -257,7 +257,10 @@ public class WindowStair extends Window<Stair>{
 	
 	@Override
 	/**
-	 * Object method : do visible update form when update button is clicked
+	 * 
+	 * <p>do visible update form when update button is clicked</p>
+	 * 
+	 * @author ansary.marecar
 	 */
 	public void update_on(int line_number) {
 		// TODO Auto-generated method stub

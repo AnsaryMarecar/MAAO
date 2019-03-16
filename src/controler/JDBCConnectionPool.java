@@ -4,7 +4,10 @@
 package controler;
 
 /**
- * @author Oussama & Amine
+ * <p>JDBC Connexion pool</p>
+ * 
+ * @author Oussama.bouachrine
+ * @author amine.maza
  *
  */
 import java.sql.*;
@@ -12,34 +15,68 @@ import java.util.ArrayList;
 
 public class JDBCConnectionPool {		
 	protected  static ArrayList<Connection> connex;
+	protected static Connection con;
 	
+	/**
+	 * <p>To initiate the number of connection the array will contain</p>
+	 * 
+	 * @author amine.maza
+	 */
 	public JDBCConnectionPool() {
-		this.connex = new ArrayList<Connection>(20);	
+		this.connex = new ArrayList<Connection>(2);	
 	}
 	 
-	public  static void remplir(){
-		for(int i=0; i<2;i++) { 
-			connex.add(ConnectionBDD.getInst());
+	/**
+	 * <p>To fill the array with connection's object</p>
+	 * 
+	 * @author Oussama.bouachrine
+	 * @author amine.maza
+	 *
+	 */
+	public  static ArrayList<Connection> fillCon(){
+		Connection var_connection = DAOFactory.getInstance();
+		if (var_connection!= null) {
+			for(int i=0; i<2;i++) { 
+				if(i==0) {
+					connex.add(var_connection);
+				}
+				else {
+					connex.add(DAOFactory.getInstance());
+				}
+				//connex.add(ConnectionBDD.getInst());
+			}
 		}
+		return connex;
 	}
 	
-	public  static Connection getConnection() {	 
-			return connex.remove(0);
+	// to return the content of connex
+	public static ArrayList<Connection> displayConnex() {
+		return connex ;
 	}
 
-	public static boolean retourner(Connection connect) { 
-			 return  connex.add(connect);
+	// to give a connection to the user
+	public  static Connection getConnection() {	 
+			con= connex.get(0);
+			connex.remove(0);
+			return con;
 	}
 	
-	public static void fermerConnection(Connection connect) {	
-		try {
-			if (connect !=null) {
-				connect.close();
-       	 	}
-		}     	 
-       	catch (Exception e) {
-       		 e.printStackTrace();
-       		 System.out.println("Error occured while deconnecting to database");
-        }
+	// To use the same object connection per user
+	public static Connection useConnect() {
+		return con;
+	}
+
+	// to return the connection after finish with using it
+	public static boolean backCo(Connection con) { 
+			 return  connex.add(con);
+	}
+	
+
+	// to close all connection
+	public static void closeAllConnection() {
+		
+		if (connex.isEmpty()==false) {
+			connex.clear();
+		}
 	}
 }
