@@ -21,7 +21,8 @@ import controler.DataSource;
 public class FirstF extends JFrame implements ActionListener {
 
 	private JPanel pan1, pan2;
-	private JButton jb1, jb2, jb3;
+	private JButton jb1, jb3;
+	/*private JButton jb2; */
 	private JLabel jl1;
 	public java.sql.Connection c;
 	private DataSource dt;
@@ -46,7 +47,7 @@ public class FirstF extends JFrame implements ActionListener {
 		
 		//Creation of JButton and JLabel
 		jb1= new JButton("Open a connection");
-		jb2= new JButton("Close all connections");
+		/*jb2= new JButton("Close all connections");*/
 		jb3= new JButton("Display Connections");
 		
 		jl1= new JLabel();
@@ -60,13 +61,13 @@ public class FirstF extends JFrame implements ActionListener {
 		jl1.setText("Choose an action");
 		
 		pan2.add(jb1);
-		pan2.add(jb2);
+		/*pan2.add(jb2);*/
 		pan2.add(jb3);
 		
 		
 		//Button add ActionListener
 		jb1.addActionListener(this);
-		jb2.addActionListener(this);
+		/*jb2.addActionListener(this);*/
 		jb3.addActionListener(this);
 		
 		this.setVisible(true);
@@ -95,10 +96,10 @@ public class FirstF extends JFrame implements ActionListener {
 		}
 		
 		// if user choose to close all connections
-		else if (event.getSource()== jb2) {
+		/*else if (event.getSource()== jb2) {
 				dt.closeAllConnection();
 				System.out.println("test");
-		}
+		}*/
 		
 		// if user choose to displays all connections available
 		else if (event.getSource()== jb3) {

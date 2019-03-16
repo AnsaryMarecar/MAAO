@@ -54,22 +54,22 @@ public class DAOFactory {
         
         //attribute value
         try {
-            var_properties.load( fileProperties )												;
+            var_properties.load( fileProperties )													;
             var_link 		= ( String ) var_properties.getProperty( PROPERTY_LINK )				;
             var_driver 		= ( String ) var_properties.getProperty( PROPERTY_DRIVER )				;
             var_username 	= ( String ) var_properties.getProperty( PROPERTY_USER_NAME )			;
             var_password 	= ( String ) var_properties.getProperty( PROPERTY_PASSWORD )			;
             System.out.println( "link: " + var_link + " Driver: " + var_driver
-            		+" username: " + var_username + " password: " + var_password )				;	
+            		+" username: " + var_username + " password: " + var_password )					;	
         } 
         catch ( Exception exp ) {
-            throw new DAOConfigurationException( " we have difficulty to charge the file, please contact administrator " + FILE_PROPERTIES, exp );
+            throw new DAOConfigurationException( " we have difficulty to charge the file : " + FILE_PROPERTIES, exp );
         }
 
         try {
         	Object newInstanceDriver = Class.forName( var_driver );
         } catch ( ClassNotFoundException exp ) {
-           throw new DAOConfigurationException( " the driver is not present in the path. ", exp );
+           throw new DAOConfigurationException( " the driver is not present in the path ", exp );
         }
         
         //create an object instance with connection
@@ -79,7 +79,7 @@ public class DAOFactory {
 			var_connection = DriverManager.getConnection( var_link, var_username, var_password );
 		} catch (SQLException exp) {
 			// TODO Auto-generated catch block
-			throw new DAOConfigurationException( " somethings is wrong for the connection to the database ", exp );
+			throw new DAOConfigurationException( " somethings is wrong (username, password or link) for the connection to the database ", exp );
 		}
         System.out.println( " var_connection: " + var_connection );
         return var_connection;

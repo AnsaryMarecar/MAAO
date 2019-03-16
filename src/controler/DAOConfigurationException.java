@@ -5,7 +5,8 @@ import javax.swing.JOptionPane;
 /**
  * <p> manage Configuration exception </p>
  * 
- * @author ansary.marecar -- amine.maza
+ * @author ansary.marecar
+ * @author : amine.maza
  *
  */
 public class DAOConfigurationException extends RuntimeException {
