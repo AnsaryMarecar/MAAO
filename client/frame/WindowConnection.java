@@ -4,15 +4,12 @@
 package frame;
 
 /**
- * <p>Frame of connexion</p>
+ * 
  * 
  * @author oussama.bouachrine 
  *
  */
 import javax.swing.*;
-
-import controler.ReadFileXML;
-
 import java.awt.*;
 import java.awt.event.*;
 
@@ -33,7 +30,6 @@ public class WindowConnection extends JFrame implements ActionListener {
 	
 	// other attribut
 	public	static Connection c									;
-	public	ReadFileXML r										;
 	
 	/**
 	 * <p>constructor</p>
@@ -102,12 +98,9 @@ public class WindowConnection extends JFrame implements ActionListener {
 		if(event.getSource() == connection_button) {
 			champ1 	= id_textfield.getText()					;
 			champ2 	= password_textfield.getText()				;
-			r		= new ReadFileXML()							;
 			// read XML File
 			try {
-				if(r.readFile(champ1,champ2))	{
-					this.dispose();
-				}
+				
 			} catch (Exception e) {
 			}			
 		}
