@@ -1,7 +1,7 @@
 /**
  * 
  */
-package controler;
+package connection.pool;
 
 /**
  * <p>JDBC Connexion pool</p>
@@ -13,6 +13,8 @@ package controler;
 import java.sql.*;
 import java.util.ArrayList;
 
+import dao.DAOFactory;
+
 public class JDBCConnectionPool {		
 	protected  static ArrayList<Connection> connex;
 	protected static Connection con;
@@ -23,7 +25,7 @@ public class JDBCConnectionPool {
 	 * @author amine.maza
 	 */
 	public JDBCConnectionPool() {
-		this.connex = new ArrayList<Connection>(2);	
+		this.connex = new ArrayList<Connection>(5);	
 	}
 	 
 	/**
@@ -36,7 +38,7 @@ public class JDBCConnectionPool {
 	public  static ArrayList<Connection> fillCon(){
 		Connection var_connection = DAOFactory.getInstance();
 		if (var_connection!= null) {
-			for(int i=0; i<2;i++) { 
+			for(int i=0; i<4;i++) { 
 				if(i==0) {
 					connex.add(var_connection);
 				}

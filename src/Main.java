@@ -1,7 +1,7 @@
 //import controler.DAOFactory;
-import controler.DataSource;
-import view.FirstF;
-import view.WindowConnection;
+import connection.pool.DataSource;
+import frame.FirstF;
+import frame.WindowConnection;
 
 public class Main {
 	

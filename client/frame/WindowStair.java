@@ -1,4 +1,4 @@
-package view;
+package frame;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -25,9 +25,9 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import controler.DAO;
-import controler.DAOStair;
-import model.Stair;
+import commonClass.Stair;
+import dao.DAO;
+import other.DAOStair;
 
 import java.sql.Connection;
 /**

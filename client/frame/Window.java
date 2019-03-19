@@ -1,7 +1,7 @@
 /**
  * 
  */
-package view;
+package frame;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -20,12 +20,11 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import controler.DataSource;
-import controler.JDBCConnectionPool;
+import commonClass.Stair;
+import connection.pool.DataSource;
+import connection.pool.JDBCConnectionPool;
 
 import java.sql.Connection;
-
-import model.Stair;
 
 /**
  * 

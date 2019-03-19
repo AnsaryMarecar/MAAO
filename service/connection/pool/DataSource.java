@@ -1,15 +1,13 @@
 /**
  * 
  */
-package controler;
+package connection.pool;
 
 /**
  * @author Oussama.bouachrine
  *
  */
 import java.sql.*;
-
-import controler.JDBCConnectionPool;
 
 
 public class DataSource extends JDBCConnectionPool{

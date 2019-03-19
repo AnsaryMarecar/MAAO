@@ -1,7 +1,7 @@
 /**
  * 
  */
-package view;
+package frame;
 
 /**
  * <p>Frame of connexion</p>
