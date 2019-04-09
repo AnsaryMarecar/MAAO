@@ -60,7 +60,7 @@ public class JDBCConnectionPool {
 
 	// to give a connection to the user
 	public  static DAOFactory getConnection() {	 
-			System.out.println("aaa");
+			System.out.println("getConnection");
 			att_daofactory = att_list.get(0);
 			att_list.remove(0);
 			return att_daofactory;

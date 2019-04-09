@@ -8,8 +8,10 @@ import java.net.UnknownHostException;
 import java.util.Random;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import org.secure.retirement.home.common.Decode;
+import org.secure.retirement.home.common.Type_sensor;
 import org.secure.retirement.home.frame.Frame;
 import org.secure.retirement.home.frame.FrameType_sensor;
 
@@ -17,7 +19,7 @@ public class ClientConnexion implements Runnable{
 
    private Socket 				att_connexion 	= null		;
    private PrintWriter 			att_writer 		= null		;
-   private BufferedInputStream 	reader 			= null		;
+   private BufferedInputStream 	att_reader 		= null		;
    private String 				att_action 		= null		;
    private String 				att_data		= null		;
    private Frame 				att_frame					;
@@ -47,7 +49,7 @@ public class ClientConnexion implements Runnable{
 	   String response = null;
        try {
             att_writer = new PrintWriter(att_connexion.getOutputStream(), true)	;
-            reader = new BufferedInputStream(att_connexion.getInputStream())	;
+            att_reader = new BufferedInputStream(att_connexion.getInputStream())	;
             
             String commande = this.att_action+";"+this.att_data	;
             att_writer.write(commande)							;
@@ -58,25 +60,50 @@ public class ClientConnexion implements Runnable{
             //Wait the answer
             try {
             	response = read()															;
-            	System.out.println("\t * " + att_name + " : answer received " + response)	;
-            	/**
-            	if(response == 1){
-            		// same value is existing
+            	System.out.println("\t * " + att_name + " : answer received: " + response)	;
+            	
+            	Type_sensor[] type_sensor_tab =  Decode.decodeType_sensor(response);
+            	
+            	if( type_sensor_tab[0].getType_sensor_id() ==-1 ){
+            		att_frame.getOptionpane();
+					// same value is existing
+            		att_frame.getOptionpane().showMessageDialog(att_frame, 
+            				"You can't have more than one value at a time",
+           		         " SECURE RETIREMENT HOMME WARNING ",
+           		         JOptionPane.WARNING_MESSAGE);
             	}
-            	else if (response == "2"){
-            		// data does no exist
+            	else if( type_sensor_tab[0].getType_sensor_id() ==-2){
+            		att_frame.getOptionpane();
+					// data does no exist
+            		att_frame.getOptionpane().showMessageDialog(att_frame, 
+            				"Sorry, but the data chosen does not exist anymore",
+              		         " SECURE RETIREMENT HOMME WARNING ",
+              		         JOptionPane.WARNING_MESSAGE);
             	}
-            	else if (response == "3"){
-            		// number of connected is limited, please try later
+            	else if( type_sensor_tab[0].getType_sensor_id() ==-3){
+            		att_frame.getOptionpane();
+					// number of connected is limited, please try later
+           
+            		att_frame.getOptionpane().showMessageDialog(att_frame, 
+            				"The number connection is limited, please try later",
+              		         " SECURE RETIREMENT HOMME WARNING ",
+              		         JOptionPane.WARNING_MESSAGE);
             	}
-            	else if(response == "4"){
+            	else if( type_sensor_tab[0].getType_sensor_id() ==-4){
             		// your request was realized succesfully
+            		System.out.println("your request was realised successfully");
+            		att_frame.getOptionpane().showMessageDialog(att_frame, 
+           		      "The traitment was realized succesfully",
+           		      " SECURE RETIREMENT HOMME INFORMATION MESSAGE ",
+           		      JOptionPane.INFORMATION_MESSAGE);
             	}
             	else{
             		// init table
+            		System.out.println("initialise table");
+            		att_frame.initialise_table(Decode.decodeType_sensor(response))			; 
             	}
-            	**/
-            	att_frame.initialise_table(Decode.decodeType_sensor(response))				; 
+            
+            	
             }catch(Exception e) {
             	System.out.println("\t * " + "error" + " : problem with answer " )			;
             } 
@@ -98,7 +125,7 @@ public class ClientConnexion implements Runnable{
       String response = ""								;
       int stream										;
       byte[] b = new byte[4096]							;
-      stream = reader.read(b)							;
+      stream = att_reader.read(b)						;
       response = new String(b, 0, stream)				;      
       System.out.println("client connect : "+response)	;
       return response									;

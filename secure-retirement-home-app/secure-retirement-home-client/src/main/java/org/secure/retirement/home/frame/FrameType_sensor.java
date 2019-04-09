@@ -38,6 +38,7 @@ public class FrameType_sensor extends Frame<Type_sensor> {
 	private JTextField 	nameupdate_textField 		= new JTextField()							;
 	private JLabel 		nameupdate_label			= new JLabel("Update the name of the type sensor : ")	;
 
+	private JOptionPane joptionpane_information;
 	
 	public FrameType_sensor() {
 		// TODO Auto-generated constructor stub
@@ -259,4 +260,9 @@ public class FrameType_sensor extends Frame<Type_sensor> {
 		// TODO Auto-generated method stub
 	}
 
+	public JOptionPane getJoptionpane_information() {
+		return joptionpane_information;
+	}
+
+	
 }

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -33,11 +34,13 @@ public abstract class Frame<T> extends JFrame implements ActionListener{
 	private 	JButton 			update_button 		= new JButton("Update"		);
 	private 	JButton 			fupdate_button 		= new JButton("Submit"		);
 	private 	JButton 			delete_button 		= new JButton("Delete"		);
-	private 	JButton 			disconnect_button 	= new JButton("Disconnect"	);
+	private 	JButton 			disconnect_button 	= new JButton("Actualise"	);
 	
 	//Other element
 	private 	JLabel				title_label			= new JLabel()				 ;
 	protected 	JTable				w_table											 ;
+	
+	private 	JOptionPane			att_optionpane = new JOptionPane();
 	
 	//table element
 	private 	DefaultTableModel 	w_dtm 				= new DefaultTableModel() {
@@ -121,9 +124,11 @@ public abstract class Frame<T> extends JFrame implements ActionListener{
 	        	System.out.println("update")						;
 	        	setVisible(true)									;
 	        }
-	        else if("Disconnect".equals(e.getActionCommand())) { // disconnect button actionned
-				System.out.println("disconnect");
-	        	//DataSource.remetConex(DataSource.useConnect())		;
+	        else if("Actualise".equals(e.getActionCommand())) { // actualise button actionned
+				System.out.println("actualise")						;
+				call_initialise_table()								;
+				setVisible(true)									;
+				//DataSource.remetConex(DataSource.useConnect())		;
 				//dispose()											;
 			}
 	    }
@@ -242,6 +247,16 @@ public abstract class Frame<T> extends JFrame implements ActionListener{
 	}
 	public void call_initialise_table() {
 		// TODO Auto-generated method stub
-		
 	}
+	
+	public void setOptionpane(JOptionPane param_optionpane) {
+		this.att_optionpane = param_optionpane;
+	}
+	
+	public JOptionPane getOptionpane() {
+		return this.att_optionpane;
+	}
+	
+	
+	
 }

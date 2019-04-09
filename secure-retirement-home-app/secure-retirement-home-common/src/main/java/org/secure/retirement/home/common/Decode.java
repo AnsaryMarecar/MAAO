@@ -50,9 +50,11 @@ public class Decode {
 		        text = param_todecode;
 		    //}
 			//try {
-		        if(text!=null) {
-				 type_sensor = objectMapper.readValue(text, Type_sensor [] .class );
-		        }
+		        
+		    if(text!=null) {
+		    	type_sensor = objectMapper.readValue(text, Type_sensor [] .class );
+		    }
+		        
 			    //for(int i=0; i<type_sensor.length;i++) {
 			    //System.out.println("decode id = " + type_sensor[i].getType_sensor_id());
 			    //System.out.println("decode name = " + type_sensor[i].getType_sensor_name());

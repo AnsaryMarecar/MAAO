@@ -13,9 +13,9 @@ import java.util.ArrayList;
 public interface DAO<T> {
 	
 	
-	public abstract boolean create(T obj) 		throws SQLException;
-	public abstract boolean delete(int id)	 	throws SQLException;
-	public abstract boolean update(T obj) 		throws SQLException;
+	public abstract int create(T obj) 		throws SQLException;
+	public abstract int delete(T obj)	 	throws SQLException;
+	public abstract int update(T obj) 		throws SQLException;
 	public abstract boolean ifFind(T obj) 		throws SQLException;
 	public abstract T find(int id) 				throws SQLException;
 	public abstract void close()				throws SQLException;

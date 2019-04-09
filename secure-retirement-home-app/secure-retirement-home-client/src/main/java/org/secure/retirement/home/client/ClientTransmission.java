@@ -8,7 +8,6 @@ import javax.swing.JFrame;
 
 import org.secure.retirement.home.common.Decode;
 import org.secure.retirement.home.common.Encode;
-import org.secure.retirement.home.common.Type_sensor;
 import org.secure.retirement.home.service.JDBCConnectionPool;
 
 public class ClientTransmission {
@@ -17,7 +16,6 @@ public class ClientTransmission {
 										ArrayList<?> data, Frame param_frame) {
 		String host = "127.0.0.1"		;
 	    int port = 2345					;
-	    Type_sensor[]  to_return = null	;
 	    System.out.println(JDBCConnectionPool.displayConnex());
 		String val_data = Encode.encoder(data);
 		ArrayList<String> val_action_array = new ArrayList<String>();
