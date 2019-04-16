@@ -4,7 +4,7 @@ package org.secure.retirement.home.simulator.client;
  * Hello world!
  *
  */
-public class App 
+public class AppSimulatorClient 
 {
     public static void main( String[] args )
     {
