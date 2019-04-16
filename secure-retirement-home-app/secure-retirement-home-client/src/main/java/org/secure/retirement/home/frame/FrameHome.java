@@ -15,7 +15,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import org.secure.retirement.home.frame.Frame.ButonListener;
+import org.secure.retirement.home.frame.Frame.ButtonListener;
 
 public class FrameHome extends JFrame {
 	
@@ -76,16 +76,16 @@ public class FrameHome extends JFrame {
 		pan2.add(risqB);
 		
 		
-		this.getAnalyseB().addActionListener(new ButonListener());
-		this.getUpdateB().addActionListener(new ButonListener());
-		this.getRisqB().addActionListener(new ButonListener());
+		this.getAnalyseB().addActionListener(new ButtonListener());
+		this.getUpdateB().addActionListener(new ButtonListener());
+		this.getRisqB().addActionListener(new ButtonListener());
 		
 		this.setVisible(true);
 		
 	}
 	
 	
-	class ButonListener implements ActionListener{
+	class ButtonListener implements ActionListener{
 	    public void actionPerformed(ActionEvent e) {
 	    	if ("Analyse".equals(e.getActionCommand())) { 
 	    		dispose();

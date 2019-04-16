@@ -87,18 +87,18 @@ public abstract class Frame<T> extends JFrame implements ActionListener{
 	    component_panel.add(this.buttons_panel, BorderLayout.WEST)			 ;
 	    
 	    //Action listener
-	    this.getAdd_button().addActionListener		(new ButonListener())	 ;
-	    this.getUpdate_button().addActionListener	(new ButonListener())	 ;
-	    this.getDelete_button().addActionListener	(new ButonListener())	 ;
-	    this.getFupdate_button().addActionListener	(new ButonListener())	 ;
-	    this.getFDisconnect_button().addActionListener	(new ButonListener());
+	    this.getAdd_button().addActionListener		(new ButtonListener())	 ;
+	    this.getUpdate_button().addActionListener	(new ButtonListener())	 ;
+	    this.getDelete_button().addActionListener	(new ButtonListener())	 ;
+	    this.getFupdate_button().addActionListener	(new ButtonListener())	 ;
+	    this.getFDisconnect_button().addActionListener	(new ButtonListener());
 	}
 	
 	/**
 	 *	@Override ButonListener ActionListener
 	 *	@author melissa.oussadi
 	 */
-	class ButonListener implements ActionListener{
+	class ButtonListener implements ActionListener{
 	    public void actionPerformed(ActionEvent e) {
 	    	if ("Add".equals(e.getActionCommand())) { // Add button actioned
 	            // method add

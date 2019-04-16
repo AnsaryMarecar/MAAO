@@ -17,6 +17,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+
 
 import org.secure.retirement.home.client.ClientTransmission;
 import org.secure.retirement.home.common.Encode;
@@ -37,7 +40,7 @@ public class FrameType_sensor extends Frame<Type_sensor> {
 	// forms atribut update name
 	private JTextField 	nameupdate_textField 		= new JTextField()							;
 	private JLabel 		nameupdate_label			= new JLabel("Update the name of the type sensor : ")	;
-
+	
 	private JOptionPane joptionpane_information;
 	
 	public FrameType_sensor() {
