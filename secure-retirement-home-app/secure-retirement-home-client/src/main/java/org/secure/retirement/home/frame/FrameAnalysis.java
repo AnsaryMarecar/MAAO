@@ -62,11 +62,15 @@ public class FrameAnalysis extends JFrame {
 		pan1= new JPanel();
 		pan1.setBackground(Color.DARK_GRAY);
 		
+		pan2=new JPanel();
+		pan2.setBackground(Color.WHITE);
+		
 		pan3= new JPanel();
 		pan3.setBackground(Color.DARK_GRAY);
 		
 		pan4= new JPanel();
 		pan4.setBackground(Color.LIGHT_GRAY);
+		
 		
 		
 		jlp= new JLayeredPane();
