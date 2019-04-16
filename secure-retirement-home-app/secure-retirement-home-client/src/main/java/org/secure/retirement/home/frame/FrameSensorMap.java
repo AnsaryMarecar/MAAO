@@ -1,10 +1,12 @@
 package org.secure.retirement.home.frame;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,6 +17,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import com.sun.prism.Graphics;
+
 
 
 public class FrameSensorMap extends JFrame implements ActionListener{
@@ -23,7 +27,7 @@ public class FrameSensorMap extends JFrame implements ActionListener{
 	
 		
 		
-		private JPanel pan1, pan2, pan3, pan4;
+		private JPanel pan1, pan3, pan4;
 		private JButton add, update, delete;
 		private JLabel jl1;
 		private JRadioButton b1, b2,b3, b4, b5;
@@ -34,7 +38,7 @@ public class FrameSensorMap extends JFrame implements ActionListener{
 		private JMenu analysis 							= new JMenu("Analysis");
 		private JMenuItem settings_type_sensor = new JMenuItem("Add a type sensor");
 		private JMenuItem settings_add_user = new JMenuItem("Add a user");
-		
+		MonPanneau pan2 = new MonPanneau();
 		
 		
 		public FrameSensorMap() {
@@ -45,7 +49,7 @@ public class FrameSensorMap extends JFrame implements ActionListener{
 			
 			
 			pan1= new JPanel();
-			pan2= new JPanel();
+			
 			pan3 = new JPanel();
 			pan4 = new JPanel();
 			
@@ -63,11 +67,7 @@ public class FrameSensorMap extends JFrame implements ActionListener{
 			
 			
 			
-			this.setLayout(new BorderLayout());
-			this.getContentPane().add(pan1, BorderLayout.NORTH);
-			this.getContentPane().add(pan2, BorderLayout.CENTER);
-			this.getContentPane().add(pan3, BorderLayout.SOUTH);
-		//	this.getContentPane().add(pan4, BorderLayout.SOUTH);
+		
 			
 			// adding a menu 
 			this.menuBar.add(map);
@@ -81,8 +81,15 @@ public class FrameSensorMap extends JFrame implements ActionListener{
 			
 			pan1.setLayout(new BorderLayout());
 			pan1.add(jl1, BorderLayout.CENTER);
-			
-			
+			this.setLayout(new BorderLayout());
+			this.getContentPane().add(pan1, BorderLayout.NORTH);
+		getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER));
+		pan2.setBackground(Color.WHITE);
+		pan2.setPreferredSize(new Dimension(1000,400));
+	
+		this.getContentPane().add(pan2, BorderLayout.CENTER);
+		this.getContentPane().add(pan3, BorderLayout.CENTER);
+		this.getContentPane().add(pan4, BorderLayout.SOUTH);
 			pan3.setLayout(new FlowLayout());
 			pan3.add(b1);
 			pan3.add(b2);
@@ -90,10 +97,17 @@ public class FrameSensorMap extends JFrame implements ActionListener{
 			pan3.add(b4);
 			pan3.add(b5);
 			
-		//	pan3.setLayout(new FlowLayout());
-			pan3.add(add);
-			pan3.add(update);
-			pan3.add(delete);
+			b1.setSelected(true);
+			b2.setSelected(true);
+			b3.setSelected(true);
+			b4.setSelected(true);
+			b5.setSelected(true);
+			
+			
+			pan4.setLayout(new FlowLayout());
+			pan4.add(add);
+			pan4.add(update);
+			pan4.add(delete);
 			
 			
 			add.addActionListener(this);
@@ -124,6 +138,7 @@ public class FrameSensorMap extends JFrame implements ActionListener{
 		
 		
 		}
+	
 		}
 
 		
