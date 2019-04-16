@@ -5,6 +5,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -39,30 +40,35 @@ public class FrameSettings extends JFrame {
 		this.setSize(500, 600);
 		this.setResizable(false);
 		this.setVisible(true);
+		
+		//location_t.setPreferredSize(new Dimension(650, 422));
+		location_t.setSize(50,50);
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		GridBagConstraints c2 = new GridBagConstraints();
 		
-		c.ipady = 0;      
+		c.ipady = 10;      
 	//	c.anchor = GridBagConstraints.PAGE_END;
-		c.insets = new Insets(2,0,0,0);
+	
+	//	c.insets = new Insets(2,0,0,0);
 		c.gridx = 1;  
-		c2.gridx = 1;
+		
+		c2.gridx = 2;
 		
 		
 		
 		this.add(location, c);
 		this.add(location_t, c2);
 		this.add(sensor_type, c);
-		this.add(sensor_type_box);
+		this.add(sensor_type_box, c2);
 		this.add(min_risq, c);
-		this.add(min_risq_t);
+		this.add(min_risq_t, c2);
 		this.add(max_risq, c);
-		this.add(max_risq_t);
+		this.add(max_risq_t, c2);
 		this.add(mac_address, c);
-		this.add(mac_address_t);
+		this.add(mac_address_t, c2);
 		this.add(IP_address, c);
-		this.add(IP_address_t);
+		this.add(IP_address_t, c2);
 		
 		}
 	
