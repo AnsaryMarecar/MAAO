@@ -41,11 +41,16 @@ public class FrameSettings extends JFrame {
 		this.setResizable(false);
 		this.setVisible(true);
 		
-		//location_t.setPreferredSize(new Dimension(650, 422));
-		location_t.setSize(50,50);
+		
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		GridBagConstraints c2 = new GridBagConstraints();
+		location_t.setPreferredSize(new Dimension(50, 30));
+		min_risq_t.setPreferredSize(new Dimension(50, 30));
+		max_risq_t.setPreferredSize(new Dimension(50, 30));
+		mac_address_t.setPreferredSize(new Dimension(50, 30));
+		IP_address_t.setPreferredSize(new Dimension(50, 30));
+		sensor_type_box.setPreferredSize(new Dimension(50,30));
 		
 		c.ipady = 10;      
 	//	c.anchor = GridBagConstraints.PAGE_END;
