@@ -38,7 +38,7 @@ public class FrameSensorMap extends JFrame implements ActionListener{
 		private JMenu analysis 							= new JMenu("Analysis");
 		private JMenuItem settings_type_sensor = new JMenuItem("Add a type sensor");
 		private JMenuItem settings_add_user = new JMenuItem("Add a user");
-		MonPanneau pan2 = new MonPanneau();
+		MyPanel pan2 = new MyPanel();
 		
 		
 		public FrameSensorMap() {
