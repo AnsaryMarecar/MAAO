@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import org.secure.retirement.home.frame.FrameHome.ButonListener;
+import org.secure.retirement.home.frame.FrameHome.ButtonListener;
 
 public class FrameUpdate extends JFrame{
 	
