@@ -38,7 +38,7 @@ public class FrameAnalysis extends JFrame {
 		historicList= new JComboBox();
 		
 		this.setLocationRelativeTo(null);
-		this.setSize(1000, 1000);
+		this.setSize(1700, 1000);
 		this.setResizable(false);
 		
 		sensor = new JCheckBox("Sensors");
@@ -82,23 +82,23 @@ public class FrameAnalysis extends JFrame {
 		this.setLayout(new BorderLayout()); 
 		this.getContentPane().add(jlp); 
 		
-		pan1.setBounds(0,0,1000, 200);
+		pan1.setBounds(0,0,1700, 100);
 		pan1.add(sensor);
 		pan1.add(room);
 		pan1.add(historic);
 		
 		
-		pan3.setBounds(0,200,300,800);
+		pan3.setBounds(0,100,150,1000);
 		pan3.setLayout(new FlowLayout());
 		pan3.add(sensorList);
 		sensorList.setVisible(false);
-		pan3.add(historicList);
-		historicList.setVisible(false);
 		pan3.add(roomList);
 		roomList.setVisible(false);
+		pan3.add(historicList);
+		historicList.setVisible(false);
 		
 
-		pan4.setBounds(300,200,700,800);
+		pan4.setBounds(150,100,1550,1000);
 
 		
 		
