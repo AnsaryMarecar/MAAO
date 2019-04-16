@@ -6,7 +6,7 @@ public class Type_sensor {
 	
 	private int 	type_sensor_id	;
 	private String	type_sensor_name;
-	private int		type_sensor_int;
+	
 	/**
 	 * 
 	 */
@@ -23,18 +23,6 @@ public class Type_sensor {
 		this.type_sensor_name 	= type_sensor_name	;
 	}
 	
-	/**
-	 * @param type_sensor_id
-	 * @param type_sensor_name
-	 * @param type_sensor_int
-	 */
-	public Type_sensor(int type_sensor_id, String type_sensor_name, int type_sensor_int) {
-		super();
-		this.type_sensor_id = type_sensor_id;
-		this.type_sensor_name = type_sensor_name;
-		this.type_sensor_int = type_sensor_int;
-	}
-
 	/**
 	 * @param type_sensor_name
 	 */
@@ -74,20 +62,6 @@ public class Type_sensor {
 	public String toString() {
 		return "Type_sensor [getType_sensor_id()=" + getType_sensor_id() + ", getType_sensor_name()="
 				+ getType_sensor_name() + "]";
-	}
-
-	/**
-	 * @return the type_sensor_int
-	 */
-	public int getType_sensor_int() {
-		return type_sensor_int;
-	}
-
-	/**
-	 * @param type_sensor_int the type_sensor_int to set
-	 */
-	public void setType_sensor_int(int type_sensor_int) {
-		this.type_sensor_int = type_sensor_int;
 	}
 	
 	
