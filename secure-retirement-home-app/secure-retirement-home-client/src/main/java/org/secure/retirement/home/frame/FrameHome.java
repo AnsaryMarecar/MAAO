@@ -9,6 +9,9 @@ import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -21,6 +24,13 @@ public class FrameHome extends JFrame {
 	private JButton analyseB, updateB, risqB;
 	private JLabel jl1;
 	
+	
+	private JMenuBar menuBar 						= new JMenuBar();
+	private JMenu settings 							= new JMenu("Settings");
+	private JMenu map							= new JMenu("Sensor's map");
+	private JMenu analysis 							= new JMenu("Analysis");
+	private JMenuItem settings_type_sensor = new JMenuItem("Add a type sensor");
+	private JMenuItem settings_add_user = new JMenuItem("Add a user");
 	
 	
 	
@@ -47,6 +57,15 @@ public class FrameHome extends JFrame {
 		this.getContentPane().add(pan1, BorderLayout.NORTH);
 		this.getContentPane().add(pan2, BorderLayout.CENTER);
 		this.getContentPane().add(pan3, BorderLayout.SOUTH);
+		// adding a menu 
+		this.menuBar.add(map);
+		this.menuBar.add(settings);
+		this.menuBar.add(analysis);
+		this.setJMenuBar(menuBar);
+		
+		// adding a submenu
+		 this.settings.add(settings_type_sensor);
+		 this.settings.add(settings_add_user);
 		
 		pan1.setLayout(new BorderLayout());
 		pan1.add(jl1, BorderLayout.CENTER);
