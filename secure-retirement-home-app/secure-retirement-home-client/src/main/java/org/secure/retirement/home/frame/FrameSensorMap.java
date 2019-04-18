@@ -5,6 +5,9 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.Scanner;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,7 +24,7 @@ import com.sun.prism.Graphics;
 
 
 
-public class FrameSensorMap extends JFrame implements ActionListener{
+public class FrameSensorMap extends JFrame implements ActionListener, MouseListener{
 	
 
 	
@@ -30,7 +33,7 @@ public class FrameSensorMap extends JFrame implements ActionListener{
 		private JPanel pan1, pan3, pan4;
 		private JButton add, update, delete;
 		private JLabel jl1;
-		private JRadioButton b1, b2,b3, b4, b5;
+		private JRadioButton b1, b2,b3, b4, b5, test;
 		
 		private JMenuBar menuBar 						= new JMenuBar();
 		private JMenu settings 							= new JMenu("Settings");
@@ -39,7 +42,7 @@ public class FrameSensorMap extends JFrame implements ActionListener{
 		private JMenuItem settings_type_sensor = new JMenuItem("Add a type sensor");
 		private JMenuItem settings_add_user = new JMenuItem("Add a user");
 		MyPanel pan2 = new MyPanel();
-		
+		protected static int x1, x2;
 		
 		public FrameSensorMap() {
 			
@@ -85,7 +88,18 @@ public class FrameSensorMap extends JFrame implements ActionListener{
 			this.getContentPane().add(pan1, BorderLayout.NORTH);
 		getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER));
 		pan2.setBackground(Color.WHITE);
-		pan2.setPreferredSize(new Dimension(1000,400));
+		pan2.setPreferredSize(new Dimension(1000,500));
+		pan2.addMouseListener(this);
+		/*
+	Scanner x= new Scanner(System.in);
+	 x1 = x.nextInt();
+	Scanner y= new Scanner(System.in);
+	y1 = y.nextInt();
+	Scanner xx= new Scanner(System.in);
+	 x2= xx.nextInt();
+	Scanner yy= new Scanner(System.in);
+	y2 = yy.nextInt();
+	*/
 	
 		this.getContentPane().add(pan2, BorderLayout.CENTER);
 		this.getContentPane().add(pan3, BorderLayout.CENTER);
@@ -138,7 +152,21 @@ public class FrameSensorMap extends JFrame implements ActionListener{
 		
 		
 		}
+		public void mouseClicked(MouseEvent event) {
+		        System.out.println("Voici les coordonnées : "+ 
+		event.getX()+" "+event.getY()+ " ");
+		       
+		}
+	    public void mousePressed(MouseEvent e) {}
+	    public void mouseExited(MouseEvent e) {}
+	    public void mouseReleased(MouseEvent e) {}
+	    public void mouseEntered(MouseEvent e) {}
 	
+
+	public static void main(String [] args) {
+		FrameSensorMap sensormap = new FrameSensorMap ();
+		sensormap.setVisible(true);
+	}
 		}
 
 		
