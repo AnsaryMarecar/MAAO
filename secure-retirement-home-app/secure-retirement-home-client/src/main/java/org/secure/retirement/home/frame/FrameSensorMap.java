@@ -3,6 +3,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -19,10 +20,7 @@ import javax.swing.JMenuItem;
 
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 
-import com.sun.prism.Graphics;
 
 
 
@@ -44,8 +42,9 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 		private JMenuItem settings_type_sensor = new JMenuItem("Add a type sensor");
 		private JMenuItem settings_add_user = new JMenuItem("Add a user");
 		MyPanel pan2 = new MyPanel();
-		protected static int x1, x2;
-		
+		  private int x1, y1;
+		    Graphics g;
+		 
 		public FrameSensorMap() {
 			
 			this.setLocationRelativeTo(null);
@@ -78,23 +77,6 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 			this.menuBar.add(map);
 			this.menuBar.add(settings);
 			this.menuBar.add(analysis);
-			analysis.addMenuListener(new MenuListener() {
-
-			      public void menuSelected(MenuEvent e) {
-			        System.out.println("menuSelected");
-			        FrameAnalysis frm= new FrameAnalysis();
-			      }
-
-			      public void menuDeselected(MenuEvent e) {
-			        System.out.println("menuDeselected");
-
-			      }
-
-			      public void menuCanceled(MenuEvent e) {
-			        System.out.println("menuCanceled");
-
-			      }
-			    });
 			this.setJMenuBar(menuBar);
 			
 			// adding a submenu
@@ -109,16 +91,7 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 		pan2.setBackground(Color.WHITE);
 		pan2.setPreferredSize(new Dimension(1000,500));
 		pan2.addMouseListener(this);
-		/*
-	Scanner x= new Scanner(System.in);
-	 x1 = x.nextInt();
-	Scanner y= new Scanner(System.in);
-	y1 = y.nextInt();
-	Scanner xx= new Scanner(System.in);
-	 x2= xx.nextInt();
-	Scanner yy= new Scanner(System.in);
-	y2 = yy.nextInt();
-	*/
+
 	
 		this.getContentPane().add(pan2, BorderLayout.CENTER);
 		this.getContentPane().add(pan3, BorderLayout.CENTER);
@@ -154,8 +127,9 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 		public void actionPerformed(ActionEvent event) {
 			
 			if(event.getSource()==add) {
-			 
-								
+				Graphics g = pan2.getGraphics();
+				g.drawOval(this.x1, this.y1,5,5);
+				
 			}
 
 			if(event.getSource()==update) {
@@ -171,23 +145,28 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 		
 		
 		}
-		public void mouseClicked(MouseEvent event) {
-		        System.out.println("Voici les coordonnées : "+ 
-		event.getX()+" "+event.getY()+ " ");
-		       
-		}
-	    public void mousePressed(MouseEvent e) {}
-	    public void mouseExited(MouseEvent e) {}
-	    public void mouseReleased(MouseEvent e) {}
-	    public void mouseEntered(MouseEvent e) {}
-	
-
+		   public void mouseClicked(MouseEvent e) {
+		    	  int x,y;
+		          x = e.getX();
+		          y = e.getY();
+		          x1=x; y1=y;
+			
+			}
+		 
+			//événement lors du déplacement de la souris
+			public void mouseMoved(MouseEvent e){
+				this.x1 = e.getX();
+				this.y1 = e.getY();
+			}
+			   public void mousePressed(MouseEvent e) {}
+		    public void mouseEntered(MouseEvent event) {}  
+		    public void mouseExited(MouseEvent evt){}
+			public void mouseReleased(MouseEvent arg0) {}
+			
 	public static void main(String [] args) {
 		FrameSensorMap sensormap = new FrameSensorMap ();
 		sensormap.setVisible(true);
 	}
-	
-	
 		}
 
 		
