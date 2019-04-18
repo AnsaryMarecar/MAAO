@@ -43,33 +43,33 @@ public class FrameAnalysis extends JFrame {
 		
 		sensor = new JCheckBox("Sensors");
 		sensor.setForeground(Color.WHITE);
-		sensor.setBackground(Color.DARK_GRAY);
+		sensor.setBackground(new Color(153,190,204));
 		sensor.addItemListener(new ItemListen());
 		
 		
 		room = new JCheckBox("Room");
 		room.setForeground(Color.WHITE);
-		room.setBackground(Color.DARK_GRAY);
+		room.setBackground(new Color(153,190,204));
 		room.addItemListener(new ItemListen());
 		
 		historic = new JCheckBox("Historic");
 		historic.setForeground(Color.WHITE);
-		historic.setBackground(Color.DARK_GRAY);
+		historic.setBackground(new Color(153,190,204));
 		historic.addItemListener(new ItemListen());
 		
 		
 		
 		pan1= new JPanel();
-		pan1.setBackground(Color.DARK_GRAY);
+		pan1.setBackground(new Color(153,190,204));
 		
 		pan2=new JPanel();
-		pan2.setBackground(Color.WHITE);
+		pan2.setBackground(Color.LIGHT_GRAY);
 		
 		pan3= new JPanel();
-		pan3.setBackground(Color.DARK_GRAY);
+		pan3.setBackground(new Color(153,190,204));
 		
 		pan4= new JPanel();
-		pan4.setBackground(Color.LIGHT_GRAY);
+		pan4.setBackground(new Color(173,216,230));
 		
 		
 		
