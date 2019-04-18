@@ -12,7 +12,7 @@ import org.secure.retirement.home.frame.FrameType_sensor;
  */
 public class AppClient {
 	public static void main (String[] args) {
-		FrameSensorMap frameHome = new FrameHome();
+		FrameSensorMap frameHome = new FrameSensorMap();
 		System.out.println("FRAMEHome was launched");
 	}
 
