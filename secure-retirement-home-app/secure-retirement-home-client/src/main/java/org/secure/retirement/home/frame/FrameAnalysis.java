@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -18,16 +19,17 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTable;
 
 
 public class FrameAnalysis extends JFrame {
 	
 	private JCheckBox sensor, room, historic;
-	private JPanel pan1, pan2, pan3, pan4;
+	private JPanel pan1, pan2, pan3, pan4, pan5;
 	private JLabel jl1;
 	private JLayeredPane jlp, jlp2;
 	private JComboBox sensorList, roomList, historicList;
-	
+	private JTable table;
 	
 	
 	public FrameAnalysis() {
@@ -71,13 +73,16 @@ public class FrameAnalysis extends JFrame {
 		pan4= new JPanel();
 		pan4.setBackground(new Color(173,216,230));
 		
+		pan5=new JPanel();
+		
 		
 		
 		jlp= new JLayeredPane();
+		jlp2= new JLayeredPane();
 		
 		jlp.add(pan1);
 		jlp.add(pan3);
-		jlp.add(pan4);
+		jlp.add(jlp2);
 		
 		this.setLayout(new BorderLayout()); 
 		this.getContentPane().add(jlp); 
@@ -98,8 +103,14 @@ public class FrameAnalysis extends JFrame {
 		historicList.setVisible(false);
 		
 
-		pan4.setBounds(150,100,1550,1000);
-
+		jlp2.setBounds(150,100,1550,1000);
+		jlp2.setLayout(new GridLayout(2,1));
+		jlp2.add(pan4);
+		jlp2.add(pan2);
+		
+		table= new JTable();
+		table.setVisible(true);
+		pan4.add(table);
 		
 		
 		
