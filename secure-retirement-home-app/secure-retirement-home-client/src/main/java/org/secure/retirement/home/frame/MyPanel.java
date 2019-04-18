@@ -9,10 +9,12 @@ import javax.swing.JPanel;
 
 
 class MyPanel extends JPanel{
-	public void paintComponent(Graphics g) {
+	public void paintComponent(Graphics g ) {
 		super.paintComponent(g);
+	
 		
 		   // g.drawRect(0,0,200,500);
+
 	
 		g.drawLine(200,0,0,0);
 		g.drawLine(0,400,0,0);
@@ -21,7 +23,17 @@ class MyPanel extends JPanel{
 		    g.drawRect(0,400,20,70);	//porte salle d'annimation
 		    g.drawRect(20,20,160,460);  // linterieur de la salle
 		    g.drawRect(200,0,800,200);
-		   
+		    g.drawString("salle d'animation", 60, 200);
+		    g.drawString("couloir", 500, 250);
+		    g.drawString("Ascenseur/Escaliers", 520, 40);
+		    g.drawString("Salle de soins", 350, 420);
+		    g.drawString("Blanchisserie ", 750, 420);
+		    g.drawString("Chambre ", 230, 60);
+		    g.drawString("Chambre ", 330, 60);
+		    g.drawString("Chambre ", 430, 60);
+		    g.drawString("Chambre ", 730, 60);
+		    g.drawString("Chambre ", 830, 60);
+		    g.drawString("Chambre ", 930, 60);
 		    g.drawRect(210,10,80,180);// linterieur de la chambre
 		    g.drawRect(410,10,80,180);//chambre
 		    g.drawRect(310,10,80,180);//chambre
@@ -47,10 +59,10 @@ class MyPanel extends JPanel{
 		    g.drawRect(650,375,20,70);//porte blanchisserie
 		    g.drawRect(980,375,20,50);//fenetre
 		    g.drawRect(670,320,310,160);//blanchisserie
-		
-		 
-		    
 		   
+		
 	}
+
+
 }
 
