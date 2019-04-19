@@ -1,11 +1,15 @@
 package org.secure.retirement.home.frame;
+import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Scanner;
@@ -17,9 +21,10 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.SwingUtilities;
 
 
 
@@ -32,8 +37,9 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 		
 		private JPanel pan1, pan3, pan4;
 		private JButton add, update, delete;
-		private JLabel jl1;
-		private JRadioButton b1, b2,b3, b4, b5, test;
+		private JLabel jl1,b1, b2,b3, b4, b5;
+		private JRadioButton test;
+		
 		
 		private JMenuBar menuBar 						= new JMenuBar();
 		private JMenu settings 							= new JMenu("Settings");
@@ -60,11 +66,12 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 				add= new JButton("ADD");
 			update= new JButton ("UPDATE");
 			delete = new JButton ("DELETE");
-			b1 = new JRadioButton("Danger");
-			b2= new JRadioButton("Middle");
-			b3= new JRadioButton("Low");
-			b4= new JRadioButton("Normal");
-			b5= new JRadioButton("No Reponse");
+			b1 = new JLabel("Danger");
+			b2= new JLabel("Middle");
+			b3= new JLabel("Low");
+			b4= new JLabel("Normal");
+			b5= new JLabel("No Reponse");
+			
 			
 			
 			jl1= new JLabel("left-click on the sensor position");
@@ -96,18 +103,28 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 		this.getContentPane().add(pan2, BorderLayout.CENTER);
 		this.getContentPane().add(pan3, BorderLayout.CENTER);
 		this.getContentPane().add(pan4, BorderLayout.SOUTH);
+		
+		
 			pan3.setLayout(new FlowLayout());
+			b1.setOpaque(true);
+			b1.setBackground(Color.RED);
+			b2.setOpaque(true);
+			b2.setBackground(Color.ORANGE);
+			b3.setOpaque(true);
+			b3.setBackground(Color.yellow);
+			b4.setOpaque(true);
+			b4.setBackground(Color.green);
+			b5.setOpaque(true);
+			b5.setBackground(Color.gray);
+			
+			
 			pan3.add(b1);
 			pan3.add(b2);
 			pan3.add(b3);
 			pan3.add(b4);
 			pan3.add(b5);
 			
-			b1.setSelected(true);
-			b2.setSelected(true);
-			b3.setSelected(true);
-			b4.setSelected(true);
-			b5.setSelected(true);
+		
 			
 			
 			pan4.setLayout(new FlowLayout());
@@ -125,15 +142,20 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 			
 		}
 		public void actionPerformed(ActionEvent event) {
-			
+			//à mettre dans la classe de melissa 
 			if(event.getSource()==add) {
-				Graphics g = pan2.getGraphics();
-				g.drawOval(this.x1, this.y1,5,5);
-				
+				 g = pan2.getGraphics();
+				g.setColor(Color.RED);
+			g.drawOval(this.x1, this.y1,5,5);
+			
+			
+	
 			}
 
 			if(event.getSource()==update) {
-			 
+				
+					
+				
 								
 			}
 
@@ -150,15 +172,25 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 		          x = e.getX();
 		          y = e.getY();
 		          x1=x; y1=y;
-			
-			}
-		 
-			//événement lors du déplacement de la souris
-			public void mouseMoved(MouseEvent e){
-				this.x1 = e.getX();
-				this.y1 = e.getY();
-			}
-			   public void mousePressed(MouseEvent e) {}
+		        
+		          if (x1>= 180 && x1 <=1000 && y1 >= 0 && y1 <= 200 ) {
+		        	  JOptionPane.showMessageDialog(null, "Sorry, but you can't add sensor in this zone", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
+		          }
+		          if (e.getClickCount()!=1) {
+		        	  System.out.println(e.getClickCount());
+		        	  JOptionPane.showMessageDialog(null, "Sorry, but you have already click once", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
+		          }
+		          if(SwingUtilities.isRightMouseButton(e)) { 
+		                /** Bouton DROIT */ 
+		         
+		             JOptionPane.showMessageDialog(null, "Sorry, but you should to do left-click", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
+		        } else if(SwingUtilities.isMiddleMouseButton(e) ) { 
+		                /** Bouton du MILIEU */   JOptionPane.showMessageDialog(null, "Sorry, but you should to do left-click", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
+		        }
+		          
+		   }
+	
+			  public void mousePressed(MouseEvent e) {}
 		    public void mouseEntered(MouseEvent event) {}  
 		    public void mouseExited(MouseEvent evt){}
 			public void mouseReleased(MouseEvent arg0) {}
