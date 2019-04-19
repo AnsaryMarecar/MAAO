@@ -25,6 +25,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.SwingUtilities;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 
 
 
@@ -84,6 +86,23 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 			this.menuBar.add(map);
 			this.menuBar.add(settings);
 			this.menuBar.add(analysis);
+			analysis.addMenuListener(new MenuListener() {
+
+			      public void menuSelected(MenuEvent e) {
+			        System.out.println("menuSelected");
+			        FrameAnalysis frm= new FrameAnalysis();
+			      }
+
+			      public void menuDeselected(MenuEvent e) {
+			        System.out.println("menuDeselected");
+
+			      }
+
+			      public void menuCanceled(MenuEvent e) {
+			        System.out.println("menuCanceled");
+
+			      }
+			    });
 			this.setJMenuBar(menuBar);
 			
 			// adding a submenu

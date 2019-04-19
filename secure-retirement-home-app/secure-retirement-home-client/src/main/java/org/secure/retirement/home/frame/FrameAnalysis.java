@@ -30,6 +30,7 @@ public class FrameAnalysis extends JFrame {
 	private JLayeredPane jlp, jlp2;
 	private JComboBox sensorList, roomList, historicList;
 	private JTable table;
+	private TableAnalysis tablet;
 	
 	
 	public FrameAnalysis() {
@@ -110,8 +111,9 @@ public class FrameAnalysis extends JFrame {
 		
 		table= new JTable();
 		table.setVisible(true);
-		pan4.add(table);
 		
+		pan4.setLayout(new FlowLayout());
+		tablet = new TableAnalysis(pan4);
 		
 		
 		this.setVisible(true);
