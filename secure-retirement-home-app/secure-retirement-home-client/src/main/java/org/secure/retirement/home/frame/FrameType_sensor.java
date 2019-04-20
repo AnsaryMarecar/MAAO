@@ -11,21 +11,16 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
 
 
 import org.secure.retirement.home.client.ClientTransmission;
-import org.secure.retirement.home.common.Encode;
 import org.secure.retirement.home.common.Type_sensor;
-import org.secure.retirement.home.service.*;
 
 /**
  * @author Ansary MARECAR
@@ -131,8 +126,6 @@ public class FrameType_sensor extends Frame<Type_sensor> {
 	}
 	public void call_initialise_table() {
 		// TODO Auto-generated method stub
-		Type_sensor[] val_list									 		;	
-		
 		this.getW_dtm().setRowCount(0)									;
 		try {
 			ClientTransmission.transmission("Type_sensor", "SELECT ALL", null, this);	

@@ -1,14 +1,9 @@
 package org.secure.retirement.home.client;
 
-import java.io.IOException;
 import org.secure.retirement.home.frame.*;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
-
-import org.secure.retirement.home.common.Decode;
 import org.secure.retirement.home.common.Encode;
-import org.secure.retirement.home.service.JDBCConnectionPool;
 
 public class ClientTransmission {
 	
@@ -16,7 +11,7 @@ public class ClientTransmission {
 										ArrayList<?> data, Frame param_frame) {
 		String host = "127.0.0.1"		;
 	    int port = 2345					;
-	    System.out.println(JDBCConnectionPool.displayConnex());
+	    //System.out.println(JDBCConnectionPool.displayConnex());
 		String val_data = Encode.encoder(data);
 		ArrayList<String> val_action_array = new ArrayList<String>();
 		val_action_array.add(element)	;
