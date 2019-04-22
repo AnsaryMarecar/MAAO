@@ -128,8 +128,6 @@ public abstract class Frame<T> extends JFrame implements ActionListener{
 				System.out.println("actualise")						;
 				call_initialise_table()								;
 				setVisible(true)									;
-				//DataSource.remetConex(DataSource.useConnect())		;
-				//dispose()											;
 			}
 	    }
 	}
@@ -200,7 +198,7 @@ public abstract class Frame<T> extends JFrame implements ActionListener{
 	/**
 	 * Init the JTable
 	 */
-	public abstract void initialise_table	(T[] obj)						;
+	public abstract void initialise_table	(T[] obj)				;
 	
 	/**
 	 * add a line of the JTable
@@ -211,7 +209,6 @@ public abstract class Frame<T> extends JFrame implements ActionListener{
 	 * delete a line of the JTable
 	 */
 	public void delete_table(int ligne_number) {
-		// TODO Auto-generated method stub
 		this.getW_dtm().removeRow(ligne_number)						;
 	}
 	
@@ -246,7 +243,6 @@ public abstract class Frame<T> extends JFrame implements ActionListener{
 		this.fupdate_button = fupdate_button						;
 	}
 	public void call_initialise_table() {
-		// TODO Auto-generated method stub
 	}
 	
 	public void setOptionpane(JOptionPane param_optionpane) {

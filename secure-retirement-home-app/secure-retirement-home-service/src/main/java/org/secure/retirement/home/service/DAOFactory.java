@@ -6,25 +6,21 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import org.secure.retirement.home.service.*;
 import org.secure.retirement.home.common.*;
 
 /**
  * <p>Have a connexion with the database</p>
- * @author ansary.marecar
- * @author amine.maza
- *
  */
 
 public class DAOFactory {
 
-    private static final 	String FILE_PROPERTIES			= "db.properties"	;
-    private static final 	String PROPERTY_LINK			= "link"		;
-    private static final 	String PROPERTY_DRIVER			= "driver"		;
-    private static final 	String PROPERTY_USER_NAME 		= "username"	;
-    private static final 	String PROPERTY_PASSWORD		= "password"	;
+    private static final 	String FILE_PROPERTIES			= "db.properties";
+    private static final 	String PROPERTY_LINK			= "link"		 ;
+    private static final 	String PROPERTY_DRIVER			= "driver"		 ;
+    private static final 	String PROPERTY_USER_NAME 		= "username"	 ;
+    private static final 	String PROPERTY_PASSWORD		= "password"	 ;
 
-    private String              link;
+    private String              link	;
     private String              username;
     private String              password;
 
@@ -41,7 +37,6 @@ public class DAOFactory {
      * @throws DAOConfigurationException
      * 
      * @author ansary.marecar
-     * @author amine.mazza
      */
     public static DAOFactory getInstance() throws DAOConfigurationException {
         Properties 	var_properties 	= new Properties()	;
@@ -58,7 +53,6 @@ public class DAOFactory {
         	System.out.println( "We cannot find the " + FILE_PROPERTIES + " file." );
             throw new DAOConfigurationException( "the file:  " + FILE_PROPERTIES + " does not exist." );
         }
-        
         else {
 	        //attribute value
 	        try {

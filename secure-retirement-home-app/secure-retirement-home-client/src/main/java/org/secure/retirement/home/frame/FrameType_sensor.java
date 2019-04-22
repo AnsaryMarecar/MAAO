@@ -1,9 +1,5 @@
 package org.secure.retirement.home.frame;
 
-/**
- * 
- */
-
 import java.awt.BorderLayout;
 
 import java.awt.Color;
@@ -40,7 +36,6 @@ public class FrameType_sensor extends Frame<Type_sensor> {
 	private JOptionPane joptionpane_information;
 	
 	public FrameType_sensor() {
-		// TODO Auto-generated constructor stub
 		
 		// general use
 		super()															;
@@ -91,7 +86,6 @@ public class FrameType_sensor extends Frame<Type_sensor> {
 	 * @author ansary.marecar
 	 */
 	public void add_table(Type_sensor param_type_sensor) {
-		// TODO Auto-generated method stub
 		this.getW_dtm().addRow(
 				new String[]{
 					String.valueOf(param_type_sensor.getType_sensor_id())
@@ -106,7 +100,6 @@ public class FrameType_sensor extends Frame<Type_sensor> {
 	 * @author ansary.marecar
 	 */
 	public void update_table() {
-		// TODO Auto-generated method stub
 		this.nameupdate_textField.setVisible(false)						 ;
 		this.nameupdate_label.setVisible(false)							 ;
 		this.getFupdate_button().setVisible(false)						 ;
@@ -125,12 +118,10 @@ public class FrameType_sensor extends Frame<Type_sensor> {
 		}
 	}
 	public void call_initialise_table() {
-		// TODO Auto-generated method stub
 		this.getW_dtm().setRowCount(0)									;
 		try {
 			ClientTransmission.transmission("Type_sensor", "SELECT ALL", null, this);	
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace()											;
 		}
 	}
@@ -142,7 +133,6 @@ public class FrameType_sensor extends Frame<Type_sensor> {
 	 * @author ansary.marecar
 	 */
 	public boolean update_action() {
-		// TODO Auto-generated method stub
 		boolean  to_return 				= false;
 		int 	 var_line_number 		= this.getW_table().getSelectedRow();
 		int 	 var_type_sensor_id		= Integer.decode( (String) this.getW_dtm().getValueAt(var_line_number, 0) );
@@ -181,7 +171,6 @@ public class FrameType_sensor extends Frame<Type_sensor> {
 	 * @author ansary.marecar
 	 */
 	public boolean delete_action() {
-		// TODO Auto-generated method stub
 		boolean to_return 			= false								;
 		int 	var_line_number 	= this.getW_table().getSelectedRow();
 		int 	var_id				= -1								;
@@ -199,7 +188,6 @@ public class FrameType_sensor extends Frame<Type_sensor> {
 				this.call_initialise_table()				;
 				to_return = true							;
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace()							;
 			}
 		}	
@@ -213,9 +201,8 @@ public class FrameType_sensor extends Frame<Type_sensor> {
 	 * @author ansary.marecar
 	 */
 	public boolean add_action() {
-		// TODO Auto-generated method stub
-		boolean to_return = false							;
-		String val_text = nameadd_textField.getText().trim();
+		boolean to_return = false								;
+		String 	val_text  = nameadd_textField.getText().trim()	;
 		
 		if(val_text.trim().equals("")) {
 			JOptionPane.showMessageDialog(null, "Sorry, but you can't add without a name.", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
@@ -229,7 +216,6 @@ public class FrameType_sensor extends Frame<Type_sensor> {
 					this.update_table()						;
 					to_return = true						;
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace()							;
 			}
 		}
@@ -244,8 +230,6 @@ public class FrameType_sensor extends Frame<Type_sensor> {
 	 * @author ansary.marecar
 	 */
 	public void update_on(int param_line_number) {
-		// TODO Auto-generated method stub
-		int 	 val_type_sensor_id		= Integer.decode( (String) this.getW_dtm().getValueAt(param_line_number, 0) )	;
 		String	 val_type_sensor_name		= (String) this.getW_dtm().getValueAt(param_line_number, 1)					;
 		this.nameupdate_textField.setText(val_type_sensor_name)															;
 		this.nameupdate_label.setVisible(true)																			;
@@ -254,12 +238,14 @@ public class FrameType_sensor extends Frame<Type_sensor> {
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
 	}
 
 	public JOptionPane getJoptionpane_information() {
 		return joptionpane_information;
 	}
 
+	public static void main (String[] args) {
+		new FrameType_sensor();
+	}
 	
 }

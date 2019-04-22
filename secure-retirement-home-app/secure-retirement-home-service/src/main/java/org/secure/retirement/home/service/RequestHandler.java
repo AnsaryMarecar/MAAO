@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.secure.retirement.home.service;
 
 /**
@@ -13,27 +10,25 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 
 import org.secure.retirement.home.common.Decode;
 import org.secure.retirement.home.common.Encode;
 import org.secure.retirement.home.common.Type_sensor;
 
-public class ClientProcessor implements Runnable{
+public class RequestHandler implements Runnable{
 
    private Socket sock;
    private PrintWriter writer = null;
    private BufferedInputStream reader = null;
    
-   public ClientProcessor(Socket pSock){
+   public RequestHandler(Socket pSock){
       sock = pSock;
    }
    
    //traitment is launched in a separate thread
-public void run(){
+   public void run(){
       System.out.println("Launch client connection");
       String to_return = ""; 
       boolean closeConnection = false;
@@ -53,7 +48,8 @@ public void run(){
             String vals2 ="";
             try {
             	vals2 = (String)(vals.get(1).toString().replaceAll("[^\\w]",""));
-            }catch(Exception e) {
+            }
+            catch(Exception e) {
             }
             if(vals1.equals("Type_sensor")) {
             	if(vals2.equals("SELECTALL")) {
@@ -64,11 +60,12 @@ public void run(){
             				DAOFactory daof = JDBCConnectionPool.getConnection();
             				DAOType_sensor element_dao = new DAOType_sensor(daof);
 							ArrayList<?> elements = element_dao.presentData();
-							to_return = Encode.encoder(elements);
+							to_return = Encode.to_encode(elements);
 							System.out.println("to_return client pro: "+to_return);
 							closeConnection = true;
 							JDBCConnectionPool.AddConnection(daof);
-            			} catch (Exception e) {
+            			} 
+            			catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
@@ -76,7 +73,7 @@ public void run(){
             		else {
             			ArrayList<Type_sensor> elements = new ArrayList<Type_sensor>();
 						elements.add(new Type_sensor(-3,"three"));
-						to_return = Encode.encoder(elements);
+						to_return = Encode.to_encode(elements);
             		}
             	}
             	else if(vals2.equals("ADD")) {
@@ -92,7 +89,7 @@ public void run(){
             				int create_message = element_dao.create(type_sensors[0]);
 							ArrayList<Type_sensor> elements = new ArrayList<Type_sensor>();
 							elements.add(new Type_sensor(create_message,"message"));
-							to_return = Encode.encoder(elements);
+							to_return = Encode.to_encode(elements);
 							if(create_message==-4) {
 								closeConnection = true;
 							}
@@ -106,7 +103,7 @@ public void run(){
             		else {
             			ArrayList<Type_sensor> elements = new ArrayList<Type_sensor>();
 						elements.add(new Type_sensor(-3,"three"));
-						to_return = Encode.encoder(elements);
+						to_return = Encode.to_encode(elements);
             		}
             	}
             	else if(vals2.equals("UPDATE")) {
@@ -124,7 +121,7 @@ public void run(){
 							}
             				ArrayList<Type_sensor> elements = new ArrayList<Type_sensor>();
 							elements.add(new Type_sensor(val_return_update,"message"));
-							to_return = Encode.encoder(elements);
+							to_return = Encode.to_encode(elements);
 							JDBCConnectionPool.AddConnection(daof);
             			} catch (Exception e) {
 							// TODO Auto-generated catch block
@@ -134,7 +131,7 @@ public void run(){
             		else {
             			ArrayList<Type_sensor> elements = new ArrayList<Type_sensor>();
 						elements.add(new Type_sensor(-3,"three"));
-						to_return = Encode.encoder(elements);
+						to_return = Encode.to_encode(elements);
             		}
             	}
             	else if(vals2.equals("DELETE")) {
@@ -153,7 +150,7 @@ public void run(){
 							}
 							ArrayList<Type_sensor> elements = new ArrayList<Type_sensor>();
 							elements.add(new Type_sensor(val_return_delete,"message"));
-							to_return = Encode.encoder(elements);
+							to_return = Encode.to_encode(elements);
 							JDBCConnectionPool.AddConnection(daof);
             			} catch (Exception e) {
 							// TODO Auto-generated catch block
@@ -163,7 +160,7 @@ public void run(){
             		else {
             			ArrayList<Type_sensor> elements = new ArrayList<Type_sensor>();
 						elements.add(new Type_sensor(-3,"three"));
-						to_return = Encode.encoder(elements);
+						to_return = Encode.to_encode(elements);
             		}
             	}
             }
@@ -183,18 +180,18 @@ public void run(){
             writer.flush();
             
             if(closeConnection){
-               System.out.println("CLOSE  ");
+               System.out.println(" CLOSE  ");
                writer = null;
                reader = null;
                sock.close();
                break;
             }
          }catch(SocketException e){
-            System.err.println("INTERRUPTED  ");
+            System.err.println(" INTERRUPTED  ");
             break;
-         } catch (IOException e) {
+         }catch (IOException e) {
             e.printStackTrace();
-         }         
+         }
       }
    }
    

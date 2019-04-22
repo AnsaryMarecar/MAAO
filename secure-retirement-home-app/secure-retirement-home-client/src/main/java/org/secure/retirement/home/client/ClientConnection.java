@@ -5,17 +5,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Random;
-
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import org.secure.retirement.home.common.Decode;
 import org.secure.retirement.home.common.Type_sensor;
 import org.secure.retirement.home.frame.Frame;
-import org.secure.retirement.home.frame.FrameType_sensor;
 
-public class ClientConnexion implements Runnable{
+public class ClientConnection implements Runnable{
 
    private Socket 				att_connexion 	= null		;
    private PrintWriter 			att_writer 		= null		;
@@ -23,14 +19,10 @@ public class ClientConnexion implements Runnable{
    private String 				att_action 		= null		;
    private String 				att_data		= null		;
    private Frame 				att_frame					;
-   private static int 			att_count 		= 0			;
-   private String 				att_name 		= "Client-"	;   
    
-   public ClientConnexion(String param_host, int param_port, 
+   public ClientConnection(String param_host, int param_port, 
 		   String param_action, String param_data, Frame param_frame){
       
-	  att_name += ++att_count;
-      System.out.println("name : "+att_name);
       try {
          att_connexion 		= new Socket(param_host, param_port);   
          this.att_action 	= param_action						;
@@ -44,68 +36,70 @@ public class ClientConnexion implements Runnable{
    }
    
    public void run(){
-	   
 	   Thread.currentThread();
 	   String response = null;
        try {
-            att_writer = new PrintWriter(att_connexion.getOutputStream(), true)	;
-            att_reader = new BufferedInputStream(att_connexion.getInputStream())	;
+    	   att_writer = new PrintWriter(att_connexion.getOutputStream(), true)	 ;
+    	   att_reader = new BufferedInputStream(att_connexion.getInputStream())  ;
+    	   
+    	   String commande = this.att_action+";"+this.att_data					 ;
+    	   att_writer.write(commande)											 ;
+           att_writer.flush()													 ;
             
-            String commande = this.att_action+";"+this.att_data	;
-            att_writer.write(commande)							;
-            att_writer.flush()									;  
+           System.out.println(" " + commande + " send to the server")			 ;
             
-            System.out.println(" " + commande + " send to the server");
-            
-            //Wait the answer
-            try {
-            	response = read()															;
-            	System.out.println("\t * " + att_name + " : answer received: " + response)	;
-            	
-            	Type_sensor[] type_sensor_tab =  Decode.decodeType_sensor(response);
-            	
-            	if( type_sensor_tab[0].getType_sensor_id() ==-1 ){
-            		att_frame.getOptionpane();
+           //Wait the answer
+           try {
+        	  try {
+        	   response = read()												 ;
+        	   System.out.println(" answer received: " + response)				 ;
+        	  }catch(Exception ex1) {
+        		  System.out.println("ex1: "+ex1.getMessage());
+        	  }
+        	  
+        	  Type_sensor[] type_sensor_tab1 =  Decode.decodeType_sensor(response);
+        	  if( type_sensor_tab1[0].getType_sensor_id() ==-1 ){
+            		att_frame.getOptionpane()									  ;
 					// same value is existing
             		att_frame.getOptionpane().showMessageDialog(att_frame, 
             				"You can't have more than one value at a time",
            		         " SECURE RETIREMENT HOMME WARNING ",
-           		         JOptionPane.WARNING_MESSAGE);
+           		         JOptionPane.WARNING_MESSAGE)							  ;
             	}
-            	else if( type_sensor_tab[0].getType_sensor_id() ==-2){
+            	else if( type_sensor_tab1[0].getType_sensor_id() ==-2){
             		att_frame.getOptionpane();
 					// data does no exist
             		att_frame.getOptionpane().showMessageDialog(att_frame, 
             				"Sorry, but the data chosen does not exist anymore",
               		         " SECURE RETIREMENT HOMME WARNING ",
-              		         JOptionPane.WARNING_MESSAGE);
+              		         JOptionPane.WARNING_MESSAGE)						;
             	}
-            	else if( type_sensor_tab[0].getType_sensor_id() ==-3){
+            	else if( type_sensor_tab1[0].getType_sensor_id() ==-3){
             		att_frame.getOptionpane();
 					// number of connected is limited, please try later
            
             		att_frame.getOptionpane().showMessageDialog(att_frame, 
             				"The number connection is limited, please try later",
               		         " SECURE RETIREMENT HOMME WARNING ",
-              		         JOptionPane.WARNING_MESSAGE);
+              		         JOptionPane.WARNING_MESSAGE)						;
             	}
-            	else if( type_sensor_tab[0].getType_sensor_id() ==-4){
+            	else if( type_sensor_tab1[0].getType_sensor_id() ==-4){
             		// your request was realized succesfully
             		System.out.println("your request was realised successfully");
             		att_frame.getOptionpane().showMessageDialog(att_frame, 
            		      "The traitment was realized succesfully",
            		      " SECURE RETIREMENT HOMME INFORMATION MESSAGE ",
-           		      JOptionPane.INFORMATION_MESSAGE);
+           		      JOptionPane.INFORMATION_MESSAGE)							;
             	}
             	else{
             		// init table
-            		System.out.println("initialise table");
-            		att_frame.initialise_table(Decode.decodeType_sensor(response))			; 
+            		System.out.println("initialise table")						;
+            		att_frame.initialise_table(Decode.decodeType_sensor(response)); 
             	}
             
             	
             }catch(Exception e) {
-            	System.out.println("\t * " + "error" + " : problem with answer " )			;
+            	System.out.println("\t * " + "error" + " : problem with answer "+e.getMessage());
             } 
        } catch (IOException e) {
             e.printStackTrace();
@@ -126,8 +120,7 @@ public class ClientConnexion implements Runnable{
       int stream										;
       byte[] b = new byte[4096]							;
       stream = att_reader.read(b)						;
-      response = new String(b, 0, stream)				;      
-      System.out.println("client connect : "+response)	;
+      response = new String(b, 0, stream)				;  
       return response									;
       
    }   

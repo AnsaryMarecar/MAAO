@@ -1,13 +1,10 @@
 package org.secure.retirement.home.common;
-
-
 /**
  * @author ansary.marecar
  *
  */
 
 public class DAOException extends RuntimeException {
-	
 	/**
 	 * <p>Constructor</p>
 	 * 
