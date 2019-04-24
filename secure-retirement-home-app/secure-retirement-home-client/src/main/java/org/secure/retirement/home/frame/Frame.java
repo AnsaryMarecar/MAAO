@@ -5,11 +5,16 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -22,22 +27,36 @@ import javax.swing.table.DefaultTableModel;
 public abstract class Frame<T> extends JFrame implements ActionListener{
 	
 	//Panel 
-	private 	JPanel 				menu_panel	 		= new JPanel()				 ;
-	private 	JPanel				component_panel		= new JPanel()				 ;
-	private 	JPanel				buttons_panel		= new JPanel()				 ;
+	protected 	JPanel 				menu_panel	 		= new JPanel()				 ;
+	protected 	JPanel				component_panel		= new JPanel()				 ;
+	protected 	JPanel				left_panel		= new JPanel()				 ;
 	protected	JPanel				addform_panel		= new JPanel()				 ;
 	protected	JPanel				updateform_panel	= new JPanel()			     ;
 	private 	JPanel				top_panel			= new JPanel()				 ;
 	
+	//ComboBox
+	protected JComboBox list_typesensor=new JComboBox();
+	protected JComboBox list_zone=new JComboBox();
+	
+
+
+	
+	//CheckBox
+	protected JCheckBox sensor = new JCheckBox("Sensors");
+	protected JCheckBox date = new JCheckBox("Date");
+	protected JCheckBox zone = new JCheckBox("Zone");
+	protected JCheckBox type_sensor = new JCheckBox("Type Sensors");
+	
+	
 	//Button
-	private 	JButton 			add_button 			= new JButton("Add"			);
-	private 	JButton 			update_button 		= new JButton("Update"		);
+	protected 	JButton 			add_button 			= new JButton("Add"			);
+	protected 	JButton 			update_button 		= new JButton("Update"		);
 	private 	JButton 			fupdate_button 		= new JButton("Submit"		);
-	private 	JButton 			delete_button 		= new JButton("Delete"		);
-	private 	JButton 			disconnect_button 	= new JButton("Actualise"	);
+	protected 	JButton 			delete_button 		= new JButton("Delete"		);
+	protected 	JButton 			disconnect_button 	= new JButton("Actualise"	);
 	
 	//Other element
-	private 	JLabel				title_label			= new JLabel()				 ;
+	protected 	JLabel				title_label			= new JLabel()				 ;
 	protected 	JTable				w_table											 ;
 	
 	private 	JOptionPane			att_optionpane = new JOptionPane();
@@ -76,22 +95,24 @@ public abstract class Frame<T> extends JFrame implements ActionListener{
 	    
 	    //content page placement
 	    component_panel.setLayout(new BorderLayout())						 ;
-	    component_panel.add(title_label, BorderLayout.NORTH)				 ;
+
+	        
 	    
-	    //placement in the grid layout
-	    buttons_panel.setLayout(new GridLayout(10,1))						 ;
-	    buttons_panel.add(	this.add_button			)						 ;
-	    buttons_panel.add(	this.update_button		)						 ;
-	    buttons_panel.add(	this.delete_button		)						 ;
-	    buttons_panel.add(	this.disconnect_button	)						 ;
-	    component_panel.add(this.buttons_panel, BorderLayout.WEST)			 ;
-	    
-	    //Action listener
+	    //Action listener for Button
 	    this.getAdd_button().addActionListener		(new ButtonListener())	 ;
 	    this.getUpdate_button().addActionListener	(new ButtonListener())	 ;
 	    this.getDelete_button().addActionListener	(new ButtonListener())	 ;
 	    this.getFupdate_button().addActionListener	(new ButtonListener())	 ;
 	    this.getFDisconnect_button().addActionListener	(new ButtonListener());
+	    
+	    
+	    //Item Listener for JCheckBox
+	    sensor.addItemListener(new ItemListen());
+	    date.addItemListener(new ItemListen());
+	    zone.addItemListener(new ItemListen());
+	    type_sensor.addItemListener(new ItemListen());
+	    
+	    
 	}
 	
 	/**
@@ -131,6 +152,16 @@ public abstract class Frame<T> extends JFrame implements ActionListener{
 			}
 	    }
 	}
+	
+	private class ItemListen implements ItemListener {
+
+        public void itemStateChanged(ItemEvent arg0) {
+        	
+        }
+	}
+	
+	
+	
     public abstract boolean add_action		(				)		;
     public abstract boolean update_action	(				)		;
     public abstract boolean delete_action	(				)		;

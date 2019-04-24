@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -49,6 +50,16 @@ public class FrameType_sensor extends Frame<Type_sensor> {
 		nameadd_textField.setForeground(Color.BLUE)						;
 		super.addform_panel.add(nameadd_label)							;
 		super.addform_panel.add(nameadd_textField)						;
+		
+	    //placement in the grid layout
+	    left_panel.setLayout(new GridLayout(10,1))						 ;
+	    left_panel.add(	this.add_button			)						 ;
+	    left_panel.add(	this.update_button		)						 ;
+	    left_panel.add(	this.delete_button		)						 ;
+	    left_panel.add(	this.disconnect_button	)						 ;
+	    component_panel.add(this.left_panel, BorderLayout.WEST)			 ;
+	    component_panel.add(title_label, BorderLayout.NORTH)				 ;
+		
 			
 		// form update
 		nameupdate_textField.setFont(police)							;
@@ -73,7 +84,9 @@ public class FrameType_sensor extends Frame<Type_sensor> {
 		// visibility
 		this.setVisible( true )											;
 	} 
-
+	
+	
+	
 	class BoutonListener implements ActionListener{
 		  public void actionPerformed(ActionEvent e) {		
 		  }
@@ -92,6 +105,9 @@ public class FrameType_sensor extends Frame<Type_sensor> {
 				,	param_type_sensor.getType_sensor_name()
 				}); 
 	}
+	
+
+
 	
 	@Override
 	/**
@@ -245,7 +261,7 @@ public class FrameType_sensor extends Frame<Type_sensor> {
 	}
 
 	public static void main (String[] args) {
-		new FrameType_sensor();
+		FrameType_sensor frameHome = new FrameType_sensor();
+		System.out.println("FRAMEHome was launched");
 	}
-	
 }
