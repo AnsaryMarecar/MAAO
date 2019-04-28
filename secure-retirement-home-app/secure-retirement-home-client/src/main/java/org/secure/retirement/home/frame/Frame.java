@@ -29,7 +29,7 @@ public abstract class Frame<T> extends JFrame implements ActionListener{
 	//Panel 
 	protected 	JPanel 				menu_panel	 		= new JPanel()				 ;
 	protected 	JPanel				component_panel		= new JPanel()				 ;
-	protected 	JPanel				left_panel		= new JPanel()				 ;
+	protected 	JPanel				left_panel			= new JPanel()				 ;
 	protected	JPanel				addform_panel		= new JPanel()				 ;
 	protected	JPanel				updateform_panel	= new JPanel()			     ;
 	private 	JPanel				top_panel			= new JPanel()				 ;
@@ -38,15 +38,11 @@ public abstract class Frame<T> extends JFrame implements ActionListener{
 	protected JComboBox list_typesensor=new JComboBox();
 	protected JComboBox list_zone=new JComboBox();
 	
-
-
-	
 	//CheckBox
 	protected JCheckBox sensor = new JCheckBox("Sensors");
 	protected JCheckBox date = new JCheckBox("Date");
 	protected JCheckBox zone = new JCheckBox("Zone");
 	protected JCheckBox type_sensor = new JCheckBox("Type Sensors");
-	
 	
 	//Button
 	protected 	JButton 			add_button 			= new JButton("Add"			);

@@ -38,13 +38,13 @@ public class Decode {
 			    // code block
 			    break;
 			  case "Historic":
-				    // code block
+				  	val_object = objectMapper.readValue(param_todecode, Historic[].class);
 				    break;
 			  case "Failure":
 				    // code block
 				    break;
 			  case "Level_risq":
-				    // code block
+				  val_object = objectMapper.readValue(param_todecode, Level_risq[].class);
 				    break;
 			  default:
 			    // code block
