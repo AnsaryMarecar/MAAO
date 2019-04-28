@@ -3,6 +3,7 @@
  */
 package org.secure.retirement.home.service.simulation;
 
+import org.secure.retirement.home.common.Historic;
 import org.secure.retirement.home.common.Sensor;
 import org.secure.retirement.home.common.Type_sensor;
 import org.secure.retirement.home.service.DAOFactory;

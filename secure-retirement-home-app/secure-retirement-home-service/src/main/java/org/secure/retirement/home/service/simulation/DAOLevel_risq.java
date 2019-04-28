@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import org.secure.retirement.home.common.DAOException;
 import org.secure.retirement.home.common.Level_risq;
+import org.secure.retirement.home.common.Return_information;
 import org.secure.retirement.home.service.DAO;
 import org.secure.retirement.home.service.DAOFactory;
 import org.secure.retirement.home.service.DAOUtility;
@@ -26,7 +27,7 @@ public class DAOLevel_risq implements DAO<Level_risq> {
 		this.daofactory = param_daofactory;
 	}
 
-	public int create(Level_risq param_level_risq) throws SQLException {
+	public Return_information create(Level_risq param_level_risq) throws SQLException {
 		// TODO Auto-generated method stub
 		int to_return = -5	;
 		System.out.println("create");
@@ -82,17 +83,17 @@ public class DAOLevel_risq implements DAO<Level_risq> {
 				}
 		}catch(Exception e) {
 		}
-		return to_return;
+		return null;
 	}
 
-	public int delete(Level_risq obj) throws SQLException {
+	public Return_information delete(Level_risq obj) throws SQLException {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
-	public int update(Level_risq obj) throws SQLException {
+	public Return_information update(Level_risq obj) throws SQLException {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	public boolean ifFind(Level_risq obj) throws SQLException {
