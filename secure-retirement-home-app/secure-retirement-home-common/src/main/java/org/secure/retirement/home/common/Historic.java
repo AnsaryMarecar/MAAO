@@ -1,10 +1,6 @@
-/**
- * 
- */
-package org.secure.retirement.home.service.simulation;
+package org.secure.retirement.home.common;
 
 import javax.print.attribute.DateTimeSyntax;
-
 import org.secure.retirement.home.common.Sensor;
 /**
  * @author Ansary MARECAR
