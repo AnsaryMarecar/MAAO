@@ -2,35 +2,57 @@ package org.secure.retirement.home.frame;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
-public class TableAnalysis  {
+public class TableAnalysis{
+	
+	private String[] headers;
+	private JTable tableau;
+	private 	DefaultTableModel 	w_dtm 				= new DefaultTableModel() {
+		@Override
+			public boolean isCellEditable(int row, int column) {
+				//all cells false
+				return false;
+			}
+	};
 
 	public TableAnalysis(JPanel pan) {
 
-		Object[][] donnees = {
-				{ "Johnathan", "Sykes", Color.red}, 
-				{ "Nicolas", "Van de Kampf", Color.black },
-				{ "Damien", "Cuthbert", Color.cyan },
-				{ "Corinne", "Valance", Color.blue },
-				{ "Emilie", "Schrödinger", Color.magenta },
-				{ "Delphine", "Duke", Color.yellow },
-				{ "Eric", "Trump", Color.pink },
-				};
+		Object[][] data = {};
 
-		String[] entetes = { "Prénom", "Nom", "Couleur favorite", "Homme", "Sport" };
+		String[] headers= {};
 
-		JTable tableau = new JTable(donnees, entetes);
+		tableau = new JTable(data, headers);
 
+		tableau.setBackground(new Color(173,216,230));
+		pan.add(tableau.getTableHeader(), BorderLayout.NORTH);
+		pan.add(tableau, BorderLayout.CENTER);
+		tableau.setVisible(false);
+
+	}
+	
+
+	
+	private JTable getTable() {
+		return tableau;
+	}
+	
+	public DefaultTableModel getHeaders() {
+		return this.w_dtm;
+	}
+	
+	
+	public void setData() {
 		
-		pan.add(tableau.getTableHeader());
-		// ERRORIN LAYOUT MANAGER 
-		//pan.add(tableau, BorderLayout.CENTER);
-
-
 	}
 
 }
+	
+

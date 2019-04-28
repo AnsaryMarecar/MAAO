@@ -31,7 +31,7 @@ public class FrameAnalysis extends JFrame {
 	private JComboBox sensorList, roomList, historicList;
 	private JTable table;
 	private TableAnalysis tablet;
-	
+	private String arrHeaders;
 	
 	public FrameAnalysis() {
 		
@@ -112,8 +112,7 @@ public class FrameAnalysis extends JFrame {
 		table= new JTable();
 		table.setVisible(true);
 		
-		pan4.setLayout(new FlowLayout());
-		tablet = new TableAnalysis(pan4);
+		pan4.setLayout(new BorderLayout());
 		
 		
 		this.setVisible(true);
@@ -131,9 +130,15 @@ public class FrameAnalysis extends JFrame {
 				String sens=elementSensor[i].toString();
 				sensorList.addItem(sens);
 			}
-
-			System.out.println("salut je vais bien ");
+			
+			// TODO RETURN AN ERROR PROBABLY COMING FROM THREAD2
 			sensorList.setVisible(true);
+			arrHeaders=("headers");
+			tablet.getHeaders().addColumn(arrHeaders);
+			table= new JTable(tablet.getHeaders());
+			
+			pan4.add(table, BorderLayout.NORTH);
+			
 		}
 		if (sensor.isSelected()==false) {
 			sensorList.removeAllItems();
