@@ -5,14 +5,15 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.secure.retirement.home.common.Type_sensor;
 
 public class FrameTableAnalysis extends Frame{
 	
 	
-	
-	
+	private JCalendar cal;
 	
 	public FrameTableAnalysis() {
 		super();
@@ -49,6 +50,9 @@ public class FrameTableAnalysis extends Frame{
 	    left_panel.setLayout(new FlowLayout());
 		left_panel.add(list_typesensor);
 		left_panel.add(list_zone);
+		cal= new JCalendar(left_panel);
+		
+		
 		component_panel.add(this.left_panel, BorderLayout.WEST);
 
 		
@@ -69,7 +73,6 @@ public class FrameTableAnalysis extends Frame{
 	
 	public static void main (String[] args) {
 		FrameTableAnalysis frameHome = new FrameTableAnalysis();
-		System.out.println("FRAMEHome was launched");
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
