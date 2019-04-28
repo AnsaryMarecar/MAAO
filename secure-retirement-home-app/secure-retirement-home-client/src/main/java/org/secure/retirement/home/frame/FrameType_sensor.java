@@ -58,7 +58,7 @@ public class FrameType_sensor extends Frame<Type_sensor> {
 	    left_panel.add(	this.delete_button		)						 ;
 	    left_panel.add(	this.disconnect_button	)						 ;
 	    component_panel.add(this.left_panel, BorderLayout.WEST)			 ;
-	    component_panel.add(title_label, BorderLayout.NORTH)				 ;
+	    component_panel.add(title_label, BorderLayout.NORTH)			 ;
 		
 			
 		// form update

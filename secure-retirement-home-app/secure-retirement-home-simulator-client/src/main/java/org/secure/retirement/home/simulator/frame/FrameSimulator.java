@@ -18,10 +18,10 @@ import javax.swing.JPanel;
 public class FrameSimulator extends JFrame implements ActionListener{
 	
 	//Panel 
-		protected 	JPanel				top_panel		= new JPanel()	;
-		protected 	JPanel				bottom_panel	= new JPanel()	;
-		
-		
+		private JPanel	top_panel		= new JPanel()	;
+		private JPanel	bottom_panel	= new JPanel()	;
+		private JButton button_stop 	= new JButton("Stop");
+		private JButton button_launch = new JButton("Launch");
 	/**
 	 * 
 	 */
@@ -37,20 +37,30 @@ public class FrameSimulator extends JFrame implements ActionListener{
 		this.setLayout(new BorderLayout())								;
 		
 		//north placement
-		JButton button_launch = new JButton("Launch");
-		top_panel.add(button_launch);
+		this.top_panel.add(button_launch);
 		this.getContentPane().add(top_panel	, BorderLayout.NORTH	)	;
 		
 		//south placement
-		JButton button_stop = new JButton("Stop");
-		bottom_panel.add(button_stop);
-		this.getContentPane().add(bottom_panel	, BorderLayout.SOUTH)	;	 
+		this.bottom_panel.add(button_stop);
+		this.getContentPane().add(bottom_panel	, BorderLayout.SOUTH)	;
+		
+		//Action listener for Button
+	    this.button_stop.addActionListener		(this)	 ;
+	    this.button_launch.addActionListener	(this)	 ;
+		
 		this.setVisible( true )											;
 	}
 	
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent param_actionevent) {
 		// TODO Auto-generated method stub
+		Object source = param_actionevent.getSource();
 		
+		if (source == button_stop) {
+			
+		}
+		else if (source == button_launch){
+			
+		}
 	}
 
 	/**
