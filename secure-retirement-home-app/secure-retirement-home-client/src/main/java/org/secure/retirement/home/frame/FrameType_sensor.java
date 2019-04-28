@@ -114,7 +114,6 @@ public class FrameType_sensor extends Frame<Type_sensor> {
 	public void initialise_table(Type_sensor[]  param_type_sensors) {
 		for(int i = 0 ; i<param_type_sensors.length; i++) {
 			this.add_table(param_type_sensors[i])						;
-			System.out.println("initialise table good")					;
 		}
 	}
 	public void call_initialise_table() {
@@ -212,7 +211,7 @@ public class FrameType_sensor extends Frame<Type_sensor> {
 			val_type_sensors.add(new Type_sensor(0,val_text));
 			try {
 				ClientTransmission.transmission("Type_sensor", "ADD", val_type_sensors, this);	
-				this.call_initialise_table()				;
+				//this.call_initialise_table()				;
 					this.update_table()						;
 					to_return = true						;
 			} catch (Exception e) {

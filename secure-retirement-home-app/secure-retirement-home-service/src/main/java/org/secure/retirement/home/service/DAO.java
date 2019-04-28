@@ -10,12 +10,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import org.secure.retirement.home.common.Return_information;
 public interface DAO<T> {
 	
 	
-	public abstract int create(T obj) 		throws SQLException;
-	public abstract int delete(T obj)	 	throws SQLException;
-	public abstract int update(T obj) 		throws SQLException;
+	public abstract Return_information create(T obj) 		throws SQLException;
+	public abstract Return_information delete(T obj)	 	throws SQLException;
+	public abstract Return_information update(T obj) 		throws SQLException;
 	public abstract boolean ifFind(T obj) 		throws SQLException;
 	public abstract T find(int id) 				throws SQLException;
 	public abstract void close()				throws SQLException;

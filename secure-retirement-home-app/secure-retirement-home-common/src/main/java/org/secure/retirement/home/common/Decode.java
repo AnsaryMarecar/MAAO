@@ -13,24 +13,43 @@ public class Decode {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		try {
-			decodeType_sensor("");
+		/**try {
+			to_decode("","Send_information");
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}**/
 	}
 	
-	public static Type_sensor[] decodeType_sensor(String param_todecode) throws IOException {
+	public static Object[] to_decode(String param_todecode, String param_class)throws IOException {
 		ObjectMapper objectMapper = new ObjectMapper();
-		Type_sensor[] type_sensor = null;
-		try {
-			String text = param_todecode;
-		    if(text!=null) {
-		    	type_sensor = objectMapper.readValue(text, Type_sensor [] .class );
-		    }
-		} catch (IOException e) {
-			e.printStackTrace();
+		Object[] val_object = null;
+		if(param_todecode!=null) {
+			switch(param_class) {
+			  case "Return_information":
+				  val_object = objectMapper.readValue(param_todecode, Return_information[].class);
+				 break;
+			  case "Send_information":
+				  val_object = objectMapper.readValue(param_todecode, Send_information[].class);
+				 break;
+			  case "Type_sensor":
+				  val_object = objectMapper.readValue(param_todecode, Type_sensor[].class);
+			    break;
+			  case "Sensor":
+			    // code block
+			    break;
+			  case "Historic":
+				    // code block
+				    break;
+			  case "Failure":
+				    // code block
+				    break;
+			  case "Level_risq":
+				    // code block
+				    break;
+			  default:
+			    // code block
+			}
 		}
-		return type_sensor;
+		return val_object;
 	}
 }

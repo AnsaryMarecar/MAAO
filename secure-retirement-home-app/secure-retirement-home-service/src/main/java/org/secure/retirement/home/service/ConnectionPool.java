@@ -24,7 +24,7 @@ public class ConnectionPool {
       }
    }
    
-   public ConnectionPool(String param_host, int param_port){
+   /**public ConnectionPool(String param_host, int param_port){
 	   att_host = param_host;
 	   att_port = param_port;
       try {
@@ -34,7 +34,7 @@ public class ConnectionPool {
       } catch (IOException e) {
          e.printStackTrace();
       }
-   }
+   }**/
    
    
    //Launch server

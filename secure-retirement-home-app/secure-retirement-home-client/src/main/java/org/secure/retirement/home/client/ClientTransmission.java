@@ -8,6 +8,7 @@ import java.util.Properties;
 
 import org.secure.retirement.home.common.DAOConfigurationException;
 import org.secure.retirement.home.common.Encode;
+import org.secure.retirement.home.common.Send_information;
 
 public class ClientTransmission {
 	
@@ -24,7 +25,9 @@ public class ClientTransmission {
 		Properties 	val_properties 	= new Properties()													;
 		String 	val_host = null																			;
 	    int 	val_port = 0																			;
-	   
+	    Send_information val_send_information = new Send_information(param_element,param_action_type);
+	    ArrayList<Send_information>val_send_info_tab = new ArrayList<Send_information>();
+	    val_send_info_tab.add(val_send_information);
 	    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 	    InputStream fileProperties = classLoader.getResourceAsStream(FILE_PROPERTIES)					; 
 	    
@@ -44,13 +47,19 @@ public class ClientTransmission {
 	            throw new DAOConfigurationException("Problem to charge : " + FILE_PROPERTIES,exp)		;
 	        }
 	    }
-		
-	    String val_data = Encode.to_encode(param_data)													;
+		String val_send_information_text =  Encode.to_encode(val_send_info_tab)								;
+	   System.out.println("val_send_information_text: "+val_send_information_text);
+		String val_data = Encode.to_encode(param_data)													;
 		ArrayList<String> val_action_array = new ArrayList<String>()									;
 		val_action_array.add(param_element)																;
 		val_action_array.add(param_action_type)															;
 		String val_action = Encode.to_encode(val_action_array)											;
-		ClientConnection cc = new ClientConnection(val_host, val_port, val_action, val_data,param_frame);
+		ClientConnection cc = new ClientConnection(
+					val_host
+				, 	val_port
+				, 	val_send_information_text
+				, 	val_data,param_frame
+				);
 		Thread t = new Thread(cc)																		;
 		t.start()																						;
 	}

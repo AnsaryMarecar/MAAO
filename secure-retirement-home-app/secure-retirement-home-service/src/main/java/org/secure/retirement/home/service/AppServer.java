@@ -8,10 +8,10 @@ public class AppServer {
 		JDBCConnectionPool.initializList();
 		System.out.println(JDBCConnectionPool.displayConnex());
 		
-		String host = "127.0.0.1";
-	    int port = 2345;
+		//String host = "127.0.0.1";
+	    //int port = 2345;
 	      
-	    ConnectionPool ts = new ConnectionPool(host, port);
+	    ConnectionPool ts = new ConnectionPool();
 	    ts.open();
 	    System.out.println("Initializ server");
 	}
