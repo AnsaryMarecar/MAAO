@@ -59,12 +59,6 @@ public class RequestHandler implements Runnable{
 	    		  System.out.println("val_jsontext: "+val_jsontext.toString());
 	    		  Send_information[] val_send_information = (Send_information[]) Decode.to_decode(val_jsontext.get(0).toString(), "Send_information");
 
-	    		  System.out.println(val_send_information[0].getSend_information_crud_action().toString()+" : val_jsontext 0 : "+val_jsontext.get(0).toString());
-	    		  System.out.println(val_send_information[0].getSend_information_crud_action().toString()+" : val_jsontext 1 : "+val_jsontext.get(1).toString());
-	    		  	
-	    		  System.out.println("val_send_information[0].getSend_information_table() "+val_send_information[0].getSend_information_table());
-	    		  System.out.println("val_send_information[0].getSend_information_crud_action() "+val_send_information[0].getSend_information_crud_action());
-	    		  	
 	    		  if(val_send_information[0].getSend_information_table().toString().equals("Type_sensor")) {
 	    			  System.out.println(val_send_information[0].getSend_information_crud_action().toString()+" : RequestHandler");
 	    			  Type_sensor[] type_sensors = null;
@@ -85,14 +79,11 @@ public class RequestHandler implements Runnable{
 	    		  	   else if(val_send_information[0].getSend_information_crud_action().toString().equals("ADD")) {
 	    		  			System.out.println("RequestHandler>add");
 	    		  			Return_information val_message = element_dao.create(type_sensors[0]);
-	    		  			System.out.println("RequestHandler>add>val_element"+val_message);
 	    		  			ArrayList<Return_information> test = new ArrayList<Return_information>();
 	    		  			test.add(val_message);
 	    		  			elements = test;
 	    		  	   }
 	    		  }
-	    		  //TODO
-	    		  System.out.println(val_send_information[0].getSend_information_crud_action().toString()+"elements : "+elements);
 	    		  to_return = Encode.to_encode(elements);
 	    		  closeConnection = true;
 	    		  
@@ -118,7 +109,7 @@ public class RequestHandler implements Runnable{
 	    	  
 	      }
     	  else {
-	    	  //System.out.println("RequestHandler>else");
+	    	  System.out.println("RequestHandler>else");
 	      }
       }
    }
