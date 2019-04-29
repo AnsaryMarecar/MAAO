@@ -39,8 +39,8 @@ public class DAORoom implements DAO<DAORoom> {
 			status = preparedStatement.executeUpdate();
 			System.out.println("status "+status);
 			if( status == 0 ) {
-				/*val_return_information = Return_information.att_db_cannot_select;
-				throw new DAOException( "cannot delete" );*/
+				val_return_information = Return_information.att_db_cannot_select;
+				throw new DAOException( "cannot select" );
 			}
 			else {
 				val_return_information = Return_information.att_success;
