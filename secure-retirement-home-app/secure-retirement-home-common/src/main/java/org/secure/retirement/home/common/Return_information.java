@@ -17,6 +17,8 @@ public enum Return_information {
 	,	att_db_error			(7,"Error : DB Problem")
 	,	att_db_cannot_delete	(8,"Error : Cannot delete data")
 	,	att_db_cannot_update	(9,"Error : Cannot update data")
+	,   att_db_cannot_select	(10,"Error : Cannot select data")
+	
 	;
 	
 	private int 	return_information_id	;
