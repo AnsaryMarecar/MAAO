@@ -252,6 +252,11 @@ public class DAOType_sensor implements DAO<Type_sensor> {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public Return_information select(Type_sensor obj) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 
