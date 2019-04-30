@@ -2,15 +2,18 @@ package org.secure.retirement.home.service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.secure.retirement.home.common.DAOException;
 import org.secure.retirement.home.common.Return_information;
 import org.secure.retirement.home.common.Room;
+import org.secure.retirement.home.common.*;
 
 
-public class DAORoom implements DAO<DAORoom> {
+
+public class DAORoom implements DAO<Room> {
 	
 	private DAOFactory daofactory;
 	
@@ -55,27 +58,59 @@ public class DAORoom implements DAO<DAORoom> {
 		}
 		return val_return_information;
 	}
-	public Return_information create(DAORoom obj) throws SQLException {
+	public ArrayList <Room> presentData() throws SQLException {
+		ArrayList<Room> var_table						 ;
+		var_table = new ArrayList<Room>()	 			 ;
+		String SQL_SELECTALL = "SELECT * from room ";
+		Connection connexion = null;
+	    PreparedStatement preparedStatement = null;
+	    ResultSet resultSet = null;
+	    try {
+	        /* Get connection from the Factory */
+	        connexion = daofactory.getConnection();
+	        preparedStatement = DAOUtility.initPreparedRequest(
+	        			connexion
+	        		,	SQL_SELECTALL
+	        		,	true
+	        		);
+	        resultSet = preparedStatement.executeQuery();
+	        System.out.println("status "+resultSet);
+	        while(resultSet.next()) {
+				var_table.add(
+						new Room(
+							resultSet.getInt("room_id"),
+							resultSet.getString("room_name"),
+						resultSet.getInt("x_min"),
+						   resultSet.getInt("x_max"),
+						  resultSet.getInt("y_min"),
+						   resultSet.getInt("y_max")
+						   
+						
+						))											 ;
+			} 
+	    }
+	    catch(Exception e)
+	    {
+	    }
+		return var_table										 ;
+	}
+	public Return_information create(Room obj) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	public Return_information delete(DAORoom obj) throws SQLException {
+	public Return_information delete(Room obj) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	public Return_information update(DAORoom obj) throws SQLException {
+	public Return_information update(Room obj) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	public Return_information select(DAORoom obj) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	public boolean ifFind(DAORoom obj) throws SQLException {
+	public boolean ifFind(Room obj) throws SQLException {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	public DAORoom find(int id) throws SQLException {
+	public Room find(int id) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -83,9 +118,6 @@ public class DAORoom implements DAO<DAORoom> {
 		// TODO Auto-generated method stub
 		
 	}
-	public ArrayList<DAORoom> presentData() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 }
