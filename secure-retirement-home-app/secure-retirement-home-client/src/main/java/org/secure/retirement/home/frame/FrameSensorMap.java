@@ -49,10 +49,11 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 		private JMenu analysis 							= new JMenu("Analysis");
 		private JMenuItem settings_type_sensor = new JMenuItem("Add a type sensor");
 		private JMenuItem settings_add_user = new JMenuItem("Add a user");
-		MyPanel pan2 = new MyPanel();
+		 private MyPanel pan2;
 		  private int x1, y1;
 		    Graphics g;
-		 
+		   
+		    
 		public FrameSensorMap() {
 			
 			this.setLocationRelativeTo(null);
@@ -114,10 +115,12 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 			this.setLayout(new BorderLayout());
 			this.getContentPane().add(pan1, BorderLayout.NORTH);
 		getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER));
+		
+		//create and draw a map
+		pan2 = new MyPanel(220,320,310,160);
 		pan2.setBackground(Color.WHITE);
 		pan2.setPreferredSize(new Dimension(1000,500));
 		pan2.addMouseListener(this);
-
 	
 		this.getContentPane().add(pan2, BorderLayout.CENTER);
 		this.getContentPane().add(pan3, BorderLayout.CENTER);
