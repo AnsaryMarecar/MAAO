@@ -9,13 +9,26 @@ import javax.swing.JPanel;
 
 
 class MyPanel extends JPanel{
+	private int x, y, z, f;
+	public MyPanel (int x , int y , int z, int f ) {
+		this.x=x;
+		this.y=y;
+		this.z=z;
+		this.f=f;
+		
+	}
 	public void paintComponent(Graphics g ) {
 		super.paintComponent(g);
+	draw(g, x ,  y ,  z, f);
+	}
 	
-		
+	public void draw(Graphics g,int x , int y , int z, int f ) {
+		g.drawRect( x ,  y ,  z, f);
+	}
+}
 		   // g.drawRect(0,0,200,500);
 
-	
+	/*
 		g.drawLine(200,0,0,0);
 		g.drawLine(0,400,0,0);
 		g.drawLine(0,470,0,500);
@@ -62,7 +75,6 @@ class MyPanel extends JPanel{
 		   
 		
 	}
+*/
 
-
-}
 
