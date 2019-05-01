@@ -6,10 +6,16 @@ package org.secure.retirement.home.simulator.frame;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import org.secure.retirement.home.common.Historic;
+import org.secure.retirement.home.common.Sensor;
+import org.secure.retirement.home.simulator.client.ClientTransmission;
+import org.secure.retirement.home.simulator.client.Parser;
 
 /**
  * @author Ansary MARECAR
@@ -59,7 +65,9 @@ public class FrameSimulator extends JFrame implements ActionListener{
 			
 		}
 		else if (source == button_launch){
-			
+			ArrayList<Historic> val_array = new ArrayList<Historic>();
+			val_array = Parser.to_parse(1);
+			ClientTransmission.transmission("Historic", "ADD", val_array, this);
 		}
 	}
 

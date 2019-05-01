@@ -23,6 +23,8 @@ public class Historic {
 		this.historic_value = historic_value;
 	}
 	
+	 
+	
 	/**
 	 * @param historic_id
 	 * @param sensor

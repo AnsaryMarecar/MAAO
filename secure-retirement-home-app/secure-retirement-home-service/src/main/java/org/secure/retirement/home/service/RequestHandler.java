@@ -14,9 +14,11 @@ import java.util.Arrays;
 
 import org.secure.retirement.home.common.Decode;
 import org.secure.retirement.home.common.Encode;
+import org.secure.retirement.home.common.Historic;
 import org.secure.retirement.home.common.Return_information;
 import org.secure.retirement.home.common.Send_information;
 import org.secure.retirement.home.common.Type_sensor;
+import org.secure.retirement.home.service.simulation.DAOHistoric;
 
 public class RequestHandler implements Runnable{
 
@@ -37,12 +39,12 @@ public class RequestHandler implements Runnable{
       while(!sock.isClosed()){
     	  if (!(JDBCConnectionPool.displayConnex().isEmpty())) {
     		  System.out.println("requesthandler>connection isnotempty");
-    		  DAOType_sensor element_dao; 
+    		  
     		  System.out.println("requesthandler>before try");
 	    	  try {
 	    		  DAOFactory daof = JDBCConnectionPool.getConnection(); //getconnection
 	    		  System.out.println("requesthandler>on try");
-	    		  element_dao = new DAOType_sensor(daof);
+	    		  
 	    		  writer = new PrintWriter(sock.getOutputStream());
 	    		  reader = new BufferedInputStream(sock.getInputStream());
 	    		  String response = "";
@@ -59,35 +61,10 @@ public class RequestHandler implements Runnable{
 	    		  System.out.println("val_jsontext: "+val_jsontext.toString());
 	    		  Send_information[] val_send_information = (Send_information[]) Decode.to_decode(val_jsontext.get(0).toString(), "Send_information");
 
-	    		  if(val_send_information[0].getSend_information_table().toString().equals("Type_sensor")) {
-	    			  System.out.println(val_send_information[0].getSend_information_crud_action().toString()+" : RequestHandler");
-	    			  Type_sensor[] type_sensors = null;
-	    			  try {
-	    		  		type_sensors = (Type_sensor[]) Decode.to_decode(val_jsontext.get(1).toString(), "Type_sensor");
-	    			  }catch(Exception e) {
-	    				  System.out.println(val_send_information[0].getSend_information_crud_action().toString()+" e: "+e.getLocalizedMessage());
-	    			  }
-	    		      if(val_send_information[0].getSend_information_crud_action().toString().equals("SELECT ALL")) {	
-	    		  			System.out.println("RequestHandler>select all");
-	    		  			try {
-	    		  				Thread.sleep(500);
-	    		  				elements = element_dao.presentData();
-	    		  			}catch (Exception e) {
-	    		  				e.printStackTrace();
-	    		  			}
-	    		  	   }
-	    		  	   else if(val_send_information[0].getSend_information_crud_action().toString().equals("ADD")) {
-	    		  			System.out.println("RequestHandler>add");
-	    		  			Return_information val_message = element_dao.create(type_sensors[0]);
-	    		  			ArrayList<Return_information> test = new ArrayList<Return_information>();
-	    		  			test.add(val_message);
-	    		  			elements = test;
-	    		  	   }
-	    		  }
+	    		  elements = ActionDecision.Actions( elements,daof, val_send_information,val_jsontext );
+	    		  
 	    		  to_return = Encode.to_encode(elements);
 	    		  closeConnection = true;
-	    		  
-	    		  
 	              String toSend = "";
 	              toSend = to_return; 
 	              JDBCConnectionPool.AddConnection(daof);

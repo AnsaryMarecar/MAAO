@@ -52,14 +52,11 @@ public class DAOHistoric implements DAO<Historic> {
 					,	param_historic.getHistoric_value()
 					,	param_historic.getSensor().getSensor_id()
 				);
-				System.out.println(" status  ");
 				status = preparedStatement.executeUpdate();
-				//System.out.println("status "+status);
-				System.out.println("end status ");
 				if( status == 0 ) {
 					System.out.println("error execute  ");
 					val_return_information = Return_information.att_db_cannot_insert;
-					throw new DAOException( "Sorry we have problem, we cannot insert" );
+					throw new DAOException( "Insertion error" );
 				}
 				else {
 					System.out.println("else");
@@ -139,6 +136,11 @@ public class DAOHistoric implements DAO<Historic> {
 	 */
 	public void setDaofactory(DAOFactory daofactory) {
 		this.daofactory = daofactory;
+	}
+
+	public Return_information select(Historic obj) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

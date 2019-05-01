@@ -21,6 +21,10 @@ public class Sensor {
 		this.sensor_id = sensor_id;
 		this.type_sensor = type_sensor;
 	}
+	public Sensor(int param_sensor_id) {
+		// TODO Auto-generated constructor stub
+		this.sensor_id = param_sensor_id;
+	}
 	public int getSensor_id() {
 		return sensor_id;
 	}

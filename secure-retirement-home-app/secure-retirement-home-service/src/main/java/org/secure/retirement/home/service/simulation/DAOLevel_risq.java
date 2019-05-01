@@ -116,4 +116,9 @@ public class DAOLevel_risq implements DAO<Level_risq> {
 		return null;
 	}
 
+	public Return_information select(Level_risq obj) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

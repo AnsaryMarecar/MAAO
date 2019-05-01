@@ -11,6 +11,7 @@ public class ConnectionPool {
    //Initializ default value
    private int 			att_port 		= 2345;
    private String 		att_host 		= "127.0.0.1";
+   //private String 		att_host 		= "10.10.5.1";
    private ServerSocket att_server 		= null;
    private boolean 		att_isRunning 	= true;
    
@@ -23,19 +24,6 @@ public class ConnectionPool {
          e.printStackTrace();
       }
    }
-   
-   /**public ConnectionPool(String param_host, int param_port){
-	   att_host = param_host;
-	   att_port = param_port;
-      try {
-    	  att_server = new ServerSocket(att_port, 100, InetAddress.getByName(att_host));
-      } catch (UnknownHostException e) {
-         e.printStackTrace();
-      } catch (IOException e) {
-         e.printStackTrace();
-      }
-   }**/
-   
    
    //Launch server
    public void open(){
