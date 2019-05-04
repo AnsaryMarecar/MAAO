@@ -13,6 +13,7 @@ public class Room {
 		
 	}
 	public Room(int room_id	,String room_name, int	 x_min, int x_max,int y_min, int	 y_max) {
+		super();
 		this.room_id=room_id;
 		this.room_name=room_name;
 		this.x_min=x_min;
