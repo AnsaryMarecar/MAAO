@@ -25,7 +25,7 @@ public class DAORoom implements DAO<Room> {
 	 */
 	public Return_information select( Room param_room ) throws SQLException {
 		//select
-		Return_information val_return_information = Return_information.att_notfoud;
+		Return_information val_return_information = Return_information.att_notfound;
 		String SQL_SELECT = " SELECT FROM room WHERE room_id = ? ; 	";
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;

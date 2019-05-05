@@ -34,14 +34,6 @@ public abstract class Frame<T> extends JFrame implements ActionListener{
 	protected	JPanel				updateform_panel	= new JPanel()			     ;
 	private 	JPanel				top_panel			= new JPanel()				 ;
 	
-	//ComboBox
-	protected JComboBox list_typesensor=new JComboBox();
-	protected JComboBox list_zone=new JComboBox();
-	
-	//CheckBox
-	protected JCheckBox date = new JCheckBox("Date");
-	protected JCheckBox zone = new JCheckBox("Zone");
-	protected JCheckBox type_sensor = new JCheckBox("Type Sensors");
 	
 	//Button
 	protected 	JButton 			add_button 			= new JButton("Add"			);

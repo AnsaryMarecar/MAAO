@@ -39,7 +39,7 @@ public class DAOType_sensor implements DAO<Type_sensor> {
 	 * @author ansary.marecar
 	 */
 	public Return_information create( Type_sensor param_type_sensor )  throws IllegalArgumentException,  DAOException {
-		Return_information val_return_information = Return_information.att_notfoud;
+		Return_information val_return_information = Return_information.att_notfound;
 		try {
 			if(ifFind(param_type_sensor)) {
 				String SQL_INSERT = "INSERT INTO type_sensor (type_sensor_name ) VALUES ( ? )";
@@ -104,7 +104,7 @@ public class DAOType_sensor implements DAO<Type_sensor> {
 	 */
 	public Return_information delete( Type_sensor param_type_sensor ) throws SQLException {
 		//Remove
-		Return_information val_return_information = Return_information.att_notfoud;
+		Return_information val_return_information = Return_information.att_notfound;
 		String SQL_DELETE = " DELETE FROM type_sensor WHERE type_sensor_id = ? ; 	";
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
@@ -139,7 +139,7 @@ public class DAOType_sensor implements DAO<Type_sensor> {
 	}
 
 	public Return_information update( Type_sensor param_type_sensor ) throws SQLException {
-		Return_information val_return_information = Return_information.att_notfoud;
+		Return_information val_return_information = Return_information.att_notfound;
 		String SQL_UPDATE = "UPDATE type_sensor set type_sensor_name = ? WHERE type_sensor.type_sensor_id = ?";
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;	    

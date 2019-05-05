@@ -33,7 +33,7 @@ public class DAOHistoric implements DAO<Historic> {
 		// TODO Auto-generated method stub
 		
 		System.out.println("create");
-		Return_information val_return_information = Return_information.att_notfoud;
+		Return_information val_return_information = Return_information.att_notfound;
 		try {
 			String SQL_INSERT = "INSERT INTO historic (historic_datetime, historic_value, sensor_id) VALUES (  NOW(), ?, ?  )";
 			Connection connexion = null;
@@ -66,7 +66,7 @@ public class DAOHistoric implements DAO<Historic> {
 						resultSet = preparedStatement.getGeneratedKeys();
 					}
 					catch(Exception e) {
-						val_return_information = Return_information.att_notfoud;
+						val_return_information = Return_information.att_notfound;
 						System.out.println("error");
 					}
 					if ( resultSet.next() ) {

@@ -12,6 +12,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 import org.secure.retirement.home.common.Type_sensor;
@@ -19,9 +21,19 @@ import org.secure.retirement.home.common.Type_sensor;
 public class FrameTableAnalysis extends Frame {
 
 	private JCalendar cal, cal2;
-	private JPanel panFilter, panCompare, panObjectComp, tablePanPrincip, tablePanComp;
+	private JPanel tablePan,panFilter, panCompare, panObjectComp, tablePanPrincip, tablePanComp;
 	private JButton validate1, validate2, compareButton;
-	private JPanel tablePan;
+	
+	//ComboBox
+	private JComboBox list_typesensor=new JComboBox();
+	private JComboBox list_zone=new JComboBox();
+	private JComboBox list_levelrisq=new JComboBox();
+	
+	//CheckBox
+	private JCheckBox date = new JCheckBox("Date");
+	private JCheckBox zone = new JCheckBox("Zone");
+	private JCheckBox type_sensor = new JCheckBox("Type Sensors");
+	private JCheckBox levelRisq= new JCheckBox("Level of Risq");
 
 	public FrameTableAnalysis() {
 		super();
@@ -38,6 +50,9 @@ public class FrameTableAnalysis extends Frame {
 
 		type_sensor.setForeground(Color.WHITE);
 		type_sensor.setBackground(new Color(153, 190, 204));
+		
+		levelRisq.setForeground(Color.WHITE);
+		levelRisq.setBackground(new Color(153, 190, 204));
 
 		menu_panel.setBackground(new Color(153, 190, 204));
 		left_panel.setBackground(new Color(153, 190, 204));
@@ -46,11 +61,13 @@ public class FrameTableAnalysis extends Frame {
 		menu_panel.add(date);
 		menu_panel.add(zone);
 		menu_panel.add(type_sensor);
+		menu_panel.add(levelRisq);
 
 		// Item Listener for JCheckBox
 		date.addItemListener(new ItemListen());
 		zone.addItemListener(new ItemListen());
 		type_sensor.addItemListener(new ItemListen());
+		levelRisq.addItemListener(new ItemListen());
 
 		// Adding ComboBox to the Left of the Frame
 		panFilter = new JPanel();
@@ -65,10 +82,14 @@ public class FrameTableAnalysis extends Frame {
 		left_panel.add(panCompare);
 		left_panel.add(panObjectComp);
 
-		panFilter.add(list_typesensor, BorderLayout.PAGE_START);
-		panFilter.add(list_zone, BorderLayout.AFTER_LINE_ENDS);
+		panFilter.add(list_typesensor);
+		list_typesensor.setEnabled(false);
+		panFilter.add(list_zone);
+		list_zone.setEnabled(false);
+		panFilter.add(list_levelrisq);
+		list_levelrisq.setEnabled(false);
 		cal = new JCalendar(panFilter);
-		panFilter.add(validate1 = new JButton("validate"), BorderLayout.SOUTH);
+		panFilter.add(validate1 = new JButton("validate"));
 		validate1.addActionListener(new ButtonListener() {
 			public void actionPerformed(ActionEvent e) {
 				tablePanPrincip.setVisible(true);
@@ -124,7 +145,8 @@ public class FrameTableAnalysis extends Frame {
         
 			// Sensor CheckBox Actions
 			if (type_sensor.isSelected()==true) {
-				type_sensor.removeAll();
+				list_typesensor.removeAll();
+				list_typesensor.setEnabled(true);
 				Object[] elementSensor = new Object[]{"Sensor 1", "Sensor 2", "Sensor 3", "Sensor 4", "Sensor 5"};
 				for (int i=0; i<elementSensor.length; i++) {
 					String sens=elementSensor[i].toString();

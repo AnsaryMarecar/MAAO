@@ -10,7 +10,7 @@ package org.secure.retirement.home.common;
 public enum Return_information {
 		att_success				(1,"The request was realized successfully")
 	,	att_number_connection	(2,"Please try later, the network is bussy")
-	,	att_notfoud				(3,"Error : Not found")
+	,	att_notfound				(3,"Error : Not found")
 	,	att_db_not_return		(4,"Error : Insertion in the database is not return to us")
 	,	att_db_cannot_insert	(5,"Error : Cannot insert data")
 	,	att_intern_transmission	(6,"Error : Intern transmission")
