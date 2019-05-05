@@ -89,7 +89,7 @@ public class FrameHome extends JFrame {
 	    public void actionPerformed(ActionEvent e) {
 	    	if ("Analyse".equals(e.getActionCommand())) { 
 	    		dispose();
-	            FrameAnalysis analyseFrm= new FrameAnalysis();
+	            FrameTableAnalysis analyseFrm= new FrameTableAnalysis();
 	        }
 	    	
 	    	
