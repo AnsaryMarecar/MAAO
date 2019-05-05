@@ -113,7 +113,9 @@ public class FrameTableAnalysis extends Frame {
 		tablePan.add(tablePanPrincip);
 
 		tablePan.add(tablePanComp);
-
+		
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 
 	}
