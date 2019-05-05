@@ -46,6 +46,10 @@ public class Decode {
 			  case "Level_risq":
 				  val_object = objectMapper.readValue(param_todecode, Level_risq[].class);
 				    break;
+			  case "Room":
+				  val_object = objectMapper.readValue(param_todecode, Room[].class);
+				    break;
+				    
 			  default:
 			    // code block
 			}
