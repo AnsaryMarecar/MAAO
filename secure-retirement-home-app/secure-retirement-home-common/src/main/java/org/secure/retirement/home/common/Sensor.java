@@ -8,8 +8,8 @@ package org.secure.retirement.home.common;
  *
  */
 public class Sensor {
-	private int sensor_id;
-	private Type_sensor type_sensor;
+	private int sensor_id = 0;
+	private Type_sensor type_sensor = null;
 	
 	
 	/**
