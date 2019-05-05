@@ -8,10 +8,10 @@ import org.secure.retirement.home.common.Sensor;
  */
 public class Historic {
 	
-	private int 			historic_id			;
-	private Sensor 			sensor				;
-	private DateTimeSyntax 	historic_datetime	;
-	private double			historic_value		;
+	private int 			historic_id			= 0;
+	private Sensor 			sensor				= null;
+	private DateTimeSyntax 	historic_datetime	= null;
+	private double			historic_value		= 0.0;
 	
 	
 	
