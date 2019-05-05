@@ -39,7 +39,6 @@ public abstract class Frame<T> extends JFrame implements ActionListener{
 	protected JComboBox list_zone=new JComboBox();
 	
 	//CheckBox
-	protected JCheckBox sensor = new JCheckBox("Sensors");
 	protected JCheckBox date = new JCheckBox("Date");
 	protected JCheckBox zone = new JCheckBox("Zone");
 	protected JCheckBox type_sensor = new JCheckBox("Type Sensors");
@@ -101,12 +100,7 @@ public abstract class Frame<T> extends JFrame implements ActionListener{
 	    this.getFupdate_button().addActionListener	(new ButtonListener())	 ;
 	    this.getFDisconnect_button().addActionListener	(new ButtonListener());
 	    
-	    
-	    //Item Listener for JCheckBox
-	    sensor.addItemListener(new ItemListen());
-	    date.addItemListener(new ItemListen());
-	    zone.addItemListener(new ItemListen());
-	    type_sensor.addItemListener(new ItemListen());
+
 	    
 	    
 	}

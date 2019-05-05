@@ -91,7 +91,7 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 
 			      public void menuSelected(MenuEvent e) {
 			        System.out.println("menuSelected");
-			        FrameAnalysis frm= new FrameAnalysis();
+			        FrameTableAnalysis frm= new FrameTableAnalysis();
 			      }
 
 			      public void menuDeselected(MenuEvent e) {
