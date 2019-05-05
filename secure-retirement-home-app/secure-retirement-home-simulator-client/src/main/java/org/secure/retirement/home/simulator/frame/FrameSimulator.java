@@ -6,16 +6,12 @@ package org.secure.retirement.home.simulator.frame;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import org.secure.retirement.home.common.Historic;
-import org.secure.retirement.home.common.Sensor;
-import org.secure.retirement.home.simulator.client.ClientTransmission;
-import org.secure.retirement.home.simulator.client.Parser;
+import org.secure.retirement.home.simulator.client.Simulation;
 
 /**
  * @author Ansary MARECAR
@@ -24,10 +20,10 @@ import org.secure.retirement.home.simulator.client.Parser;
 public class FrameSimulator extends JFrame implements ActionListener{
 	
 	//Panel 
-		private JPanel	top_panel		= new JPanel()	;
-		private JPanel	bottom_panel	= new JPanel()	;
-		private JButton button_stop 	= new JButton("Stop");
-		private JButton button_launch = new JButton("Launch");
+		private JPanel	top_panel		= new JPanel()					;
+		private JPanel	bottom_panel	= new JPanel()					;
+		private JButton button_stop 	= new JButton("Stop")			;
+		private JButton button_launch = new JButton("Launch")			;
 	/**
 	 * 
 	 */
@@ -51,8 +47,8 @@ public class FrameSimulator extends JFrame implements ActionListener{
 		this.getContentPane().add(bottom_panel	, BorderLayout.SOUTH)	;
 		
 		//Action listener for Button
-	    this.button_stop.addActionListener		(this)	 ;
-	    this.button_launch.addActionListener	(this)	 ;
+	    this.button_stop.addActionListener		(this)	 				;
+	    this.button_launch.addActionListener	(this)	 				;
 		
 		this.setVisible( true )											;
 	}
@@ -60,14 +56,17 @@ public class FrameSimulator extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent param_actionevent) {
 		// TODO Auto-generated method stub
 		Object source = param_actionevent.getSource();
-		
 		if (source == button_stop) {
 			
 		}
 		else if (source == button_launch){
-			ArrayList<Historic> val_array = new ArrayList<Historic>();
-			val_array = Parser.to_parse(1);
-			ClientTransmission.transmission("Historic", "ADD", val_array, this);
+			for(int i=1; i<3;i++) {
+				Simulation val_simulation = new Simulation(this, i)		;
+				Thread t = new Thread(val_simulation)					;
+				t.start();
+			}
+			//Parser.to_parse(1, this);
+			
 		}
 	}
 
