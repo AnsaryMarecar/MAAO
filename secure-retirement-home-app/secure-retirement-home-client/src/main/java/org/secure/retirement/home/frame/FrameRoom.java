@@ -47,8 +47,11 @@ public class FrameRoom extends Frame<Room> {
 	private JTextField 	y_maxadd_textField 		= new JTextField()							;
 	private JLabel 		y_maxadd_label			= new JLabel("add y_max: ")	;
 	
-	
-	
+	public static int  x_min, x_max, y_min, y_max;
+	public static int [] tabx = new int [3];
+	public static int [] tabxx= new int [3];
+	public static int [] taby = new int [3];
+	public static int [] tabyy = new int [3];
 	
 	
 	
@@ -125,6 +128,7 @@ public class FrameRoom extends Frame<Room> {
 		this.getW_dtm().addColumn( "Y_MAX"	)							;
 		
 		
+		
 		this.call_initialise_table()									;
 		w_table = new JTable(this.getW_dtm())							; 
 		super.getComponent_panel().add( super.getW_table() 
@@ -133,12 +137,15 @@ public class FrameRoom extends Frame<Room> {
 		
 		// visibility
 		this.setVisible( true )											;
+		
+
 	} 
 	
 	
 	
 	class BoutonListener implements ActionListener{
 		  public void actionPerformed(ActionEvent e) {		
+
 		  }
 	}
 	
@@ -182,8 +189,27 @@ public class FrameRoom extends Frame<Room> {
 	 */
 	public void initialise_table(Room[]  param_room) {
 		for(int i = 0 ; i<param_room.length; i++) {
-			this.add_table(param_room[i])						;
+			this.add_table(param_room[i])	;
+			
+			int x_minn=param_room[i].getX_min() ;
+			int x_maxx=param_room[i].getX_max() ;
+			int y_minn=param_room[i].getY_min() ;
+			int y_maxx=param_room[i].getY_max() ;
+			x_min=x_minn;
+			x_max=x_maxx;
+			y_min=y_minn;
+			y_max=y_maxx;
+			System.out.println(x_min);
+			tabx[i]=x_min;
+			tabxx[i]=x_max;
+			taby[i]=y_min;
+			tabyy[i]=y_max;
+			
+	
+			
 		}
+		FrameSensorMap f = new FrameSensorMap();
+		f.setVisible(true);
 	}
 	public void call_initialise_table() {
 		this.getW_dtm().setRowCount(0)									;
@@ -333,6 +359,8 @@ public class FrameRoom extends Frame<Room> {
 
 	public static void main (String[] args) {
 		FrameRoom framerome = new FrameRoom();
+		framerome.setVisible(true);
 		System.out.println("FRAMEHome was launched");
+		
 	}
 }

@@ -9,17 +9,21 @@ import javax.swing.JPanel;
 
 
 class MyPanel extends JPanel{
-	private int x, y, z, f;
-	public MyPanel (int x , int y , int z, int f ) {
-		this.x=x;
-		this.y=y;
-		this.z=z;
-		this.f=f;
+	
+	public MyPanel ( ) {
+	
 		
 	}
-	public void paintComponent(Graphics g ) {
+	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-	draw(g, x ,  y ,  z, f);
+		for (int i=0 ; i<2; i++) {
+		 int x = FrameRoom.tabx[i];
+		int  y =FrameRoom.tabxx[i];
+		int z=FrameRoom.taby[i];
+		int  w=FrameRoom.tabyy[i];
+
+	draw(g,x,y,z,w);
+	}
 	}
 	
 	public void draw(Graphics g,int x , int y , int z, int f ) {
