@@ -25,6 +25,22 @@ import javax.swing.JPanel;
 public class JCalendar {
 
 	static JComboBox comboYear;
+	public static JComboBox getComboYear() {
+		return comboYear;
+	}
+
+
+
+	public JComboBox getComboMonth() {
+		return comboMonth;
+	}
+
+
+
+	public JComboBox getComboDay() {
+		return comboDay;
+	}
+
 	private JComboBox comboMonth;
 	private JComboBox comboDay;
 	public static int year, month, day;
@@ -119,11 +135,13 @@ public class JCalendar {
 			j++;
 		}
 		
-		
+		JPanel pan2=new JPanel();
 		//Adding Comboboxes to panel
-		pan1.add(comboYear);
-		pan1.add(comboMonth);
-		pan1.add(comboDay);
+		pan2.add(comboYear);
+		pan2.add(comboMonth);
+		pan2.add(comboDay);
+
+		pan1.add(pan2);
 	}
 
 	
