@@ -58,20 +58,23 @@ public class ClientConnection implements Runnable{
            try {
         	  try {
         	   response = read()												 ;
-        	   System.out.println(" answer received: " + response)				 ;
+        	   System.out.println(" answer received: " + response)	;
+        	
         	  }catch(Exception ex1) {
         		  System.out.println("ex1: "+ex1.getMessage());
         	  }
         	  
         	  
-        	  Object[] val_object =  Decode.to_decode(response, "Type_sensor");
+        	  Object[] val_object =  Decode.to_decode(response, "Room");
         	  att_frame.initialise_table(val_object); 
+        	 
         	  	att_frame.getOptionpane()									  ;
 				// same value is existing
         	  	att_frame.getOptionpane().showMessageDialog(att_frame, 
-      				val_message,
+        	  			val_message,
      		         " SECURE RETIREMENT HOMME "+val_title,
-     		         JOptionPane.WARNING_MESSAGE)							  ;
+     		         JOptionPane.WARNING_MESSAGE);	
+        	  
             }catch(Exception e) {
             	System.out.println("\t * " + "error" + " : problem with answer "+e.getMessage());
             } 
