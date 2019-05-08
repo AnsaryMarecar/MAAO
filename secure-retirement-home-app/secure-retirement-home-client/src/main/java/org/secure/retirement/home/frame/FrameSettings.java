@@ -11,6 +11,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
@@ -22,8 +23,9 @@ import java.awt.*;
 
 import org.secure.retirement.home.client.ClientTransmission;
 import org.secure.retirement.home.common.Sensor;
+import org.secure.retirement.home.common.Type_sensor;
 
-public class FrameSettings extends JFrame implements ActionListener{
+public class FrameSettings extends Frame<Sensor> implements ActionListener{
 
 	JPanel settings_panel = new JPanel();
 	JFrame settings_sensor = new JFrame();
@@ -90,8 +92,8 @@ public class FrameSettings extends JFrame implements ActionListener{
 		this.add(mac_address_t, c2);
 		this.add(IP_address, c);
 		this.add(IP_address_t, c2);
-		this.add(confirm, c);
-		this.add(cancel, c2);
+	    this.add(this.add_button, c);
+	    this.add(this.update_button, c2);			
 
 		confirm.addActionListener(this);
 		cancel.addActionListener(this);
@@ -112,5 +114,71 @@ public class FrameSettings extends JFrame implements ActionListener{
 
 
 		}
+	}
+
+
+	@Override
+	public boolean add_action() {
+		boolean to_return = false								;
+		String 	val_text  = min_risq_t.getText().trim()	;
+		
+		if(val_text.trim().equals("")) {
+			JOptionPane.showMessageDialog(null, "Sorry, but you can't add without a name.", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
+		}
+		else {
+			System.out.println("OK");
+			ArrayList<Type_sensor> val_type_sensors = new ArrayList<Type_sensor>();
+			val_type_sensors.add(new Type_sensor(0,val_text));
+			try {
+				ClientTransmission.transmission("Type_sensor", "ADD", val_type_sensors, this);	
+				//this.call_initialise_table()				;
+					this.update_table()						;
+					to_return = true						;
+			} catch (Exception e) {
+				e.printStackTrace()							;
+			}
+		}
+		return to_return;
+	}
+
+
+	@Override
+	public boolean update_action() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean delete_action() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public void update_on(int line_number) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void initialise_table(Sensor[] obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void add_table(Sensor obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update_table() {
+		// TODO Auto-generated method stub
+		
 	}
 }
