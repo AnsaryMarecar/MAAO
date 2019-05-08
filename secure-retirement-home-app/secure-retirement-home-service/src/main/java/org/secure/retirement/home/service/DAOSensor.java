@@ -46,8 +46,8 @@ public class DAOSensor implements DAO<Sensor>{
 							,	SQL_INSERT
 							,	true
 							,	param_sensor.getSensor_status()
-						//	,   param_sensor.getZone_id()
-						//	,   param_sensor.getType_sensor_id()
+							,   param_sensor.getRoom_id()
+							,   param_sensor.getType_sensor()
 						//	,   param_sensor.getRisq_id()
 
 							);
@@ -145,10 +145,9 @@ public class DAOSensor implements DAO<Sensor>{
 			        	,	SQL_UPDATE
 						,	true
 						,	param_sensor.getSensor_status()
-					//	,   param_sensor.getZone_id()
-					//	,   param_room.getRoom_id()
+						,   param_sensor.getRoom_id()
+						,   param_sensor.getType_sensor()
 					//	,   param_sensor.getRisq_id()
-
 			       		);
 			status = preparedStatement.executeUpdate();
 			System.out.println("status "+status);        
@@ -182,8 +181,12 @@ public class DAOSensor implements DAO<Sensor>{
 	        preparedStatement = DAOUtility.initPreparedRequest(
 	        			connexion
 	        		,	SQL_SELECTALL
-	        		,	true
-	        		, 	param_sensor.getSensor_status()
+					,	true
+					,	param_sensor.getSensor_status()
+					,   param_sensor.getRoom_id()
+					,   param_sensor.getType_sensor()
+				//	,   param_sensor.getRisq_id()
+	        		
 	        		);
 	        resultSet = preparedStatement.executeQuery();
 	        System.out.println("status "+resultSet);
