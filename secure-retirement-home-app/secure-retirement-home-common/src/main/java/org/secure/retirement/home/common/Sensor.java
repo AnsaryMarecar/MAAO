@@ -1,15 +1,9 @@
-/**
- * 
- */
 package org.secure.retirement.home.common;
 
-/**
- * @author Ansary MARECAR
- *
- */
+
 public class Sensor {
-	private int sensor_id = 0;
-	private int sensor_status;
+	private int sensor_id;
+	private int sensor_status = 1;
 	private Room room_id;
 	private Type_sensor type_sensor = null;
 //  private Risq risq_id;	
@@ -23,10 +17,13 @@ public class Sensor {
 		this.type_sensor = type_sensor;
 		this.sensor_status = sensor_status;
 	}
-	public Sensor(int param_sensor_id) {
+
+
+	public Sensor(int parseInt) {
 		// TODO Auto-generated constructor stub
-		this.sensor_id = param_sensor_id;
 	}
+
+
 	public int getSensor_id() {
 		return sensor_id;
 	}
@@ -50,7 +47,7 @@ public class Sensor {
 		return sensor_status;
 	}
 	public void setSensor_status(int sensor_status) {
-		this.sensor_status = sensor_status;
+		this.sensor_status = 1;
 	}
 	public Room getRoom_id() {
 		return room_id;
