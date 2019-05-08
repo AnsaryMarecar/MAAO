@@ -38,7 +38,7 @@ public class Decode {
 				  val_object = objectMapper.readValue(param_todecode, Type_sensor[].class);
 			    break;
 			  case "Sensor":
-			    // code block
+				  val_object = objectMapper.readValue(param_todecode, Sensor[].class);
 			    break;
 			  case "Room":
 				  val_object = objectMapper.readValue(param_todecode, Room[].class);

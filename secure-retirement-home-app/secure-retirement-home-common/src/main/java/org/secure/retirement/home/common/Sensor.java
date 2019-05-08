@@ -9,17 +9,19 @@ package org.secure.retirement.home.common;
  */
 public class Sensor {
 	private int sensor_id = 0;
+	private int sensor_status;
+//	private Zone zone_id;
 	private Type_sensor type_sensor = null;
+//  private Risq risq_id;	
 	
 	
-	/**
-	 * @param sensor_id
-	 * @param type_sensor
-	 */
-	public Sensor(int sensor_id, Type_sensor type_sensor) {
+	
+
+	public Sensor(int sensor_id, Type_sensor type_sensor, int sensor_status ) {
 		super();
 		this.sensor_id = sensor_id;
 		this.type_sensor = type_sensor;
+		this.sensor_status = sensor_status;
 	}
 	public Sensor(int param_sensor_id) {
 		// TODO Auto-generated constructor stub
@@ -43,5 +45,11 @@ public class Sensor {
 	public void setType_sensor(Type_sensor type_sensor) {
 		this.type_sensor = type_sensor;
 	}
-		
+	public int getSensor_status() {
+		return sensor_status;
+	}
+	public void setSensor_status(int sensor_status) {
+		this.sensor_status = sensor_status;
+	}
+
 }
