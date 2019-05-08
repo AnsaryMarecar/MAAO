@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import org.secure.retirement.home.common.Decode;
 import org.secure.retirement.home.common.Historic;
 import org.secure.retirement.home.common.Return_information;
+import org.secure.retirement.home.common.Room;
 import org.secure.retirement.home.common.Send_information;
 import org.secure.retirement.home.common.Type_sensor;
 import org.secure.retirement.home.service.simulation.DAOHistoric;
@@ -91,6 +92,38 @@ public class ActionDecision {
 				e1.printStackTrace();
 			}
 		  }
+		  else if(val_send_information[0].getSend_information_table().toString().equals("Room")) {
+			DAORoom element_dao;   
+			try {
+				element_dao = new DAORoom(daof);
+				Room[] rooms= null;
+				  try {
+			  		rooms = (Room[]) Decode.to_decode(val_jsontext.get(1).toString(), "Room");
+				  }catch(Exception e) {
+					  System.out.println(val_send_information[0].getSend_information_crud_action().toString()+" e: "+e.getLocalizedMessage());
+				  }
+			      if(val_send_information[0].getSend_information_crud_action().toString().equals("SELECT ALL")) {	
+			  			//Select All
+			  			try {
+			  				Thread.sleep(500);
+			  				elements = element_dao.presentData();
+			  			}catch (Exception e) {
+			  				e.printStackTrace();
+			  			}
+			  	   }
+			  	   else if(val_send_information[0].getSend_information_crud_action().toString().equals("ADD")) {
+			  		   	//Add
+			  		   	Return_information val_message = element_dao.create(rooms[0]);
+			  		   	ArrayList<Return_information> val_return_info = new ArrayList<Return_information>();
+			  			val_return_info.add(val_message);
+			  			elements = val_return_info;
+			  	   }
+			  } catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			  }
+		  }
+		
 		return elements;
 	}
 }
