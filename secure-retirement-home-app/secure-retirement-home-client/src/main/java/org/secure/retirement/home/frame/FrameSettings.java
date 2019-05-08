@@ -5,18 +5,22 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.*;
 
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.event.MenuListener;
+import javax.swing.*;
+import java.awt.*;
 
-public class FrameSettings extends JFrame {
+public class FrameSettings extends JFrame implements ActionListener{
 
 	JPanel settings_panel = new JPanel();
 	JFrame settings_sensor = new JFrame();
@@ -28,38 +32,47 @@ public class FrameSettings extends JFrame {
 	JLabel IP_address = new JLabel("IP Address: ");
 	
 	JComboBox sensor_type_box = new JComboBox();
+	
 	JTextField location_t = new JTextField();
 	JTextField min_risq_t = new JTextField();
 	JTextField max_risq_t = new JTextField();
 	JTextField mac_address_t = new JTextField();
 	JTextField IP_address_t = new JTextField();
+	JButton confirm = new JButton("Confirm");
+	JButton cancel = new JButton("Cancel");
 	
 	public FrameSettings() {
 		
 		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		
 		this.setSize(500, 600);
 		this.setResizable(false);
 		this.setVisible(true);
 		
 		
+		sensor_type_box.addItem("smoke");
+		sensor_type_box.addItem("humidity");
+		sensor_type_box.addItem("motion");
+		sensor_type_box.addItem("position");
+		sensor_type_box.addItem("brightness");
+		sensor_type_box.addItem("occupancy");
+		
+		
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		GridBagConstraints c2 = new GridBagConstraints();
-		location_t.setPreferredSize(new Dimension(50, 30));
-		min_risq_t.setPreferredSize(new Dimension(50, 30));
-		max_risq_t.setPreferredSize(new Dimension(50, 30));
-		mac_address_t.setPreferredSize(new Dimension(50, 30));
-		IP_address_t.setPreferredSize(new Dimension(50, 30));
-		sensor_type_box.setPreferredSize(new Dimension(50,30));
+		location_t.setPreferredSize(new Dimension(100, 30));
+		min_risq_t.setPreferredSize(new Dimension(100, 30));
+		max_risq_t.setPreferredSize(new Dimension(100, 30));
+		mac_address_t.setPreferredSize(new Dimension(100, 30));
+		IP_address_t.setPreferredSize(new Dimension(100, 30));
+		sensor_type_box.setPreferredSize(new Dimension(100,30));
 		
-		c.ipady = 10;      
-	//	c.anchor = GridBagConstraints.PAGE_END;
-	
-	//	c.insets = new Insets(2,0,0,0);
+		      
 		c.gridx = 1;  
-		
 		c2.gridx = 2;
-		
+
 		
 		
 		this.add(location, c);
@@ -74,8 +87,23 @@ public class FrameSettings extends JFrame {
 		this.add(mac_address_t, c2);
 		this.add(IP_address, c);
 		this.add(IP_address_t, c2);
-		
+		this.add(confirm, c);
+		this.add(cancel, c2);
+	
+	//	confirm.addActionListener(ae);
+	}
+	
+	public void actionPerformed(ActionEvent ae) {
+		if(ae.getSource()==confirm) {
+			if(min_risq.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "You cannot leave the field min risq empty", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
+			}
 		}
+		else if(ae.getSource()==cancel) {
+			JOptionPane.showMessageDialog(null, "Are you sure you want to cancel your entry ?", "MAAO - Warning message", JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
+
 	
-	
-}
+	}
+

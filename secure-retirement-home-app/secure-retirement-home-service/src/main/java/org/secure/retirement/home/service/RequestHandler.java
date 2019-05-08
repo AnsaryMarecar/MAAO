@@ -14,11 +14,7 @@ import java.util.Arrays;
 
 import org.secure.retirement.home.common.Decode;
 import org.secure.retirement.home.common.Encode;
-import org.secure.retirement.home.common.Historic;
-import org.secure.retirement.home.common.Return_information;
 import org.secure.retirement.home.common.Send_information;
-import org.secure.retirement.home.common.Type_sensor;
-import org.secure.retirement.home.service.simulation.DAOHistoric;
 
 public class RequestHandler implements Runnable{
 

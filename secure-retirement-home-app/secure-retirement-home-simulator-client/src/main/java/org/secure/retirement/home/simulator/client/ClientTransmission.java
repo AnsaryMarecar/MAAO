@@ -53,20 +53,20 @@ public class ClientTransmission {
 	            throw new DAOConfigurationException("Problem to charge : " + FILE_PROPERTIES,exp)		;
 	        }
 	    }
-		String val_send_information_text =  Encode.to_encode(val_send_info_tab)								;
-	   System.out.println("val_send_information_text: "+val_send_information_text);
+		String val_send_information_text =  Encode.to_encode(val_send_info_tab)							;
+	    System.out.println("val_send_information_text: "+val_send_information_text);
 		String val_data = Encode.to_encode(param_data)													;
 		ArrayList<String> val_action_array = new ArrayList<String>()									;
 		val_action_array.add(param_element)																;
 		val_action_array.add(param_action_type)															;
-		String val_action = Encode.to_encode(val_action_array)											;
-		ClientConnection cc = new ClientConnection(
+		Encode.to_encode(val_action_array)																;
+		ClientConnection val_client_connection = new ClientConnection(
 					val_host
 				, 	val_port
 				, 	val_send_information_text
 				, 	val_data,param_frame
 				);
-		Thread t = new Thread(cc)																		;
+		Thread t = new Thread(val_client_connection)													;
 		t.start()																						;
 	}
 	

@@ -7,9 +7,27 @@ public class Room {
 	private int	 x_max;
 	private int	 y_min;
 	private int	 y_max;
+	public Stair getStair() {
+		return stair;
+	}
+	public void setStair(Stair stair) {
+		this.stair = stair;
+	}
+	private Stair stair;
 	
 	
 	public Room() {
+		
+	}
+	public Room(int room_id	,String room_name, int	 x_min, int x_max,int y_min, int	 y_max,Stair stair) {
+		super();
+		this.room_id=room_id;
+		this.room_name=room_name;
+		this.x_min=x_min;
+		this.x_max=x_max;
+		this.y_min = y_min;
+		this.y_max= y_max;
+		this.stair=stair;
 		
 	}
 	public Room(int room_id	,String room_name, int	 x_min, int x_max,int y_min, int	 y_max) {
