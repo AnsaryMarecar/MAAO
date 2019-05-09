@@ -2,6 +2,7 @@ package org.secure.retirement.home.frame;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -12,16 +13,28 @@ import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.secure.retirement.home.common.Type_sensor;
 
 public class FrameTableAnalysis extends Frame {
 
-	private JCalendar cal, cal2;
-	private JPanel panFilter, panCompare, panObjectComp, tablePanPrincip, tablePanComp;
+	private JCalendar cal, cal2, cal3, cal4;
+	private JPanel panFilter,panComboFilter, panDateFilt,panDateFilt2,panDateFilt3, panCompare, panObjectComp, panObjectCompDate1, panObjectCompDate2, tablePanPrincip, tablePanComp,tablePan;
 	private JButton validate1, validate2, compareButton;
-	private JPanel tablePan;
+	private JLabel label1, label2, label3, label4;	
+	//ComboBox
+	private JComboBox list_typesensor=new JComboBox();
+	private JComboBox list_zone=new JComboBox();
+	
+	//CheckBox
+	private JCheckBox date = new JCheckBox("Date");
+	private JCheckBox zone = new JCheckBox("Zone");
+	private JCheckBox type_sensor = new JCheckBox("Type Sensors");
+	
 
 	public FrameTableAnalysis() {
 		super();
@@ -55,6 +68,10 @@ public class FrameTableAnalysis extends Frame {
 		// Adding ComboBox to the Left of the Frame
 		panFilter = new JPanel();
 		panFilter.setBackground(new Color(153, 190, 204));
+		panDateFilt = new JPanel();
+		panDateFilt.setBackground(new Color(153, 190, 204));
+		panComboFilter =new JPanel();
+		panComboFilter.setBackground(new Color(153,190,204));
 		panCompare = new JPanel();
 		panCompare.setBackground(new Color(153, 190, 204));
 		panObjectComp = new JPanel();
@@ -65,16 +82,29 @@ public class FrameTableAnalysis extends Frame {
 		left_panel.add(panCompare);
 		left_panel.add(panObjectComp);
 
-		panFilter.add(list_typesensor, BorderLayout.PAGE_START);
-		panFilter.add(list_zone, BorderLayout.AFTER_LINE_ENDS);
-		cal = new JCalendar(panFilter);
-		panFilter.add(validate1 = new JButton("validate"), BorderLayout.SOUTH);
+		panFilter.setLayout(new GridLayout(2,1));
+		panFilter.add(panComboFilter);
+		panFilter.add(panDateFilt);
+		
+		panComboFilter.add(list_typesensor);
+		list_typesensor.setEnabled(false);
+		panComboFilter.add(list_zone);
+		list_zone.setEnabled(false);
+		
+		panDateFilt.setLayout(new GridLayout(5,1));
+		panDateFilt.add(label1=new JLabel("From"));
+		panDateFilt.add(panDateFilt2= new JPanel());
+		cal = new JCalendar(panDateFilt2);
+		panDateFilt.add(label2=new JLabel("To"));
+		panDateFilt.add(panDateFilt3= new JPanel());
+		cal2=new JCalendar(panDateFilt3);
+		panDateFilt.add(validate1 = new JButton("validate"));
 		validate1.addActionListener(new ButtonListener() {
 			public void actionPerformed(ActionEvent e) {
 				tablePanPrincip.setVisible(true);
 			}
 		});
-
+		panDateFilt.setVisible(false);
 		// Add button Compare to its pan
 		compareButton = new JButton("Compare");
 		compareButton.addActionListener(new ButtonListener() {
@@ -83,10 +113,17 @@ public class FrameTableAnalysis extends Frame {
 			}
 		});
 		panCompare.add(compareButton);
+		compareButton.setEnabled(false);
 
 		// Adding Component to panObjectComp which will appear after pushing button
 		// compare
-		cal2 = new JCalendar(panObjectComp);
+		panObjectComp.setLayout(new GridLayout(5,1));
+		panObjectComp.add(label3=new JLabel("From"));
+		panObjectComp.add(panObjectCompDate1=new JPanel());
+		cal3 = new JCalendar(panObjectCompDate1);
+		panObjectComp.add(label4=new JLabel("To"));
+		panObjectComp.add(panObjectCompDate2=new JPanel());
+		cal4=new JCalendar(panObjectCompDate2);
 		panObjectComp.add(validate2 = new JButton("Do comparaison"));
 		validate2.addActionListener(new ButtonListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -94,24 +131,30 @@ public class FrameTableAnalysis extends Frame {
 			}
 		});
 		panObjectComp.setVisible(false);
-
+		
+		//Adding the Left panel with all filters at the left of the screen
+		
 		component_panel.add(this.left_panel, BorderLayout.WEST);
 
+		
+		//Panel which will contain the tables
 		tablePan = new JPanel();
 		tablePan.setLayout(new GridLayout(2, 1));
 		tablePan.setBackground(new Color(191, 195, 210));
 		component_panel.add(tablePan, BorderLayout.CENTER);
 
+		//The principal table of datas will be there
 		tablePanPrincip = new JPanel();
 		tablePanPrincip.setBackground(new Color(215, 240, 245));
 		tablePanPrincip.setVisible(false);
 
+		//If users want to compare datas by date it will be there
 		tablePanComp = new JPanel();
 		tablePanComp.setBackground(new Color(200, 210, 240));
 		tablePanComp.setVisible(false);
-
+		
+		//Adding the two panel of data's to the frame
 		tablePan.add(tablePanPrincip);
-
 		tablePan.add(tablePanComp);
 		
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -125,14 +168,33 @@ public class FrameTableAnalysis extends Frame {
 		public void itemStateChanged(ItemEvent arg0) {
         
 			// Sensor CheckBox Actions
-			if (type_sensor.isSelected()==true) {
-				type_sensor.removeAll();
+			if (type_sensor.isSelected()==true  & list_typesensor.getItemCount()<1) {
+				list_typesensor.setEnabled(true);
 				Object[] elementSensor = new Object[]{"Sensor 1", "Sensor 2", "Sensor 3", "Sensor 4", "Sensor 5"};
 				for (int i=0; i<elementSensor.length; i++) {
 					String sens=elementSensor[i].toString();
 					list_typesensor.addItem(sens);
 				}
-			}else {list_typesensor.setEnabled(false);}
+			}
+			if (type_sensor.isSelected()==false){
+				list_typesensor.removeAllItems();
+				list_typesensor.setEnabled(false);
+				}
+			if (date.isSelected()==true) {
+				panDateFilt.setVisible(true);
+				compareButton.setEnabled(true);
+			}
+			if (date.isSelected()==false) {
+				panDateFilt.setVisible(false);
+				compareButton.setEnabled(false);
+			}
+			if (zone.isSelected()==true) {
+				list_zone.setEnabled(true);
+			}
+			if (zone.isSelected()==false) {
+				list_zone.removeAllItems();
+				list_zone.setEnabled(false);
+			}
 		}
 	}
 		
