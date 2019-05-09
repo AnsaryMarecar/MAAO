@@ -15,20 +15,32 @@ class MyPanel extends JPanel{
 		
 	}
 	public void paintComponent(Graphics g) {
+		try {
 		super.paintComponent(g);
-		for (int i=0 ; i<2; i++) {
-		 int x = FrameRoom.tabx[i];
-		int  y =FrameRoom.tabxx[i];
-		int z=FrameRoom.taby[i];
-		int  w=FrameRoom.tabyy[i];
-
-	draw(g,x,y,z,w);
+		for (int i=0 ; i<40; i++) {
+			
+		 String name = FrameRoom.tabName[i];
+		 int position_X = FrameRoom.tabx[i];
+		int  position_XX =FrameRoom.tabxx[i];
+		int position_Y=FrameRoom.taby[i];
+		int  position_YY=FrameRoom.tabyy[i];
+		
+		drawRectangle(g,position_X,position_XX,position_Y,position_YY);
+		
+		if(position_XX==0 && position_YY==0) {
+		drawStr(g,name,position_X,position_Y);
+		}
+		}}catch(Exception e) {}
 	}
-	}
-	
-	public void draw(Graphics g,int x , int y , int z, int f ) {
+	// Draw Rectangle 
+	public void drawRectangle(Graphics g,int x , int y , int z, int f ) {
 		g.drawRect( x ,  y ,  z, f);
 	}
+	// Draw String
+	public void drawStr(Graphics g,String text, int x, int y ) {
+		g.drawString(text, x,y) ;
+	}
+	
 }
 		   // g.drawRect(0,0,200,500);
 
