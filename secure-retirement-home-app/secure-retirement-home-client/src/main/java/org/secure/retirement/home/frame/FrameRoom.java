@@ -47,11 +47,14 @@ public class FrameRoom extends Frame<Room> {
 	private JTextField 	y_maxadd_textField 		= new JTextField()							;
 	private JLabel 		y_maxadd_label			= new JLabel("add y_max: ")	;
 	
-	public static int  x_min, x_max, y_min, y_max;
-	public static int [] tabx = new int [3];
-	public static int [] tabxx= new int [3];
-	public static int [] taby = new int [3];
-	public static int [] tabyy = new int [3];
+	public static int room_id, x_min, x_max, y_min, y_max;
+	public static int [] tabId = new int [40];
+	public static String  names;
+	public static int [] tabx = new int [40];
+	public static int [] tabxx= new int [40];
+	public static int [] taby = new int [40];
+	public static int [] tabyy = new int [40];
+	public static String [] tabName= new String [40];
 	
 	
 	
@@ -190,24 +193,28 @@ public class FrameRoom extends Frame<Room> {
 	public void initialise_table(Room[]  param_room) {
 		for(int i = 0 ; i<param_room.length; i++) {
 			this.add_table(param_room[i])	;
+			room_id=param_room[i].getRoom_id() ;
+			names=param_room[i].getRoom_name() ;
+			x_min=param_room[i].getX_min() ;
+			x_max=param_room[i].getX_max() ;
+			y_min=param_room[i].getY_min() ;
+			y_max=param_room[i].getY_max() ;
 			
-			int x_minn=param_room[i].getX_min() ;
-			int x_maxx=param_room[i].getX_max() ;
-			int y_minn=param_room[i].getY_min() ;
-			int y_maxx=param_room[i].getY_max() ;
-			x_min=x_minn;
-			x_max=x_maxx;
-			y_min=y_minn;
-			y_max=y_maxx;
-			System.out.println(x_min);
+			
+			System.out.println(room_id);
+			tabId[i]=room_id;
+			tabName[i]=names;
 			tabx[i]=x_min;
 			tabxx[i]=x_max;
 			taby[i]=y_min;
 			tabyy[i]=y_max;
 			
+			
+			
 	
 			
 		}
+		
 		FrameSensorMap f = new FrameSensorMap();
 		f.setVisible(true);
 	}
@@ -318,9 +325,10 @@ public class FrameRoom extends Frame<Room> {
 		int v_ymax = Integer.parseInt(var_ymax);
 									;
 		if(val_text.trim().equals("")) {
-			JOptionPane.showMessageDialog(null, "Sorry, but you can't add without a name.", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
+		//	JOptionPane.showMessageDialog(null, "Sorry, but you can't add without a name.", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
 		}
 		else {
+		
 			ArrayList<Room> val_rooms = new ArrayList<Room>();
 			val_rooms.add(new Room(0,val_text,v_xmin,v_xmax,v_ymin ,v_ymax ));
 			try {
@@ -359,7 +367,7 @@ public class FrameRoom extends Frame<Room> {
 
 	public static void main (String[] args) {
 		FrameRoom framerome = new FrameRoom();
-		framerome.setVisible(true);
+		framerome.setVisible(false);
 		System.out.println("FRAMEHome was launched");
 		
 	}
