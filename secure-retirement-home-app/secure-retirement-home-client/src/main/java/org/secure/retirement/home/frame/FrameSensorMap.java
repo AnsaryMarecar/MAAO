@@ -1,20 +1,13 @@
 package org.secure.retirement.home.frame;
-import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
-import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Scanner;
-
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,7 +16,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.SwingUtilities;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
@@ -31,17 +23,14 @@ import javax.swing.event.MenuListener;
 
 
 
-public class FrameSensorMap extends JPanel implements ActionListener, MouseListener{
+public class FrameSensorMap extends JFrame implements ActionListener, MouseListener{
 	
-
-	
-		
 		
 		private JPanel pan1, pan3, pan4;
 		private JButton add, update, delete;
-		private JLabel jl1,b1, b2,b3, b4, b5;
-		private JRadioButton test;
-		private JFrame frame = new JFrame();
+		private JLabel jlabel,jlabel1, jlabel2,jlabel3, jlabel4, jlabel5;
+		
+		
 		
 		private JMenuBar menuBar = new JMenuBar();
 		private JMenu settings = new JMenu("Settings");
@@ -52,15 +41,15 @@ public class FrameSensorMap extends JPanel implements ActionListener, MouseListe
 		private JMenuItem settings_sensors = new JMenuItem("Set a sensor");
 		
 		 private JPanel pan2;
-		  private int x1, y1;
+		  public static int position_x, position_y;
 		    Graphics g;
 		   
 		    
 		public FrameSensorMap() {
 			
-			frame.setLocationRelativeTo(null);
-			frame.setSize(1200, 650);
-			frame.setResizable(false);
+			this.setLocationRelativeTo(null);
+			this.setSize(1200, 650);
+			this.setResizable(false);
 			
 			
 			pan1= new JPanel();
@@ -71,15 +60,15 @@ public class FrameSensorMap extends JPanel implements ActionListener, MouseListe
 			add= new JButton("ADD");
 			update= new JButton ("UPDATE");
 			delete = new JButton ("DELETE");
-			b1 = new JLabel("Danger");
-			b2= new JLabel("Middle");
-			b3= new JLabel("Low");
-			b4= new JLabel("Normal");
-			b5= new JLabel("No Reponse");
+			jlabel1 = new JLabel("Danger");
+			jlabel2= new JLabel("Middle");
+			jlabel3= new JLabel("Low");
+			jlabel4= new JLabel("Normal");
+			jlabel5= new JLabel("No Reponse");
 			
 			
 			
-			jl1= new JLabel("left-click on the sensor position");
+			jlabel= new JLabel("left-click on the sensor position");
 			
 			
 			
@@ -122,7 +111,7 @@ public class FrameSensorMap extends JPanel implements ActionListener, MouseListe
 
 			      }
 			    });
-			frame.setJMenuBar(menuBar);
+			this.setJMenuBar(menuBar);
 			
 			// adding a submenu
 			 this.settings.add(settings_type_sensor);
@@ -130,10 +119,10 @@ public class FrameSensorMap extends JPanel implements ActionListener, MouseListe
 			 this.settings.add(settings_sensors);
 			
 			pan1.setLayout(new BorderLayout());
-			pan1.add(jl1, BorderLayout.CENTER);
+			pan1.add(jlabel, BorderLayout.CENTER);
 			this.setLayout(new BorderLayout());
-			frame.getContentPane().add(pan1, BorderLayout.NORTH);
-			frame.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER));
+			this.getContentPane().add(pan1, BorderLayout.NORTH);
+			this.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER));
 		
 		//create and draw a map
 		
@@ -141,33 +130,33 @@ public class FrameSensorMap extends JPanel implements ActionListener, MouseListe
 		pan2 = new MyPanel();
 		
 		pan2.setBackground(Color.WHITE);
-		pan2.setPreferredSize(new Dimension(1000,500));
+		pan2.setPreferredSize(new Dimension(1100,500));
 		pan2.addMouseListener(this);
 
 	
-		frame.getContentPane().add(pan2, BorderLayout.CENTER);
-		frame.getContentPane().add(pan3, BorderLayout.CENTER);
-		frame.getContentPane().add(pan4, BorderLayout.SOUTH);
+		this.getContentPane().add(pan2, BorderLayout.CENTER);
+		this.getContentPane().add(pan3, BorderLayout.CENTER);
+		this.getContentPane().add(pan4, BorderLayout.SOUTH);
 		
 		
 			pan3.setLayout(new FlowLayout());
-			b1.setOpaque(true);
-			b1.setBackground(Color.RED);
-			b2.setOpaque(true);
-			b2.setBackground(Color.ORANGE);
-			b3.setOpaque(true);
-			b3.setBackground(Color.yellow);
-			b4.setOpaque(true);
-			b4.setBackground(Color.green);
-			b5.setOpaque(true);
-			b5.setBackground(Color.gray);
+			jlabel1.setOpaque(true);
+			jlabel1.setBackground(Color.RED);
+			jlabel2.setOpaque(true);
+			jlabel2.setBackground(Color.ORANGE);
+			jlabel3.setOpaque(true);
+			jlabel3.setBackground(Color.yellow);
+			jlabel4.setOpaque(true);
+			jlabel4.setBackground(Color.green);
+			jlabel5.setOpaque(true);
+			jlabel5.setBackground(Color.gray);
 			
 			
-			pan3.add(b1);
-			pan3.add(b2);
-			pan3.add(b3);
-			pan3.add(b4);
-			pan3.add(b5);
+			pan3.add(jlabel1);
+			pan3.add(jlabel2);
+			pan3.add(jlabel3);
+			pan3.add(jlabel4);
+			pan3.add(jlabel5);
 			
 		
 			
@@ -182,8 +171,8 @@ public class FrameSensorMap extends JPanel implements ActionListener, MouseListe
 			update.addActionListener(this);
 			delete.addActionListener(this);
 				
-			frame.setLocationRelativeTo(null);
-			frame.setVisible(true);
+			this.setLocationRelativeTo(null);
+			this.setVisible(true);
 			
 		}
 		public void actionPerformed(ActionEvent event) {
@@ -191,9 +180,9 @@ public class FrameSensorMap extends JPanel implements ActionListener, MouseListe
 			if(event.getSource()==add) {
 				 g = pan2.getGraphics();
 				g.setColor(Color.RED);
-			g.drawOval(this.x1, this.y1,5,5);
+			g.fillOval(this.position_x, this.position_y,8,8);
 			
-			
+	
 	
 			}
 
@@ -205,7 +194,7 @@ public class FrameSensorMap extends JPanel implements ActionListener, MouseListe
 			}
 
 			if(event.getSource()==delete) {
-			 
+			 repaint(this.position_x,this.position_y,1,1);
 								
 			}
 			
@@ -216,9 +205,9 @@ public class FrameSensorMap extends JPanel implements ActionListener, MouseListe
 		    	  int x,y;
 		          x = e.getX();
 		          y = e.getY();
-		          x1=x; y1=y;
+		          position_x=x; position_y=y;
 		        
-		          if (x1>= 180 && x1 <=1000 && y1 >= 0 && y1 <= 200 ) {
+		          if (position_x>= 180 && position_x <=1000 && position_y >= 0 && position_y<= 200 ) {
 		        	  JOptionPane.showMessageDialog(null, "Sorry, but you can't add sensor in this zone", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
 		          }
 		          if (e.getClickCount()!=1) {
