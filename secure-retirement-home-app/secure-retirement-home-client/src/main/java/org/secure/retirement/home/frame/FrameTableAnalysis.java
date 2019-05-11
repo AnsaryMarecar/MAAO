@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -16,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.secure.retirement.home.common.Type_sensor;
@@ -28,11 +30,11 @@ public class FrameTableAnalysis extends Frame {
 	private JLabel label1, label2, label3, label4;	
 	//ComboBox
 	private JComboBox list_typesensor=new JComboBox();
-	private JComboBox list_zone=new JComboBox();
+	private JComboBox list_room=new JComboBox();
 	
 	//CheckBox
 	private JCheckBox date = new JCheckBox("Date");
-	private JCheckBox zone = new JCheckBox("Zone");
+	private JCheckBox room = new JCheckBox("Room");
 	private JCheckBox type_sensor = new JCheckBox("Type Sensors");
 	
 
@@ -46,8 +48,8 @@ public class FrameTableAnalysis extends Frame {
 		date.setForeground(Color.WHITE);
 		date.setBackground(new Color(153, 190, 204));
 
-		zone.setForeground(Color.WHITE);
-		zone.setBackground(new Color(153, 190, 204));
+		room.setForeground(Color.WHITE);
+		room.setBackground(new Color(153, 190, 204));
 
 		type_sensor.setForeground(Color.WHITE);
 		type_sensor.setBackground(new Color(153, 190, 204));
@@ -57,12 +59,12 @@ public class FrameTableAnalysis extends Frame {
 
 		// Adding CheckBox to the top of the Frame
 		menu_panel.add(date);
-		menu_panel.add(zone);
+		menu_panel.add(room);
 		menu_panel.add(type_sensor);
 
 		// Item Listener for JCheckBox
 		date.addItemListener(new ItemListen());
-		zone.addItemListener(new ItemListen());
+		room.addItemListener(new ItemListen());
 		type_sensor.addItemListener(new ItemListen());
 
 		// Adding ComboBox to the Left of the Frame
@@ -88,8 +90,8 @@ public class FrameTableAnalysis extends Frame {
 		
 		panComboFilter.add(list_typesensor);
 		list_typesensor.setEnabled(false);
-		panComboFilter.add(list_zone);
-		list_zone.setEnabled(false);
+		panComboFilter.add(list_room);
+		list_room.setEnabled(false);
 		
 		panDateFilt.setLayout(new GridLayout(5,1));
 		panDateFilt.add(label1=new JLabel("From"));
@@ -99,11 +101,7 @@ public class FrameTableAnalysis extends Frame {
 		panDateFilt.add(panDateFilt3= new JPanel());
 		cal2=new JCalendar(panDateFilt3);
 		panDateFilt.add(validate1 = new JButton("validate"));
-		validate1.addActionListener(new ButtonListener() {
-			public void actionPerformed(ActionEvent e) {
-				tablePanPrincip.setVisible(true);
-			}
-		});
+		validate1.addActionListener(new ButtonListener());
 		panDateFilt.setVisible(false);
 		// Add button Compare to its pan
 		compareButton = new JButton("Compare");
@@ -125,11 +123,7 @@ public class FrameTableAnalysis extends Frame {
 		panObjectComp.add(panObjectCompDate2=new JPanel());
 		cal4=new JCalendar(panObjectCompDate2);
 		panObjectComp.add(validate2 = new JButton("Do comparaison"));
-		validate2.addActionListener(new ButtonListener() {
-			public void actionPerformed(ActionEvent e) {
-				tablePanComp.setVisible(true);
-			}
-		});
+		validate2.addActionListener(new ButtonListener());
 		panObjectComp.setVisible(false);
 		
 		//Adding the Left panel with all filters at the left of the screen
@@ -188,13 +182,40 @@ public class FrameTableAnalysis extends Frame {
 				panDateFilt.setVisible(false);
 				compareButton.setEnabled(false);
 			}
-			if (zone.isSelected()==true) {
-				list_zone.setEnabled(true);
+			if (room.isSelected()==true& list_room.getItemCount()<1) {
+				list_room.setEnabled(true);
+				
 			}
-			if (zone.isSelected()==false) {
-				list_zone.removeAllItems();
-				list_zone.setEnabled(false);
+			if (room.isSelected()==false) {
+				list_room.removeAllItems();
+				list_room.setEnabled(false);
 			}
+		}
+	}
+	
+	class ButtonListener implements ActionListener{
+	    public void actionPerformed(ActionEvent e) {
+	    	if("validate".equals(e.getActionCommand())) {
+				tablePanPrincip.setVisible(true);
+				
+				if(date.isSelected()==true) {
+				String date1 = cal.getDate();
+				String date2=cal2.getDate();
+				}
+				
+	    	}
+	    	
+	    	
+	    	
+	    	if("Do comparaison".equals(e.getActionCommand())) {
+	    		tablePanComp.setVisible(true);
+
+				String date3 = cal4.getDate();
+				String date4=cal3.getDate();
+	    	}
+	    	
+	    	
+	    	
 		}
 	}
 		

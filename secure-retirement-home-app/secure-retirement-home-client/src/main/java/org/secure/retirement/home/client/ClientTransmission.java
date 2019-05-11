@@ -21,10 +21,10 @@ public class ClientTransmission {
 										,	ArrayList<?> 	param_data
 										,	Frame 			param_frame
 									) {
-		
+		//Getting Properties from file 
 		Properties 	val_properties 	= new Properties()													;
 		String 	val_host = null																			;
-	    int 	val_port = 0																			;
+	    int 	val_port = 0;
 	    Send_information val_send_information = new Send_information(param_element,param_action_type);
 	    ArrayList<Send_information>val_send_info_tab = new ArrayList<Send_information>();
 	    val_send_info_tab.add(val_send_information);
@@ -48,7 +48,7 @@ public class ClientTransmission {
 	        }
 	    }
 		String val_send_information_text =  Encode.to_encode(val_send_info_tab)								;
-	   System.out.println("val_send_information_text: "+val_send_information_text);
+	    System.out.println("val_send_information_text: "+val_send_information_text);
 		String val_data = Encode.to_encode(param_data)													;
 		ArrayList<String> val_action_array = new ArrayList<String>()									;
 		val_action_array.add(param_element)																;
@@ -58,7 +58,7 @@ public class ClientTransmission {
 					val_host
 				, 	val_port
 				, 	val_send_information_text
-				, 	val_data,param_frame
+				, 	val_data,param_element,param_frame
 				);
 		Thread t = new Thread(cc)																		;
 		t.start()																						;

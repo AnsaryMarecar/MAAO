@@ -16,6 +16,7 @@ public class Encode {
 	/**
 	 * @param args
 	 */
+	/*
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ArrayList<Type_sensor> element = new ArrayList<Type_sensor>();
@@ -23,7 +24,7 @@ public class Encode {
 		element.add(new Type_sensor(11,"ee"));
 		to_encode(element);
 	}
-	
+	*/
 	public static String to_encode(ArrayList<?> param_data) {
 		String json = null;
 		ObjectMapper objectMapper = new ObjectMapper ();

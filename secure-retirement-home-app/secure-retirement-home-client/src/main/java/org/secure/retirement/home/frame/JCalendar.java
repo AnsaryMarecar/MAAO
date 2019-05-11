@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,17 +30,6 @@ public class JCalendar {
 		return comboYear;
 	}
 
-
-
-	public JComboBox getComboMonth() {
-		return comboMonth;
-	}
-
-
-
-	public JComboBox getComboDay() {
-		return comboDay;
-	}
 
 	private JComboBox comboMonth;
 	private JComboBox comboDay;
@@ -104,9 +94,6 @@ public class JCalendar {
 				JComboBox comboDay = (JComboBox) event.getSource();
 				if (comboDay.getItemCount()>1) {
 				day = Integer.parseInt(comboDay.getSelectedItem().toString());
-				GregorianCalendar calendar = new GregorianCalendar();
-				calendar.set(year,month -1,day);
-				System.out.println(new DateItem(calendar.getTime()));
 				}
 			}
 		});
@@ -136,7 +123,7 @@ public class JCalendar {
 		}
 		
 		JPanel pan2=new JPanel();
-		//Adding Comboboxes to panel
+		//Adding Combobox to panel
 		pan2.add(comboYear);
 		pan2.add(comboMonth);
 		pan2.add(comboDay);
@@ -161,6 +148,16 @@ public class JCalendar {
 		return dateDayFormat.format(date.getTime());
 	}
 	
+
+	
+	public String getDate(){
+		SimpleDateFormat formatter= new SimpleDateFormat("yyyy/MM//dd");
+		String sDate= (year+"/"+month+"/"+day);
+		GregorianCalendar calendar = new GregorianCalendar();
+		calendar.set(year,month -1,day);
+		return (new DateItem(calendar.getTime()).toString());
+		
+	}
 
 
 }

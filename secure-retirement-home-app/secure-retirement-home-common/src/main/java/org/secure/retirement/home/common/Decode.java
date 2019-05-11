@@ -47,7 +47,7 @@ public class Decode {
 				    val_object = to_decodeHistoric(param_todecode);
 				  break;
 			  case "Failure":
-				    // code block
+				  val_object = objectMapper.readValue(param_todecode, Failure[].class);
 				    break;
 			  case "Level_risq":
 				  	val_object = objectMapper.readValue(param_todecode, Level_risq[].class);

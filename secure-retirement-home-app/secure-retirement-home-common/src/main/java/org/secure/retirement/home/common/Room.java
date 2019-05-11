@@ -23,6 +23,13 @@ public class Room {
 		this.y_max= y_max;
 		
 	}
+	
+	public Room(int room_id, String room_name) {
+		super();
+		this.room_id=room_id;
+		this.room_name=room_name;
+	}
+	
 	public int getRoom_id() {
 		return room_id;
 	}

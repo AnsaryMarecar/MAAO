@@ -19,15 +19,17 @@ public class ClientConnection implements Runnable{
    private String 				att_action 		= null		;
    private String 				att_data		= null		;
    private Frame 				att_frame					;
+   private String param_class=null;
    
    public ClientConnection(String param_host, int param_port, 
-		   String param_action, String param_data, Frame param_frame){
+		   String param_action, String param_data, String param_class, Frame param_frame){
       
       try {
          att_connexion 		= new Socket(param_host, param_port);   
          this.att_action 	= param_action						;
          this.att_data 		= param_data						;
          this.att_frame 	= param_frame						;
+         this.param_class=param_class;
       } catch (UnknownHostException e) {
          e.printStackTrace();
       } catch (IOException e) {
@@ -65,7 +67,7 @@ public class ClientConnection implements Runnable{
         	  }
         	  
         	  
-        	  Object[] val_object =  Decode.to_decode(response, "Room");
+        	  Object[] val_object =  Decode.to_decode(response, param_class);
         	  att_frame.initialise_table(val_object); 
         	 
         	  	att_frame.getOptionpane()									  ;
