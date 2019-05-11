@@ -17,6 +17,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.border.BevelBorder;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
@@ -26,9 +27,9 @@ import javax.swing.event.MenuListener;
 public class FrameSensorMap extends JFrame implements ActionListener, MouseListener{
 	
 		
-		private JPanel pan1, pan3, pan4;
+		private JPanel pan1, pan3, pan4, pan5;
 		private JButton add, update, delete;
-		private JLabel jlabel,jlabel1, jlabel2,jlabel3, jlabel4, jlabel5;
+		private JLabel jlabel,jlabel1, jlabel2,jlabel3, jlabel4, jlabel5, jlabel6;
 		
 		
 		
@@ -56,6 +57,7 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 			
 			pan3 = new JPanel();
 			pan4 = new JPanel();
+			pan5 = new JPanel();
 			
 			add= new JButton("ADD");
 			update= new JButton ("UPDATE");
@@ -65,10 +67,15 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 			jlabel3= new JLabel("Low");
 			jlabel4= new JLabel("Normal");
 			jlabel5= new JLabel("No Reponse");
-			
+			jlabel6 = new JLabel("Etat");
 			
 			
 			jlabel= new JLabel("left-click on the sensor position");
+			pan5 = new JPanel();
+			pan5.setLayout(new BorderLayout());
+			pan5.add(jlabel6, BorderLayout.WEST);
+			pan5.setBorder(new BevelBorder (BevelBorder.LOWERED));
+			pan5.setBackground(Color.CYAN);
 			
 			
 			
@@ -130,13 +137,14 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 		pan2 = new MyPanel();
 		
 		pan2.setBackground(Color.WHITE);
-		pan2.setPreferredSize(new Dimension(1100,500));
+		pan2.setPreferredSize(new Dimension(1200,500));
 		pan2.addMouseListener(this);
 
 	
 		this.getContentPane().add(pan2, BorderLayout.CENTER);
 		this.getContentPane().add(pan3, BorderLayout.CENTER);
 		this.getContentPane().add(pan4, BorderLayout.SOUTH);
+		this.add(pan5, BorderLayout.SOUTH);
 		
 		
 			pan3.setLayout(new FlowLayout());
@@ -180,7 +188,7 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 			if(event.getSource()==add) {
 				 g = pan2.getGraphics();
 				g.setColor(Color.RED);
-			g.fillOval(this.position_x, this.position_y,8,8);
+			g.fillOval(this.position_x, this.position_y,20,20);
 			
 	
 	
@@ -194,7 +202,10 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 			}
 
 			if(event.getSource()==delete) {
-			 repaint(this.position_x,this.position_y,1,1);
+				 {
+					 
+			 repaint(this.position_x,this.position_y,20,20);
+				}
 								
 			}
 			
@@ -206,7 +217,9 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 		          x = e.getX();
 		          y = e.getY();
 		          position_x=x; position_y=y;
-		        
+		          jlabel6.setText(" " +position_x + " " +position_y);
+		         
+		          System.out.println( pan2.getHeight());
 		          if (position_x>= 180 && position_x <=1000 && position_y >= 0 && position_y<= 200 ) {
 		        	  JOptionPane.showMessageDialog(null, "Sorry, but you can't add sensor in this zone", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
 		          }
@@ -223,11 +236,16 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 		        }
 		          
 		   }
-	
+		 
 			  public void mousePressed(MouseEvent e) {}
-		    public void mouseEntered(MouseEvent event) {}  
-		    public void mouseExited(MouseEvent evt){}
-			public void mouseReleased(MouseEvent arg0) {}
+		    public void mouseEntered(MouseEvent e) {
+		    	if (e.getX()==position_x && e.getY()==position_y) {
+		  pan2.setToolTipText("jkbjk");
+		    	}
+		    	}  
+		    
+		    public void mouseExited(MouseEvent e){}
+			public void mouseReleased(MouseEvent e) {}
 			
 	public static void main(String [] args) {
 		FrameSensorMap f = new FrameSensorMap();
