@@ -12,11 +12,9 @@ import java.util.ArrayList;
 import org.secure.retirement.home.common.DAOException;
 import org.secure.retirement.home.common.Historic;
 import org.secure.retirement.home.common.Return_information;
-import org.secure.retirement.home.common.Type_sensor;
 import org.secure.retirement.home.service.DAO;
 import org.secure.retirement.home.service.DAOFactory;
 import org.secure.retirement.home.service.DAOUtility;
-import org.secure.retirement.home.service.simulation.*;
 
 /**
  * @author Ansary MARECAR
@@ -92,7 +90,69 @@ public class DAOHistoric implements DAO<Historic> {
 		return val_return_information;
 	}
 	
-	
+	public String add(Historic param_historic) throws SQLException {
+		// TODO Auto-generated method stub
+		
+		System.out.println("create");
+		String val_return_information = Return_information.att_notfoud.toString();
+		try {
+			String SQL_INSERT = "INSERT INTO historic (historic_datetime, historic_value, sensor_id) VALUES (  NOW(), ?, ?  )";
+			Connection connexion = null;
+			PreparedStatement preparedStatement = null;
+			ResultSet resultSet = null;
+			int status = 0;
+			try {
+				/* Get connection from the Factory */
+				connexion = daofactory.getConnection();
+				System.out.println(" execute  ");
+				System.out.println("param_historic.getSensor().getSensor_id()"+param_historic.getSensor().getSensor_id());
+				preparedStatement = DAOUtility.initPreparedRequest(
+					connexion
+					,	SQL_INSERT
+					,	true
+					,	param_historic.getHistoric_value()
+					,	param_historic.getSensor().getSensor_id()
+				);
+				status = preparedStatement.executeUpdate();
+				if( status == 0 ) {
+					System.out.println("error execute  ");
+					val_return_information = Return_information.att_db_cannot_insert.toString();
+					throw new DAOException( "Insertion error" );
+				}
+				else {
+					System.out.println("else");
+					/* take the generated id */
+					try{
+						System.out.println("generate key");
+						resultSet = preparedStatement.getGeneratedKeys();
+					}
+					catch(Exception e) {
+						val_return_information = Return_information.att_notfoud.toString();
+						System.out.println("error");
+					}
+					if ( resultSet.next() ) {
+						System.out.println(" to_return = -4  ");
+						 param_historic.setHistoric_id(resultSet.getInt( 1 ));
+						 val_return_information = String.valueOf(param_historic.getHistoric_id());
+						//to_return = -4;
+					} 
+					else {
+						val_return_information = Return_information.att_db_not_return.toString();
+						System.out.println(" insertion id is not return to us  ");
+						throw new DAOException( "insertion id is not return to us" );
+					}
+				}
+				} catch ( SQLException e ) {
+					val_return_information = Return_information.att_db_error.toString();
+					throw new DAOException( e );
+				} finally {
+					DAOUtility.closeAll(preparedStatement, connexion,   resultSet );
+				}
+		}catch(Exception e) {
+			val_return_information = Return_information.att_db_cannot_insert.toString();
+		}
+		return val_return_information.toString();
+	}
 
 	public Return_information delete(Historic obj) throws SQLException {
 		// TODO Auto-generated method stub
@@ -104,8 +164,36 @@ public class DAOHistoric implements DAO<Historic> {
 		return null;
 	}
 
-	public boolean ifFind(Historic obj) throws SQLException {
-		return false;
+	public boolean ifFind(Historic param_historic) throws SQLException {
+		// verification of the presence of the same value in the data base
+				boolean to_return = false;
+				String SQL_SELECTALL = "SELECT IF(count(*) as number from hisoric "
+						+ " where sensor_id = ? "
+						+ " and historic_datetime>=(NOW()-5)";
+				Connection connexion = null;
+			    PreparedStatement preparedStatement = null;
+			    ResultSet resultSet = null;
+			    
+			    try {
+			        /* Get connection from the Factory */
+			        connexion = daofactory.getConnection();
+			        preparedStatement = DAOUtility.initPreparedRequest(
+			        			connexion
+			        		,	SQL_SELECTALL
+			        		,	true
+			        		, 	param_historic.getSensor().getSensor_id()
+			        		);
+			        resultSet = preparedStatement.executeQuery();
+			        System.out.println("status "+resultSet);
+			        resultSet.next();
+			        if(resultSet.getInt("number") == 0 ) {
+			        	to_return = true;
+			        }
+			    }
+			    catch(Exception e){
+			    	System.out.println("Exception DAOHistoric/ifFind : "+e.getMessage());
+			    }
+				return to_return;
 	}
 
 	public Historic find(int id) throws SQLException {
