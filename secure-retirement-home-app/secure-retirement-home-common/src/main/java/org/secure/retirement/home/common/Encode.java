@@ -16,15 +16,14 @@ public class Encode {
 	/**
 	 * @param args
 	 */
-	/*
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ArrayList<Type_sensor> element = new ArrayList<Type_sensor>();
-		element.add(new Type_sensor(10,"ee"));
-		element.add(new Type_sensor(11,"ee"));
+		element.add(new Type_sensor(10,"humidity"));
+		element.add(new Type_sensor(11,"heater"));
 		to_encode(element);
 	}
-	*/
+	
 	public static String to_encode(ArrayList<?> param_data) {
 		String json = null;
 		ObjectMapper objectMapper = new ObjectMapper ();
