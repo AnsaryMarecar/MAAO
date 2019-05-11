@@ -7,7 +7,6 @@ package org.secure.retirement.home.service;
  * <p>JDBC Connexion pool</p>
  *
  */
-import java.sql.*;
 import java.util.ArrayList;
 
 
@@ -18,13 +17,11 @@ public class JDBCConnectionPool {
 	private 	static 	DAOFactory 				att_daofactory			;
 	private 	static	int			 			att_number_connection=5	;
 	private  	static 	ArrayList<DAOFactory> 	att_list=new ArrayList<DAOFactory>()		;
+	
 	/**
 	 * <p>To initiate the number of connection the array will contain</p>
-	 * 
-	 * @author amine.maza
 	 */
 	public JDBCConnectionPool() {
-		this.att_list = new ArrayList<DAOFactory>();	
 	}
 	 
 	/**
@@ -58,21 +55,12 @@ public class JDBCConnectionPool {
 		return att_list ;
 	}
 
-	// to give a connection to the user
+	// to give a connection
 	public  static DAOFactory getConnection() {	 
 			System.out.println("getConnection");
 			att_daofactory = att_list.get(0);
 			att_list.remove(0);
 			return att_daofactory;
-	}
-	
-	// To use the same object connection per user
-	/**
-	 * @deprecated
-	 * @return
-	 */
-	public static DAOFactory useConnect() {
-		return att_daofactory;
 	}
 
 	// to return the connection after finish with using it
