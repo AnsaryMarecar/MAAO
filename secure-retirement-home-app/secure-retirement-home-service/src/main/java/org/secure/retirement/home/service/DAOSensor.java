@@ -11,14 +11,14 @@ import org.secure.retirement.home.common.Return_information;
 import org.secure.retirement.home.common.Room;
 import org.secure.retirement.home.service.*;
 import org.secure.retirement.home.common.Sensor;
+import org.secure.retirement.home.common.Type_sensor;
 
 public class DAOSensor implements DAO<Sensor>{
 
 	private DAOFactory daofactory;
 	
-	public DAOSensor(DAOFactory param_daofactory) throws Exception {
+	public DAOSensor(DAOFactory param_daofactory) {
 		// TODO Auto-generated constructor stub
-		//super(param_daofactory);
 		this.daofactory = param_daofactory;
 	}
 
@@ -239,6 +239,75 @@ public class DAOSensor implements DAO<Sensor>{
 		return var_table										 ;
 	}
 
+	public ArrayList<Sensor> presentDataA() throws SQLException {
+		ArrayList<Sensor> var_table						 ;
+		var_table = new ArrayList<Sensor>()	 			 ;
+		String SQL_SELECT = "SELECT "
+				+ "		sensor.sensor_id"
+				+ ",	sensor.sensor_ip"
+				+ ",	sensor.sensor_mac"
+				+ ",	sensor.sensor_min"
+				+ ",	sensor.sensor_max"
+				+ ",	type_sensor.type_sensor_interval"
+				+ ",	type_sensor.type_sensor_name"
+				+ ",	type_sensor.type_sensor_id "
+				+ "		from sensor join type_sensor "
+				+ "		where sensor.type_sensor_id=type_sensor.type_sensor_id";
+		Connection connexion = null;
+	    PreparedStatement preparedStatement = null;
+	    ResultSet resultSet = null;
+	    try {
+	    	try {
+	        /* Get connection from the Factory */
+	        connexion = daofactory.getConnection();
+	    	}catch(Exception e0) {
+	    		System.out.println("E0: "+e0.getLocalizedMessage());
+	    	}
+	    	try{
+	        preparedStatement = DAOUtility.initPreparedRequest(
+	        			connexion
+	        		,	SQL_SELECT
+	        		,	true
+	        		);
+	    }catch(Exception e0B) {
+    		System.out.println("E0B: "+e0B.getLocalizedMessage());
+    	}
+	        try {
+	        resultSet = preparedStatement.executeQuery();
+	        System.out.println("status "+resultSet);
+	        
+	        while(resultSet.next()) {
+				try {
+	        	var_table.add(
+						
+						new Sensor(
+							resultSet.getInt("sensor_id")
+						,	new Type_sensor(
+									resultSet.getInt("type_sensor_id")
+								,	resultSet.getString("type_sensor_name")
+								, 	resultSet.getInt("type_sensor_interval")
+								)
+						,	resultSet.getString("sensor_mac")
+						,	resultSet.getString("sensor_ip")
+						,	resultSet.getDouble("sensor_min")
+						,	resultSet.getDouble("sensor_max")
+						));
+				}
+				catch(Exception e1) {
+					System.out.println("E1: "+e1.getLocalizedMessage());
+				}
+			} 
+		    }
+			catch(Exception e2) {
+				System.out.println("E2: "+e2.getLocalizedMessage());
+			}
+	    }
+	    catch(Exception e){
+	    	System.out.println("E: "+e.getLocalizedMessage());
+	    }
+		return var_table										 ;
+	}
+	
 	
 	public void close() throws SQLException {
 		// TODO Auto-generated method stub		
