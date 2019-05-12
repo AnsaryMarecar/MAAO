@@ -47,7 +47,6 @@ public class RequestHandler implements Runnable{
 	              debug += "\t -> Received on server : " + response + "\n";
 	    		  System.out.println(debug);
 	    		  ArrayList<?> val_jsontext = new ArrayList<String>(Arrays.asList(response.split(";")));
-	    		  System.out.println("val_jsontext: "+val_jsontext.toString());
 	    		  Send_information[] val_send_information = (Send_information[]) Decode.to_decode(val_jsontext.get(0).toString(), "Send_information");
 
 	    		  elements = ActionDecision.Actions( elements,daof, val_send_information,val_jsontext);
@@ -75,7 +74,7 @@ public class RequestHandler implements Runnable{
 	    	  
 	      }
     	  else {
-	    	  System.out.println("RequestHandler>else");
+	    	  System.out.println("Connection is empty");
 	      }
       }
    }

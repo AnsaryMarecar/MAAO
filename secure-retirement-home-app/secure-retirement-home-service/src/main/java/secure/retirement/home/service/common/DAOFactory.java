@@ -76,12 +76,10 @@ public class DAOFactory {
 	           throw new DAOConfigurationException( " the driver is not present in the path ", exp );
 	        }
         }
-        System.out.println("ss: "+var_instance);
         return var_instance;
     }
 
    public Connection getConnection() throws SQLException {
-	   System.out.println("getCo");
        return DriverManager.getConnection( this.link, this.username, this.password );
    }
 }

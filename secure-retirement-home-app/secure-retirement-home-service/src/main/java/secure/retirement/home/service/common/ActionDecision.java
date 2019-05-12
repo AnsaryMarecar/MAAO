@@ -98,23 +98,18 @@ public class ActionDecision {
 			  			
 			  			boolean val_bool = false;
 			  			int i = -1;
-			  			System.out.println("actiondecision>historic>add>1");
 			  			for(i = 0 ; i < ConnectionPool.getAtt_sensors().size() && !val_bool; i++) {
-			  				System.out.println("actiondecision>historic>add>for>i:"+i);
 			  				if(history[0].getSensor().getSensor_id() == ConnectionPool.getAtt_sensors().get(i).getSensor_id()) {
 			  					val_bool = true;
 			  				}
 			  			}
-			  			System.out.println("actiondecision>historic>add>2");
 			  			if(val_bool) {
-			  				System.out.println("actiondecision>historic>add>3");
 			  				if(ConnectionPool.getAtt_cache()[i].edition(history[0])) {
 			  					Risk val_risk = new Risk(history[0].getSensor(),history[0]);
 				  				DAORisk daorisk = new DAORisk(daof);
 				  				daorisk.create(val_risk);
 			  				}
 			  			}
-			  			System.out.println("actiondecision>historic>add>4");
 			  	   }
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block

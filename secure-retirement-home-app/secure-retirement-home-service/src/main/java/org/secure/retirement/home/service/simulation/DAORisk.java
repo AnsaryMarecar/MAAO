@@ -43,23 +43,39 @@ public class DAORisk implements DAO<Risk> {
 		System.out.println("create");
 		Return_information val_return_information = Return_information.att_notfoud;
 		try {
-			String SQL_INSERT = "INSERT INTO risk (sensor_id, historic_id) VALUES ( ?, ? )";
-			Connection connexion = null;
+			String SQL_INSERT = "";
+			if (param_risk.getHistoric()!=null) {
+				SQL_INSERT = "INSERT INTO risk (sensor_id, historic_id) VALUES ( ?, ? )";
+			}
+			else {
+				SQL_INSERT = "INSERT INTO risk (sensor_id) VALUES ( ? )";
+			}
+			Connection val_connection = null;
 			PreparedStatement preparedStatement = null;
 			ResultSet resultSet = null;
 			int status = 0;
 			try {
 				/* Get connection from the Factory */
-				connexion = daofactory.getConnection();
+				val_connection = daofactory.getConnection();
 				System.out.println(" execute  ");
 				System.out.println("param_risk.getSensor().getSensor_id()"+param_risk.getSensor().getSensor_id());
-				preparedStatement = DAOUtility.initPreparedRequest(
-					connexion
-					,	SQL_INSERT
-					,	true
-					,	param_risk.getSensor().getSensor_id()
-					,	param_risk.getHistoric().getHistoric_id()
-				);
+				if (param_risk.getHistoric()!=null) {
+					preparedStatement = DAOUtility.initPreparedRequest(
+							val_connection
+						,	SQL_INSERT
+						,	true
+						,	param_risk.getSensor().getSensor_id()	
+						,	param_risk.getHistoric().getHistoric_id()
+					);
+				}
+				else {
+					preparedStatement = DAOUtility.initPreparedRequest(
+								val_connection
+							,	SQL_INSERT
+							,	true
+							,	param_risk.getSensor().getSensor_id()
+						);
+				}
 				status = preparedStatement.executeUpdate();
 				if( status == 0 ) {
 					System.out.println("error execute  ");
@@ -91,7 +107,7 @@ public class DAORisk implements DAO<Risk> {
 					val_return_information = Return_information.att_db_error;
 					throw new DAOException( e );
 				} finally {
-					DAOUtility.closeAll(preparedStatement, connexion,   resultSet );
+					DAOUtility.closeAll(preparedStatement, val_connection,   resultSet );
 				}
 		}catch(Exception e) {
 			val_return_information = Return_information.att_db_cannot_insert;

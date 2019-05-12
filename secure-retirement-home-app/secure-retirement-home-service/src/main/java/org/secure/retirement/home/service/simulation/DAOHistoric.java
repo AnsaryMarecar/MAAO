@@ -185,7 +185,6 @@ public class DAOHistoric implements DAO<Historic> {
 			        		, 	param_historic.getSensor().getSensor_id()
 			        		);
 			        resultSet = preparedStatement.executeQuery();
-			        System.out.println("status "+resultSet);
 			        resultSet.next();
 			        if(resultSet.getInt("number") == 0 ) {
 			        	to_return = true;

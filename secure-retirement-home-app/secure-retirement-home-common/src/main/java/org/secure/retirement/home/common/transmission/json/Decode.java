@@ -3,7 +3,6 @@ package org.secure.retirement.home.common.transmission.json;
 import java.io.IOException;
 
 import org.secure.retirement.home.common.Historic;
-import org.secure.retirement.home.common.Level_risq;
 import org.secure.retirement.home.common.Room;
 import org.secure.retirement.home.common.Sensor;
 import org.secure.retirement.home.common.Type_sensor;
@@ -58,9 +57,6 @@ public class Decode {
 			  case "Failure":
 				    // code block
 				    break;
-			  case "Level_risq":
-				  	val_object = objectMapper.readValue(param_todecode, Level_risq[].class);
-				    break;
 			  default:
 			    // code block
 			}
@@ -69,23 +65,14 @@ public class Decode {
 	}
 	
 	public static Object[] to_decodeHistoric(String param_todecode)throws IOException {
-		System.out.println("param_todecode: "+param_todecode+" Historic 1");
 	    param_todecode = param_todecode.replace("[","");
-	    
-	    System.out.println("param_todecode: "+param_todecode+" Historic 2");
 	    param_todecode = param_todecode.replace("]","");
-	    System.out.println("param_todecode: "+param_todecode+" Historic 3");
 	    param_todecode = param_todecode.replaceAll("\"","");
-	    System.out.println("param_todecode: "+param_todecode+" Historic 4");
 	    String[] parts = param_todecode.split("/");
-	    System.out.println("parts: "+parts+" Historic 5");
 	    int val_iter = 0;
-	    System.out.println("parts.length: "+parts.length+" Historic 5");
 	    int val_length = parts.length/2;
 	    Historic []historic_tab = new Historic [val_length];
 	    for(int i = 0; i<parts.length; i=i+2) {
-	    	System.out.println("parts: "+parts[i+1]+" Historic while:"+i);
-	    	
 	    	Historic historic = new Historic(
 	    			new Sensor(Integer.parseInt(parts[i]))
 	    			,Double.parseDouble(parts[i+1])

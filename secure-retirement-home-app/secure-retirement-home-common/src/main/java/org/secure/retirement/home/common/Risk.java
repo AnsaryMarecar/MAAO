@@ -26,10 +26,18 @@ public class Risk {
 	 * @param historic
 	 */
 	public Risk(int risk_id, Sensor sensor, Historic historic) {
-		super();
 		this.risk_id = risk_id;
 		this.sensor = sensor;
 		this.historic = historic;
+	}
+
+	/**
+	 * @param risk_id
+	 * @param sensor
+	 * @param historic
+	 */
+	public Risk(Sensor sensor) {
+		this.sensor = sensor;
 	}
 	
 	/**
@@ -37,7 +45,6 @@ public class Risk {
 	 * @param sensor
 	 */
 	public Risk(Sensor sensor, Historic historic) {
-		super();
 		this.historic = historic;
 		this.sensor = sensor;
 	}

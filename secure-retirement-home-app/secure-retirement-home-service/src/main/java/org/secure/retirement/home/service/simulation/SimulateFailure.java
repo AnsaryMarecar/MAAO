@@ -3,7 +3,14 @@
  */
 package org.secure.retirement.home.service.simulation;
 
+import java.sql.SQLException;
+
+import org.secure.retirement.home.common.Historic;
+import org.secure.retirement.home.common.Risk;
+
 import secure.retirement.home.service.common.ConnectionPool;
+import secure.retirement.home.service.common.DAOFactory;
+import secure.retirement.home.service.common.JDBCConnectionPool;
 
 /**
  * @author Ansary MARECAR
@@ -11,6 +18,7 @@ import secure.retirement.home.service.common.ConnectionPool;
  */
 public class SimulateFailure extends Thread {
 
+	private DAOFactory att_daofactory;
 	/**
 	 * 
 	 */
@@ -29,8 +37,11 @@ public class SimulateFailure extends Thread {
 	/**
 	 * @param name
 	 */
-	public SimulateFailure(String name) {
+	public SimulateFailure(String name
+			, DAOFactory param_daofactory
+			) {
 		super(name);
+		//this.att_daofactory = param_daofactory;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -84,20 +95,30 @@ public class SimulateFailure extends Thread {
 
 	public void run(){
 		int i;
-		while(true) {
-			try{
+		DAORisk element_dao;
+		element_dao = new DAORisk(att_daofactory);
+		try{
+			while(true) {
 			    Thread.sleep(1000);
 			    System.out.println("true");
 				for(i = 0; i < ConnectionPool.getAtt_sensors().size(); i++) {
-					ConnectionPool.getAtt_cache()[i].isFailure();
+					 if(ConnectionPool.getAtt_cache()[i].isFailure()) {
+						 Risk val_risk = new Risk(ConnectionPool.getAtt_sensors().get(i));
+						 try {
+							 
+							element_dao.create(val_risk);
+						 } catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					 }
 				}
 			}
-			catch(InterruptedException ex){
-			    Thread.currentThread().interrupt();
-			}
-			
 		}
-		
+		catch(InterruptedException ex){
+			Thread.currentThread().interrupt();
+			//JDBCConnectionPool.AddConnection(att_daofactory);
+		}	
 	}
 	
 	/**
