@@ -31,7 +31,8 @@ class MyPanel extends JPanel{
 		drawStr(g,name,position_X,position_Y);
 		}
 		}}catch(Exception e) {}
-		for (int i =0 ; i<40 ; i++) {
+	}
+		/*for (int i =0 ; i<40 ; i++) {
 			int position_x1= FrameSensor.tabx[i];
 			int position_y1= FrameSensor.taby[i];
 			int min= FrameSensor.tabsensor_min[i];
@@ -49,7 +50,7 @@ class MyPanel extends JPanel{
 				g.fillOval(position_x1, position_y1,20,20);
 			}
 	}
-	}
+	}*/
 	// Draw Rectangle 
 	public void drawRectangle(Graphics g,int x , int y , int z, int f ) {
 		g.drawRect( x ,  y ,  z, f);
