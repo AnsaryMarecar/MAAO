@@ -18,16 +18,18 @@ public class ClientConnection implements Runnable{
    private BufferedInputStream 	att_reader 		= null		;
    private String 				att_action 		= null		;
    private String 				att_data		= null		;
+   private String 				att_class=null;
    private Frame 				att_frame					;
    
    public ClientConnection(String param_host, int param_port, 
-		   String param_action, String param_data, Frame param_frame){
+		   String param_action, String param_data,String att_class ,Frame param_frame){
       
       try {
          att_connexion 		= new Socket(param_host, param_port);   
          this.att_action 	= param_action						;
          this.att_data 		= param_data						;
          this.att_frame 	= param_frame						;
+         this.att_class =att_class;
       } catch (UnknownHostException e) {
          e.printStackTrace();
       } catch (IOException e) {
@@ -65,7 +67,7 @@ public class ClientConnection implements Runnable{
         	  }
         	  
         	  
-        	  Object[] val_object =  Decode.to_decode(response, "Sensor");
+        	  Object[] val_object =  Decode.to_decode(response, att_class);
         	  att_frame.initialise_table(val_object); 
         	 
         	  	att_frame.getOptionpane()									  ;
@@ -77,7 +79,7 @@ public class ClientConnection implements Runnable{
         	  
             }catch(Exception e) {
             	System.out.println("\t * " + "error" + " : problem with answer "+e.getMessage());
-            } 
+            }
        } catch (IOException e) {
             e.printStackTrace();
        }
