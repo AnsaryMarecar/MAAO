@@ -139,16 +139,10 @@ public class GuavaCache {
    public boolean isCurrentFailure(int param_iter, Instant param_instant_ref, Instant param_instant_min) {
 	   System.out.println("iscurrentfailure/begin");
 	   boolean to_return = false;
-	   System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()
-			   +" iscurrentfailure/val_min.getEpochSecond()"+param_instant_min
-			   +" param_instant_ref:"+param_instant_ref
-			   );
 	   if (param_instant_ref.getEpochSecond()>=param_instant_min.getEpochSecond()) {
 			to_return = false;
-			System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" iscurrentfailure/if/param_iter="+param_iter+"isCurrentFAILURE/if param_instant_ref.isAfter(value)/");
 	   }
 	   else {
-			System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" iscurrentfailure/else/param_iter="+param_iter+"isCurrentFAILURE/else param_instant_ref.isAfter(value)/");
 			to_return = true;
 	   }
 	   return to_return; 
@@ -161,52 +155,39 @@ public class GuavaCache {
 		int val_max = this.getAtt_historics().getHistoric_array().size();
 		Instant val_now = Instant.now();
 		Instant val_min = val_now.minus(this.getAtt_sensor().getType_sensor().getType_sensor_interval(),ChronoUnit.SECONDS);
-		
-		System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" isFailure>val_interval:"+val_interval+" val_max:"+val_max);
-		
+		System.out.println("--------------------------------------------"
+				+"\n"+"sensor:"+this.getAtt_sensor().getSensor_id()
+				+" tostring getHistoric:"+this.getAtt_historics().toString()
+				+"\n"+"--------------------------------------------");
 		if(val_max!=0) {
 			Instant val_current = this.getAtt_historics().getHistoric_array().get(val_max-1).getHistoric_datetime();
 			if (val_current.getEpochSecond()>=val_min.getEpochSecond()) {
 				to_return = false;
-				System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()
-						+" pas failure :"
-						+ "val_current.getEpochSecond():"+val_current.getEpochSecond()
-						+ " >= "
-						+ "val_min.getEpochSecond():"+val_min.getEpochSecond()
-						);
 		    }
 			else{ 
 				if(val_interval <= val_max) {
-					System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" isFailure>val_interface: <=val_max");//affiché
 					for(int i = val_max-1 ; ( i > (val_max-val_interval) ) && to_return ; i--) {
-						System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" isFailure>val_interface<=val_max>for>i:"+i);//affiché
 						val_current = this.getAtt_historics().getHistoric_array().get(i).getHistoric_datetime();
-						System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" isFailure>value:"+val_current);//exception
-						to_return = isCurrentFailure(i,val_current,val_min);//
-						System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" i: "+i+" to_return : "+to_return);//
+						to_return = isCurrentFailure(i,val_current,val_min);
 					}
 					if(!to_return) {
 						System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()
-								+" pas failure :"
+								+" All past element are not failure :"
 								+ "val_current.getEpochSecond():"+val_current.getEpochSecond()
 								+ " >= "
 								+ "val_min.getEpochSecond():"+val_min.getEpochSecond()
 								);
 					}else {
-						System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" FAILURE : past element are failure");
-						
+						System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" FAILURE : All past element are failure");
 					}
 				}
 				else {
-					System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" FAILURE : NB element < SIZE ");
 					to_return = true;
 				}
 			}
 		}else {
-			System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" FAILURE : 0 element");
 			to_return = true;
 		}
-		System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" EXIT");
 		return to_return;
   }
    
@@ -220,7 +201,6 @@ public class GuavaCache {
    }
 
    public boolean edition(Historic param_historic) {
-	   
 	   this.cache.invalidate(this.getAtt_sensor().getSensor_id());
 	   if(this.getAtt_historics().getHistoric_array()==null) {
 		   ArrayList<Historic> historic_array = new ArrayList<Historic>();

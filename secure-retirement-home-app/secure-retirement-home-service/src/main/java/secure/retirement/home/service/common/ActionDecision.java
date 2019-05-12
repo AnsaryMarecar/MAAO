@@ -66,53 +66,59 @@ public class ActionDecision {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			  }
-		  }
+		}
 		else if(val_send_information[0].getSend_information_table().toString().equals("Historic")) {
 			  DAOHistoric element_dao;   
 			  try {
-				  element_dao = new DAOHistoric(daof);
-				  Historic[] history = null;
-				  try {
-			  		history = (Historic[]) Decode.to_decode(val_jsontext.get(1).toString(), "Historic");
-			  		if(val_send_information[0].getSend_information_crud_action().toString().equals("SELECT ALL")) {	
-			  			System.out.println("RequestHandler>select all");
-			  			try {
-			  				Thread.sleep(500);
-			  				elements = element_dao.presentData();
-			  			}catch (Exception e) {
-			  				e.printStackTrace();
-			  			}
-			  	   }
-			  	   else if(val_send_information[0].getSend_information_crud_action().toString().equals("ADD")) {
-			  			String val_message_add = element_dao.add(history[0]);
-			  			history[0].setHistoric_id(Integer.parseInt(val_message_add));
-			  			ArrayList<Return_information> return_info_array = new ArrayList<Return_information>();
-			  			
-			  			//return_info_array.add(val_message_add);
-			  			elements = return_info_array;
-			  			
-			  			boolean val_bool = false;
-			  			int i = -1;
-			  			for(i = 0 ; i < ConnectionPool.getAtt_sensors().size() && !val_bool; i++) {
-			  				if(history[0].getSensor().getSensor_id() == ConnectionPool.getAtt_sensors().get(i).getSensor_id()) {
-			  					val_bool = true;
+				  	element_dao = new DAOHistoric(daof);
+				  	Historic[] history = null;
+				  	try {
+				  		history = (Historic[]) Decode.to_decode(val_jsontext.get(1).toString(), "Historic");
+			  			if(val_send_information[0].getSend_information_crud_action().toString().equals("SELECT ALL")) {	
+			  				System.out.println("RequestHandler>select all");
+			  				try {
+			  					Thread.sleep(500);
+			  					elements = element_dao.presentData();
+			  				}catch (Exception e) {
+			  					e.printStackTrace();
 			  				}
 			  			}
-			  			if(val_bool) {
-			  				if(ConnectionPool.getAtt_cache()[i].edition(history[0])) {
-			  					Risk val_risk = new Risk(history[0].getSensor(),history[0]);
-				  				DAORisk daorisk = new DAORisk(daof);
-				  				daorisk.create(val_risk);
-			  				}
+			  			else if(val_send_information[0].getSend_information_crud_action().toString().equals("ADD")) {
+			  				
+			  				String val_message_add = element_dao.add(history[0]);
+			  				history[0].setHistoric_id(Integer.parseInt(val_message_add));
+			  				ArrayList<Return_information> return_info_array = new ArrayList<Return_information>();
+			  			
+			  				//return_info_array.add(val_message_add);
+			  				elements = return_info_array;
+			  				boolean val_bool = false;
+			  				int i = -1;
+			  				int val_number = -1;
+				  			for(i = 0 ; i < ConnectionPool.getAtt_sensors().size() && (!val_bool); i++) {
+				  					if(history[0].getSensor().getSensor_id() == ConnectionPool.getAtt_cache()[i].getAtt_sensor().getSensor_id()) {
+				  						System.out.println("i:"+i+"***************************************************************"
+				  							+"\n"+"i:"+i+" History getsensor_id: "+history[0].getSensor().getSensor_id()
+				  							+"\n"+"i:"+i+" connectionpool getsensor_id: "+ConnectionPool.getAtt_cache()[i].getAtt_sensor().getSensor_id() 
+				  							+"\n"+"i: "+i+"***************************************************************");
+				  						val_number = i; 
+				  						val_bool = true;
+				  					}
+				  			}
+				  			if(val_bool) {	
+				  				if(ConnectionPool.getAtt_cache()[val_number].edition(history[0])) {
+				  					Risk val_risk = new Risk(history[0].getSensor(),history[0]);
+				  					DAORisk daorisk = new DAORisk(daof);
+				  					daorisk.create(val_risk);
+				  				}
+				  			}
 			  			}
-			  	   }
-				  }catch(Exception e) {
-					System.out.println(val_send_information[0].getSend_information_crud_action().toString()+" e: "+e.getLocalizedMessage());
-				  }
-			  } catch (Exception e1) {
-			  	// TODO Auto-generated catch block
-			  	e1.printStackTrace();
-			  }
+				  	}catch(Exception e) {
+				  		System.out.println(val_send_information[0].getSend_information_crud_action().toString()+" e: "+e.getLocalizedMessage());
+				  	}
+			 } catch (Exception e1) {
+				 // TODO Auto-generated catch block
+			  	 e1.printStackTrace();
+			 }
 		  }
 		  else if(val_send_information[0].getSend_information_table().toString().equals("Room")) {
 			DAORoom element_dao;   

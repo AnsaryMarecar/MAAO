@@ -96,14 +96,20 @@ public class SimulateFailure extends Thread {
 	}
 
 	public void run(){
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		int i;
 			try{
 				while(true) {
 				    Thread.sleep(2000);
-					for(i = 0; i < ConnectionPool.getAtt_sensors().size(); i++) {
+					for(i = 0; i < ConnectionPool.getAtt_cache().length; i++) {
 						 if(ConnectionPool.getAtt_cache()[i].isFailure()) {
 							System.out.println("****************failureeee monsieur*********");
-							Failure failure = new Failure(ConnectionPool.getAtt_sensors().get(i));
+							Failure failure = new Failure(ConnectionPool.getAtt_cache()[i].getAtt_sensor());
 							System.out.println("id_sensor : "+failure.getSensor().getSensor_id());
 							DAOFailure element_dao;
 							element_dao = new DAOFailure(att_daofactory);
