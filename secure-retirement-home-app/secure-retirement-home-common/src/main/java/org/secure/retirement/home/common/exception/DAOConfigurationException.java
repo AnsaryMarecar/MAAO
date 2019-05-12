@@ -1,4 +1,4 @@
-package org.secure.retirement.home.common;
+package org.secure.retirement.home.common.exception;
 
 /**
  * <p> manage Configuration exception </p>
@@ -14,11 +14,8 @@ public class DAOConfigurationException extends RuntimeException {
 	 * @return
 	 * @author 	ansary.marecar
 	 */
-	
 	public DAOConfigurationException(String param_message) {
 		super(param_message);
-		//jo1 = new JOptionPane();
-		//jo1.showMessageDialog(null, "Error while connecting to database", "Error", JOptionPane.ERROR_MESSAGE);
 	}
 	
 	/**
@@ -30,8 +27,6 @@ public class DAOConfigurationException extends RuntimeException {
 	 */
 	public DAOConfigurationException(String param_message, Throwable param_cause) {
 		super(param_message, param_cause);
-		//jo1 = new JOptionPane();
-		//jo1.showMessageDialog(null, "Error while connecting to database", "Error", JOptionPane.ERROR_MESSAGE);
 	}
 	
 	/**
@@ -43,7 +38,5 @@ public class DAOConfigurationException extends RuntimeException {
 	 */
 	public DAOConfigurationException(Throwable param_cause) {
 		super(param_cause);
-		//jo1 = new JOptionPane();
-		//jo1.showMessageDialog(null, "Error while connecting to database", "Error", JOptionPane.ERROR_MESSAGE);
 	}
 }

@@ -31,7 +31,7 @@ public class FrameSimulator extends JFrame implements ActionListener{
 		// TODO Auto-generated constructor stub
 		//Generality
 		this.setSize(120, 120)									 		;
-		this.setLocationRelativeTo(null)						 		;               
+		this.setLocationRelativeTo(null)						 		; 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)		 		;
 		
 		
@@ -56,17 +56,16 @@ public class FrameSimulator extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent param_actionevent) {
 		// TODO Auto-generated method stub
 		Object source = param_actionevent.getSource();
-		if (source == button_stop) {
-			
-		}
-		else if (source == button_launch){
+		Thread t;
+		if (source == button_launch){
 			for(int i=1; i<3;i++) {
-				Simulation val_simulation = new Simulation(this, i)		;
-				Thread t = new Thread(val_simulation)					;
+				Simulation val_simulation = new Simulation(this, i);
+				t = new Thread(val_simulation);
 				t.start();
 			}
-			//Parser.to_parse(1, this);
-			
+		}
+		else if (source == button_stop) {
+			//t.stop();
 		}
 	}
 

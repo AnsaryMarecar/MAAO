@@ -1,20 +1,14 @@
-package org.secure.retirement.home.service;
+package secure.retirement.home.service.common;
 /**
  * 
  */
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
-import org.secure.retirement.home.common.Return_information;
+import org.secure.retirement.home.common.transmission.information.Return_information;
 public interface DAO<T> {
-	
-	
+
 	public abstract Return_information create(T obj) 		throws SQLException;
 	public abstract Return_information delete(T obj)	 	throws SQLException;
 	public abstract Return_information update(T obj) 		throws SQLException;
@@ -24,5 +18,4 @@ public interface DAO<T> {
 	public abstract void close()				throws SQLException;
 	public abstract ArrayList<T> presentData() 	throws SQLException;
 
-	
 }

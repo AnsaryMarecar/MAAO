@@ -1,4 +1,4 @@
-package org.secure.retirement.home.service;
+package secure.retirement.home.service.common;
 
 /**
  * @author Ansary MARECAR
@@ -12,18 +12,18 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.secure.retirement.home.common.Decode;
-import org.secure.retirement.home.common.Encode;
-import org.secure.retirement.home.common.Send_information;
+import org.secure.retirement.home.common.transmission.information.Send_information;
+import org.secure.retirement.home.common.transmission.json.Decode;
+import org.secure.retirement.home.common.transmission.json.Encode;
 
 public class RequestHandler implements Runnable{
 
-   private Socket sock;
-   private PrintWriter writer = null;
-   private BufferedInputStream reader = null;
+   private Socket 				sock		 ;
+   private PrintWriter 			writer = null;
+   private BufferedInputStream 	reader = null;
    
-   public RequestHandler(Socket pSock){
-      sock = pSock;
+   public RequestHandler(Socket param_sock){
+      sock = param_sock;
    }
    
    //traitment is launched in a separate thread
@@ -31,16 +31,10 @@ public class RequestHandler implements Runnable{
       String to_return = ""; 
       boolean closeConnection = false;
       ArrayList<?> elements = new ArrayList<Object>();
-      System.out.println("requesthandler>before jdbc is empty");
       while(!sock.isClosed()){
     	  if (!(JDBCConnectionPool.displayConnex().isEmpty())) {
-    		  System.out.println("requesthandler>connection isnotempty");
-    		  
-    		  System.out.println("requesthandler>before try");
 	    	  try {
 	    		  DAOFactory daof = JDBCConnectionPool.getConnection(); //getconnection
-	    		  System.out.println("requesthandler>on try");
-	    		  
 	    		  writer = new PrintWriter(sock.getOutputStream());
 	    		  reader = new BufferedInputStream(sock.getInputStream());
 	    		  String response = "";
@@ -52,12 +46,11 @@ public class RequestHandler implements Runnable{
 	              debug += " port : " + remote.getPort() + ".\n";
 	              debug += "\t -> Received on server : " + response + "\n";
 	    		  System.out.println(debug);
-	              //TODO REVOIR ENTIEREMENT CETTE PARTIE 
 	    		  ArrayList<?> val_jsontext = new ArrayList<String>(Arrays.asList(response.split(";")));
 	    		  System.out.println("val_jsontext: "+val_jsontext.toString());
 	    		  Send_information[] val_send_information = (Send_information[]) Decode.to_decode(val_jsontext.get(0).toString(), "Send_information");
 
-	    		  elements = ActionDecision.Actions( elements,daof, val_send_information,val_jsontext );
+	    		  elements = ActionDecision.Actions( elements,daof, val_send_information,val_jsontext);
 	    		  
 	    		  to_return = Encode.to_encode(elements);
 	    		  closeConnection = true;

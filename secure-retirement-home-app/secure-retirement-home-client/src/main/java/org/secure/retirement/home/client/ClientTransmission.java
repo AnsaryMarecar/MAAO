@@ -6,9 +6,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import org.secure.retirement.home.common.DAOConfigurationException;
-import org.secure.retirement.home.common.Encode;
-import org.secure.retirement.home.common.Send_information;
+import org.secure.retirement.home.common.exception.DAOConfigurationException;
+import org.secure.retirement.home.common.transmission.information.Send_information;
+import org.secure.retirement.home.common.transmission.json.Encode;
 
 public class ClientTransmission {
 	

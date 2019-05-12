@@ -13,7 +13,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.secure.retirement.home.common.*;
-import org.secure.retirement.home.service.*;
+import org.secure.retirement.home.common.exception.DAOException;
+import org.secure.retirement.home.common.transmission.information.Return_information;
+
+import secure.retirement.home.service.common.DAO;
+import secure.retirement.home.service.common.DAOFactory;
+import secure.retirement.home.service.common.DAOUtility;
 
 
 /**
@@ -29,7 +34,6 @@ public class DAOType_sensor implements DAO<Type_sensor> {
 	 */
 	public DAOType_sensor(DAOFactory param_daofactory) throws Exception {
 		// TODO Auto-generated constructor stub
-		//super(param_daofactory);
 		this.daofactory = param_daofactory;
 	}
 
@@ -142,8 +146,7 @@ public class DAOType_sensor implements DAO<Type_sensor> {
 		Return_information val_return_information = Return_information.att_notfoud;
 		String SQL_UPDATE = "UPDATE type_sensor set type_sensor_name = ? WHERE type_sensor.type_sensor_id = ?";
 		Connection connexion = null;
-		PreparedStatement preparedStatement = null;	    
-		Type_sensor var_type_sensor = null;
+		PreparedStatement preparedStatement = null;	  
 		int status = 0;
 		try {
 			/* Get connection from the Factory */
@@ -239,7 +242,7 @@ public class DAOType_sensor implements DAO<Type_sensor> {
 	    }
 		return var_table										 ;
 	}
-
+/**
 	private static Type_sensor map( ResultSet resultSet ) throws SQLException {
 	    Type_sensor var_type_sensor = new Type_sensor();
 	    
@@ -247,7 +250,7 @@ public class DAOType_sensor implements DAO<Type_sensor> {
 	    var_type_sensor.setType_sensor_name( resultSet.getString( "nom" ) );
 	    return var_type_sensor;
 	}
-	
+**/	
 	public void close() throws SQLException {
 		// TODO Auto-generated method stub
 		

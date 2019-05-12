@@ -1,4 +1,4 @@
-package org.secure.retirement.home.common;
+package org.secure.retirement.home.common.exception;
 /**
  * @author ansary.marecar
  *

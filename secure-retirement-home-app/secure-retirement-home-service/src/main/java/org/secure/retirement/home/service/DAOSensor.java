@@ -6,19 +6,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import org.secure.retirement.home.common.DAOException;
-import org.secure.retirement.home.common.Return_information;
-import org.secure.retirement.home.common.Room;
-import org.secure.retirement.home.service.*;
+import secure.retirement.home.service.common.DAO;
+import secure.retirement.home.service.common.DAOFactory;
+import secure.retirement.home.service.common.DAOUtility;
+
 import org.secure.retirement.home.common.Sensor;
+import org.secure.retirement.home.common.Type_sensor;
+import org.secure.retirement.home.common.exception.DAOException;
+import org.secure.retirement.home.common.transmission.information.Return_information;
 
 public class DAOSensor implements DAO<Sensor>{
 
 	private DAOFactory daofactory;
 	
-	public DAOSensor(DAOFactory param_daofactory) throws Exception {
-		// TODO Auto-generated constructor stub
-		//super(param_daofactory);
+	public DAOSensor(DAOFactory param_daofactory)  {
 		this.daofactory = param_daofactory;
 	}
 
@@ -31,7 +32,7 @@ public class DAOSensor implements DAO<Sensor>{
 		Return_information val_return_information = Return_information.att_notfoud;
 		try {
 			if(ifFind(param_sensor)) {
-				String SQL_INSERT = "INSERT INTO sensor (type_sensor,position_x,position_y,sensor_min,sensor_max,sensor_ip,sensor_mac) VALUES ( ?,?,?,?,?,?,?)";
+				String SQL_INSERT = "INSERT INTO sensor (type_sensor_id,sensor_positionX,sensor_positionY,sensor_min,sensor_max,sensor_ip,sensor_mac) VALUES ( ?,?,?,?,?,?,?)";
 				
 				Connection val_connection = null;
 				PreparedStatement val_preparedStatement = null;
@@ -46,13 +47,13 @@ public class DAOSensor implements DAO<Sensor>{
 							,	SQL_INSERT
 							,	true
 							
-							,   param_sensor.getType_sensor()
-							,   param_sensor.getPosition_x()
-							,   param_sensor.getPosition_y()
+							,   param_sensor.getType_sensor().getType_sensor_id()
+							,   param_sensor.getSensor_positionX()
+							,   param_sensor.getSensor_positionY()
 							,   param_sensor.getSensor_min()
 							,   param_sensor.getSensor_max()
-							,   param_sensor.getAddress_ip()
-							,   param_sensor.getAddress_mac()
+							,   param_sensor.getSensor_ip()
+							,   param_sensor.getSensor_mac()
 						//	,   param_sensor.getRisq_id()
 
 							);
@@ -102,9 +103,8 @@ public class DAOSensor implements DAO<Sensor>{
 	 */
 	public Return_information delete( Sensor param_sensor) throws SQLException {
 		//Remove
-		String s = param_sensor.getType_sensor();
 		Return_information val_return_information = Return_information.att_notfoud;
-		String SQL_DELETE = " DELETE FROM sensor WHERE type_sensor =" +	param_sensor.getSensor_id();
+		String SQL_DELETE = " DELETE FROM sensor WHERE sensor_id =" +	param_sensor.getSensor_id();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		int status = 0;
@@ -139,14 +139,13 @@ public class DAOSensor implements DAO<Sensor>{
 	}
 
 	public Return_information update( Sensor param_sensor ) throws SQLException {
-		Return_information val_return_information = Return_information.att_notfoud;
+	/**	Return_information val_return_information = Return_information.att_notfoud;
 		String SQL_UPDATE = "UPDATE sensor set sensor_status = ? WHERE sensor_id = ?";
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;	    
 		Sensor var_sensor = null;
 		int status = 0;
 		try {
-			/* Get connection from the Factory */
 			connexion = daofactory.getConnection();
 			preparedStatement = DAOUtility.initPreparedRequest( 
 			        		connexion
@@ -178,18 +177,19 @@ public class DAOSensor implements DAO<Sensor>{
 			DAOUtility.closeStatementConnection(preparedStatement, connexion);
 		}
 		return val_return_information;
+		**/
+		return null;
 	}
 
 	public boolean ifFind(Sensor param_sensor) throws SQLException {
 		// verification of the presence of the same value in the data base
-		boolean to_return = false;
+		/**boolean to_return = false;
 		String SQL_SELECTALL = "SELECT count(*) as number from sensor where type_sensor = ? ";
 		Connection connexion = null;
 	    PreparedStatement preparedStatement = null;
 	    ResultSet resultSet = null;
 	    
 	    try {
-	        /* Get connection from the Factory */
 	        connexion = daofactory.getConnection();
 	        preparedStatement = DAOUtility.initPreparedRequest(
 	        			connexion
@@ -211,6 +211,8 @@ public class DAOSensor implements DAO<Sensor>{
 	    {
 	    }
 		return to_return;
+		**/
+		return false;
 	}
 
 	public Sensor find(int id) throws SQLException {
@@ -218,47 +220,10 @@ public class DAOSensor implements DAO<Sensor>{
 		return null;
 	}
 
-	
-	public ArrayList<Sensor> presentData() throws SQLException {
-		ArrayList<Sensor> var_table						 ;
-		var_table = new ArrayList<Sensor>()	 			 ;
-		String SQL_SELECTALL = "SELECT * from sensor ";
-		Connection connexion = null;
-	    PreparedStatement preparedStatement = null;
-	    ResultSet resultSet = null;
-	    try {
-	        /* Get connection from the Factory */
-	        connexion = daofactory.getConnection();
-	        preparedStatement = DAOUtility.initPreparedRequest(
-	        			connexion
-	        		,	SQL_SELECTALL
-	        		,	true
-	        		);
-	        resultSet = preparedStatement.executeQuery();
-	        System.out.println("status "+resultSet);
-	        while(resultSet.next()) {
-				var_table.add(
-						new Sensor(
-								resultSet.getInt("sensor_id"),
-								resultSet.getString("type_sensor"),
-								resultSet.getInt("position_x"),
-							     resultSet.getInt("position_y"),
-							   resultSet.getInt("sensor_min"),
-							  resultSet.getInt("sensor_max"),
-							   resultSet.getString("sensor_ip"),
-							  resultSet.getString("sensor_mac")
-						))											 ;
-			} 
-	    }
-	    catch(Exception e)
-	    {
-	    }
-		return var_table										 ;
-	}
 	private static Sensor map( ResultSet resultSet ) throws SQLException {
 	    Sensor var_sensor = new Sensor();
 	    
-	    var_sensor.setSensor_id( resultSet.getInt( "id" ) );
+	/**    var_sensor.setSensor_id( resultSet.getInt( "id" ) );
 	    var_sensor.setType_sensor( resultSet.getString( "nom" ) );
 	    var_sensor.setPosition_x( resultSet.getInt( "x" ) );
 	    var_sensor.setPosition_y( resultSet.getInt( "y" ) );
@@ -266,10 +231,83 @@ public class DAOSensor implements DAO<Sensor>{
 	    var_sensor.setSensor_max( resultSet.getInt( "sensor_max" ) );
 	    var_sensor.setAddress_ip( resultSet.getString( "sensor_ip" ) );
 	    var_sensor.setAddress_mac( resultSet.getString( "sensor_mac" ) );
+	 **/
 	    return var_sensor;
 	    
 	}
 	
+	public ArrayList<Sensor> presentData() throws SQLException {
+		ArrayList<Sensor> var_table						 ;
+		var_table = new ArrayList<Sensor>()	 			 ;
+		String SQL_SELECT = "SELECT "
+				+ "		sensor.sensor_id"
+				+ ",	sensor.sensor_ip"
+				+ ",	sensor.sensor_mac"
+				+ ",	sensor.sensor_min"
+				+ ",	sensor.sensor_max"
+				+ ",	sensor.sensor_positionX"
+				+ ",	sensor.sensor_positionY"
+				+ ",	type_sensor.type_sensor_interval"
+				+ ",	type_sensor.type_sensor_name"
+				+ ",	type_sensor.type_sensor_id "
+				+ "		from sensor join type_sensor "
+				+ "		where sensor.type_sensor_id=type_sensor.type_sensor_id";
+		Connection connexion = null;
+	    PreparedStatement preparedStatement = null;
+	    ResultSet resultSet = null;
+	    try {
+	    	try {
+	        /* Get connection from the Factory */
+	        connexion = daofactory.getConnection();
+	    	}catch(Exception e0) {
+	    		System.out.println("E0: "+e0.getLocalizedMessage());
+	    	}
+	    	try{
+	        preparedStatement = DAOUtility.initPreparedRequest(
+	        			connexion
+	        		,	SQL_SELECT
+	        		,	true
+	        		);
+	    }catch(Exception e0B) {
+    		System.out.println("E0B: "+e0B.getLocalizedMessage());
+    	}
+	        try {
+	        resultSet = preparedStatement.executeQuery();
+	        System.out.println("status "+resultSet);
+	        
+	        while(resultSet.next()) {
+				try {
+	        	var_table.add(
+						
+						new Sensor(
+							resultSet.getInt("sensor_id")
+						,	new Type_sensor(
+									resultSet.getInt("type_sensor_id")
+								,	resultSet.getString("type_sensor_name")
+								, 	resultSet.getInt("type_sensor_interval")
+								)
+						,	resultSet.getString("sensor_mac")
+						,	resultSet.getString("sensor_ip")
+						,	resultSet.getDouble("sensor_min")
+						,	resultSet.getDouble("sensor_max")
+						,	resultSet.getDouble("sensor_positionX")
+						,	resultSet.getDouble("sensor_positionY")
+						));
+				}
+				catch(Exception e1) {
+					System.out.println("E1: "+e1.getLocalizedMessage());
+				}
+			} 
+		    }
+			catch(Exception e2) {
+				System.out.println("E2: "+e2.getLocalizedMessage());
+			}
+	    }
+	    catch(Exception e){
+	    	System.out.println("E: "+e.getLocalizedMessage());
+	    }
+		return var_table										 ;
+	}
 	
 	public void close() throws SQLException {
 		// TODO Auto-generated method stub		
@@ -279,7 +317,6 @@ public class DAOSensor implements DAO<Sensor>{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	
 

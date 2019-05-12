@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.secure.retirement.home.common;
+package org.secure.retirement.home.common.transmission.information;
 
 /**
  * @author Ansary MARECAR

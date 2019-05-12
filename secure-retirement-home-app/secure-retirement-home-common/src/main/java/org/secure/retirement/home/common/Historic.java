@@ -1,6 +1,7 @@
 package org.secure.retirement.home.common;
 
-import javax.print.attribute.DateTimeSyntax;
+import java.time.Instant;
+
 import org.secure.retirement.home.common.Sensor;
 /**
  * @author Ansary MARECAR
@@ -10,19 +11,20 @@ public class Historic {
 	
 	private int 			historic_id			= 0;
 	private Sensor 			sensor				= null;
-	private DateTimeSyntax 	historic_datetime	= null;
+	private Instant 		historic_datetime	= Instant.now();
 	private double			historic_value		= 0.0;
 	
 	
 	
-	public Historic(int historic_id, Sensor sensor, DateTimeSyntax historic_datetime, double historic_value) {
+	public Historic(int historic_id, Sensor sensor, Instant historic_datetime, double historic_value) {
 
 		this.historic_id = historic_id;
 		this.sensor = sensor;
 		this.historic_datetime = historic_datetime;
 		this.historic_value = historic_value;
+		this.historic_datetime = Instant.now();
+		System.out.println(this.getHistoric_datetime());
 	}
-	
 	 
 	
 	/**
@@ -35,6 +37,8 @@ public class Historic {
 		this.historic_id = historic_id;
 		this.sensor = sensor;
 		this.historic_value = historic_value;
+		this.historic_datetime = Instant.now();
+		System.out.println(this.getHistoric_datetime());
 	}
 	
 	/**
@@ -45,6 +49,9 @@ public class Historic {
 
 		this.sensor = sensor;
 		this.historic_value = historic_value;
+		this.historic_datetime = Instant.now();
+		this.historic_datetime = Instant.now();
+		System.out.println(this.getHistoric_datetime());
 	}
 
 	/**
@@ -68,24 +75,14 @@ public class Historic {
 		
 		return sensor;
 	}
-	/**
-	 * @param sensor the sensor to set
-	 */
-	public void setSensor(Sensor sensor) {
-		this.sensor = sensor;
-	}
+
 	/**
 	 * @return the historic_datetime
 	 */
-	public DateTimeSyntax getHistoric_datetime() {
+	public Instant getHistoric_datetime() {
 		return historic_datetime;
 	}
-	/**
-	 * @param historic_datetime the historic_datetime to set
-	 */
-	public void setHistoric_datetime(DateTimeSyntax historic_datetime) {
-		this.historic_datetime = historic_datetime;
-	}
+
 	/**
 	 * @return the historic_value
 	 */
@@ -98,13 +95,18 @@ public class Historic {
 	public void setHistoric_value(double historic_value) {
 		this.historic_value = historic_value;
 	}
-	
+
+
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "Historic [historic_id=" + historic_id + ", sensor=" + sensor + ", historic_datetime="
-				+ historic_datetime + ", historic_value=" + historic_value + "]";
+		return "Historic [getHistoric_id()=" + getHistoric_id() + ", getSensor()=" + getSensor()
+				+ ", getHistoric_datetime()=" + getHistoric_datetime() + ", getHistoric_value()=" + getHistoric_value()
+				+ "]";
 	}
+	
+
 }

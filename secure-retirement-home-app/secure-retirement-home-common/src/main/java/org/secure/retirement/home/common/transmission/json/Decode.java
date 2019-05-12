@@ -1,6 +1,15 @@
-package org.secure.retirement.home.common;
+package org.secure.retirement.home.common.transmission.json;
 
 import java.io.IOException;
+
+import org.secure.retirement.home.common.Historic;
+import org.secure.retirement.home.common.Level_risq;
+import org.secure.retirement.home.common.Room;
+import org.secure.retirement.home.common.Sensor;
+import org.secure.retirement.home.common.Type_sensor;
+import org.secure.retirement.home.common.transmission.information.Return_information;
+import org.secure.retirement.home.common.transmission.information.Send_information;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**

@@ -1,7 +1,9 @@
-package org.secure.retirement.home.common;
+package org.secure.retirement.home.common.transmission.json;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import org.secure.retirement.home.common.Type_sensor;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;

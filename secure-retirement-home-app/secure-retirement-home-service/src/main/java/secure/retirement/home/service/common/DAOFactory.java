@@ -1,4 +1,4 @@
-package org.secure.retirement.home.service;
+package secure.retirement.home.service.common;
 
 import java.io.InputStream;
 import java.sql.Connection;
@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import org.secure.retirement.home.common.*;
+import org.secure.retirement.home.common.exception.DAOConfigurationException;
 
 /**
  * <p>Have a connexion with the database</p>
@@ -69,7 +70,7 @@ public class DAOFactory {
 	        }
 	
 	        try {
-	        	Object newInstanceDriver = Class.forName( var_driver );
+	        	 Class.forName( var_driver );
 	        	var_instance = new DAOFactory( var_link, var_username, var_password );
 	        } catch ( ClassNotFoundException exp ) {
 	           throw new DAOConfigurationException( " the driver is not present in the path ", exp );

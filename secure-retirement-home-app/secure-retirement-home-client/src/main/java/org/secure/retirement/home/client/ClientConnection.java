@@ -7,8 +7,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import javax.swing.JOptionPane;
 
-import org.secure.retirement.home.common.Decode;
 import org.secure.retirement.home.common.Type_sensor;
+import org.secure.retirement.home.common.transmission.json.Decode;
 import org.secure.retirement.home.frame.Frame;
 
 public class ClientConnection implements Runnable{
