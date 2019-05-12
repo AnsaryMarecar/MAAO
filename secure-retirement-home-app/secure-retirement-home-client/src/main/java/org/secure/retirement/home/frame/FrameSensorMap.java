@@ -178,19 +178,19 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 			add.addActionListener(this);
 			update.addActionListener(this);
 			delete.addActionListener(this);
-				
+		
 			this.setLocationRelativeTo(null);
 			this.setVisible(true);
+			
+			
+	
 			
 		}
 		public void actionPerformed(ActionEvent event) {
 			//à mettre dans la classe de melissa 
 			if(event.getSource()==add) {
-				 g = pan2.getGraphics();
-				g.setColor(Color.RED);
-			g.fillOval(this.position_x, this.position_y,20,20);
 			
-	
+	FrameSensor f= new FrameSensor();
 	
 			}
 
