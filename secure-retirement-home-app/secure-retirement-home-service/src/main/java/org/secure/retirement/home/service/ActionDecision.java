@@ -125,37 +125,37 @@ public class ActionDecision {
 			  }
 		  }
 		  else if(val_send_information[0].getSend_information_table().toString().equals("Sensor")) {
-			  DAOSensor element_dao;   
-			  try {
-				  element_dao = new DAOSensor(daof);
-				  Sensor[] sensors = null;
-				  try {
-			  		sensors = (Sensor[]) Decode.to_decode(val_jsontext.get(1).toString(), "Sensor");
-				  }catch(Exception e) {
-					  System.out.println(val_send_information[0].getSend_information_crud_action().toString()+" e: "+e.getLocalizedMessage());
+				DAOSensor element_dao;   
+				try {
+					element_dao = new DAOSensor(daof);
+					Sensor[] sensors= null;
+					  try {
+				  		sensors = (Sensor[]) Decode.to_decode(val_jsontext.get(1).toString(), "Sensor");
+					  }catch(Exception e) {
+						  System.out.println(val_send_information[0].getSend_information_crud_action().toString()+" e: "+e.getLocalizedMessage());
+					  }
+				      if(val_send_information[0].getSend_information_crud_action().toString().equals("SELECT ALL")) {	
+				  			//Select All
+				  			try {
+				  				Thread.sleep(500);
+				  				elements = element_dao.presentData();
+				  			}catch (Exception e) {
+				  				e.printStackTrace();
+				  			}
+				  	   }
+				  	   else if(val_send_information[0].getSend_information_crud_action().toString().equals("ADD")) {
+				  		   	//Add
+				  		   	Return_information val_message = element_dao.create(sensors[0]);
+				  		   	ArrayList<Return_information> val_return_info = new ArrayList<Return_information>();
+				  			val_return_info.add(val_message);
+				  			elements = val_return_info;
+				  	   }
+				  } catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				  }
-			      if(val_send_information[0].getSend_information_crud_action().toString().equals("SELECT ALL")) {	
-			  			System.out.println("RequestHandler>select all");
-			  			try {
-			  				Thread.sleep(500);
-			  				elements = element_dao.presentData();
-			  			}catch (Exception e) {
-			  				e.printStackTrace();
-			  			}
-			  	   }
-			  	   else if(val_send_information[0].getSend_information_crud_action().toString().equals("ADD")) {
-			  			System.out.println("RequestHandler>add");
-			  			Return_information val_message = element_dao.create(sensors[0]);
-			  			ArrayList<Return_information> test = new ArrayList<Return_information>();
-			  			test.add(val_message);
-			  			elements = test;
-			  	   }
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		  }
-		
+				
+			  }
 		return elements;
 	}
 }
