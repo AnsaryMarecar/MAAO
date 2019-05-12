@@ -31,7 +31,7 @@ public class DAOSensor implements DAO<Sensor>{
 		Return_information val_return_information = Return_information.att_notfoud;
 		try {
 			if(ifFind(param_sensor)) {
-				String SQL_INSERT = "INSERT INTO sensor (sensor_status,zone_id,type_sensor_id,risq_id  ) VALUES ( ?,?,?,? )";
+				String SQL_INSERT = "INSERT INTO sensor (type_sensor,position_x,position_y,sensor_min,sensor_max,sensor_ip,sensor_mac) VALUES ( ?,?,?,?,?,?,?)";
 				
 				Connection val_connection = null;
 				PreparedStatement val_preparedStatement = null;
@@ -45,9 +45,14 @@ public class DAOSensor implements DAO<Sensor>{
 							val_connection
 							,	SQL_INSERT
 							,	true
-							,	param_sensor.getSensor_status()
-							,   param_sensor.getRoom_id()
+							
 							,   param_sensor.getType_sensor()
+							,   param_sensor.getPosition_x()
+							,   param_sensor.getPosition_y()
+							,   param_sensor.getSensor_min()
+							,   param_sensor.getSensor_max()
+							,   param_sensor.getAddress_ip()
+							,   param_sensor.getAddress_mac()
 						//	,   param_sensor.getRisq_id()
 
 							);
@@ -144,9 +149,14 @@ public class DAOSensor implements DAO<Sensor>{
 			        		connexion
 			        	,	SQL_UPDATE
 						,	true
-						,	param_sensor.getSensor_status()
-						,   param_sensor.getRoom_id()
+						,	param_sensor.getSensor_id()
 						,   param_sensor.getType_sensor()
+						,   param_sensor.getPosition_x()
+						,   param_sensor.getPosition_y()
+						,   param_sensor.getSensor_min()
+						,   param_sensor.getSensor_max()
+						,   param_sensor.getAddress_ip()
+						,   param_sensor.getAddress_mac()
 					//	,   param_sensor.getRisq_id()
 			       		);
 			status = preparedStatement.executeUpdate();
@@ -170,7 +180,7 @@ public class DAOSensor implements DAO<Sensor>{
 	public boolean ifFind(Sensor param_sensor) throws SQLException {
 		// verification of the presence of the same value in the data base
 		boolean to_return = false;
-		String SQL_SELECTALL = "SELECT count(*) as number from sensor where sensor_id = ? ";
+		String SQL_SELECTALL = "SELECT count(*) as number from sensor where type_sensor = ? ";
 		Connection connexion = null;
 	    PreparedStatement preparedStatement = null;
 	    ResultSet resultSet = null;
@@ -182,10 +192,9 @@ public class DAOSensor implements DAO<Sensor>{
 	        			connexion
 	        		,	SQL_SELECTALL
 					,	true
-					,	param_sensor.getSensor_status()
-					,   param_sensor.getRoom_id()
+				
 					,   param_sensor.getType_sensor()
-				//	,   param_sensor.getRisq_id()
+		
 	        		
 	        		);
 	        resultSet = preparedStatement.executeQuery();
@@ -227,9 +236,14 @@ public class DAOSensor implements DAO<Sensor>{
 	        while(resultSet.next()) {
 				var_table.add(
 						new Sensor(
-								resultSet.getInt("sensor_status")
-							
-					
+								resultSet.getInt("sensor_id"),
+								resultSet.getString("type_sensor"),
+								resultSet.getInt("position_x"),
+							     resultSet.getInt("position_y"),
+							   resultSet.getInt("sensor_min"),
+							  resultSet.getInt("sensor_max"),
+							   resultSet.getString("sensor_ip"),
+							  resultSet.getString("sensor_mac")
 						))											 ;
 			} 
 	    }
@@ -238,7 +252,21 @@ public class DAOSensor implements DAO<Sensor>{
 	    }
 		return var_table										 ;
 	}
-
+	private static Sensor map( ResultSet resultSet ) throws SQLException {
+	    Sensor var_sensor = new Sensor();
+	    
+	    var_sensor.setSensor_id( resultSet.getInt( "id" ) );
+	    var_sensor.setType_sensor( resultSet.getString( "nom" ) );
+	    var_sensor.setPosition_x( resultSet.getInt( "x" ) );
+	    var_sensor.setPosition_y( resultSet.getInt( "y" ) );
+	    var_sensor.setSensor_min( resultSet.getInt( "sensor_min" ) );
+	    var_sensor.setSensor_max( resultSet.getInt( "sensor_max" ) );
+	    var_sensor.setAddress_ip( resultSet.getString( "sensor_ip" ) );
+	    var_sensor.setAddress_mac( resultSet.getString( "sensor_mac" ) );
+	    return var_sensor;
+	    
+	}
+	
 	
 	public void close() throws SQLException {
 		// TODO Auto-generated method stub		
