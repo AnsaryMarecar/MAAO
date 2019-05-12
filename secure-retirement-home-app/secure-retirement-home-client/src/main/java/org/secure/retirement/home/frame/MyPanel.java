@@ -31,6 +31,24 @@ class MyPanel extends JPanel{
 		drawStr(g,name,position_X,position_Y);
 		}
 		}}catch(Exception e) {}
+		for (int i =0 ; i<40 ; i++) {
+			int position_x1= FrameSensor.tabx[i];
+			int position_y1= FrameSensor.taby[i];
+			int min= FrameSensor.tabsensor_min[i];
+			
+			if(min<10) {
+			g.setColor(Color.RED);
+			g.fillOval(position_x1, position_y1,20,20);
+		}
+			else if (min>20) {
+				g.setColor(Color.GREEN);
+				g.fillOval(position_x1, position_y1,20,20);
+			}
+			else {
+				g.setColor(Color.GRAY);
+				g.fillOval(position_x1, position_y1,20,20);
+			}
+	}
 	}
 	// Draw Rectangle 
 	public void drawRectangle(Graphics g,int x , int y , int z, int f ) {
