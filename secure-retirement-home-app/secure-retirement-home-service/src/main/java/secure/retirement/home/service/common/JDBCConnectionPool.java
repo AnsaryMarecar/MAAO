@@ -38,11 +38,9 @@ public class JDBCConnectionPool {
 			for(int i=0; i<att_number_connection;i++) { 
 				if(i==0) {
 					att_list.add(var_daofactory);
-					System.out.println("add 0");
 				}
 				else {
 					att_list.add(DAOFactory.getInstance());
-					System.out.println("add "+i);
 				}
 				//connex.add(ConnectionBDD.getInst());
 			}

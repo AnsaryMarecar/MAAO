@@ -74,10 +74,7 @@ public class ActionDecision {
 				  Historic[] history = null;
 				  try {
 			  		history = (Historic[]) Decode.to_decode(val_jsontext.get(1).toString(), "Historic");
-				  }catch(Exception e) {
-					  System.out.println(val_send_information[0].getSend_information_crud_action().toString()+" e: "+e.getLocalizedMessage());
-				  }
-			      if(val_send_information[0].getSend_information_crud_action().toString().equals("SELECT ALL")) {	
+			  		if(val_send_information[0].getSend_information_crud_action().toString().equals("SELECT ALL")) {	
 			  			System.out.println("RequestHandler>select all");
 			  			try {
 			  				Thread.sleep(500);
@@ -87,9 +84,7 @@ public class ActionDecision {
 			  			}
 			  	   }
 			  	   else if(val_send_information[0].getSend_information_crud_action().toString().equals("ADD")) {
-			  			System.out.println("RequestHandler>add");
 			  			String val_message_add = element_dao.add(history[0]);
-			  			System.out.println("val_message_add: "+val_message_add);
 			  			history[0].setHistoric_id(Integer.parseInt(val_message_add));
 			  			ArrayList<Return_information> return_info_array = new ArrayList<Return_information>();
 			  			
@@ -98,28 +93,26 @@ public class ActionDecision {
 			  			
 			  			boolean val_bool = false;
 			  			int i = -1;
-			  			System.out.println("actiondecision>historic>add>1");
 			  			for(i = 0 ; i < ConnectionPool.getAtt_sensors().size() && !val_bool; i++) {
-			  				System.out.println("actiondecision>historic>add>for>i:"+i);
 			  				if(history[0].getSensor().getSensor_id() == ConnectionPool.getAtt_sensors().get(i).getSensor_id()) {
 			  					val_bool = true;
 			  				}
 			  			}
-			  			System.out.println("actiondecision>historic>add>2");
 			  			if(val_bool) {
-			  				System.out.println("actiondecision>historic>add>3");
 			  				if(ConnectionPool.getAtt_cache()[i].edition(history[0])) {
 			  					Risk val_risk = new Risk(history[0].getSensor(),history[0]);
 				  				DAORisk daorisk = new DAORisk(daof);
 				  				daorisk.create(val_risk);
 			  				}
 			  			}
-			  			System.out.println("actiondecision>historic>add>4");
 			  	   }
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+				  }catch(Exception e) {
+					System.out.println(val_send_information[0].getSend_information_crud_action().toString()+" e: "+e.getLocalizedMessage());
+				  }
+			  } catch (Exception e1) {
+			  	// TODO Auto-generated catch block
+			  	e1.printStackTrace();
+			  }
 		  }
 		  else if(val_send_information[0].getSend_information_table().toString().equals("Room")) {
 			DAORoom element_dao;   

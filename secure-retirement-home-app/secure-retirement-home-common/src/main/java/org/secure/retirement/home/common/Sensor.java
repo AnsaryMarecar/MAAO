@@ -4,7 +4,7 @@
 package org.secure.retirement.home.common;
 
 /**
- * @author Ansary MARECAR
+ * 
  *
  */
 public class Sensor {
@@ -14,8 +14,6 @@ public class Sensor {
 	private double sensor_max = 0;
 	private String sensor_mac = null;
 	private String sensor_ip = null;
-	private Room room_id; // is it usefull ??? not in the db
-	private int sensor_status = 1; //???? (red, green, grey?) not in the db
 	private double sensor_positionX;
 	private double sensor_positionY;
 	
@@ -23,6 +21,7 @@ public class Sensor {
 	 * @param sensor_id
 	 * @param type_sensor
 	 */
+	
 	public Sensor(int sensor_id, Type_sensor type_sensor) {
 		super();
 		this.sensor_id = sensor_id;
@@ -47,7 +46,7 @@ public class Sensor {
 	 * @param sensor_positionY
 	 */
 	public Sensor(int sensor_id, Type_sensor type_sensor, double sensor_min, double sensor_max, String sensor_mac,
-			String sensor_ip, Room room_id, int sensor_status, double sensor_positionX, double sensor_positionY) {
+			String sensor_ip, double sensor_positionX, double sensor_positionY) {
 		super();
 		this.sensor_id = sensor_id;
 		this.type_sensor = type_sensor;
@@ -55,8 +54,6 @@ public class Sensor {
 		this.sensor_max = sensor_max;
 		this.sensor_mac = sensor_mac;
 		this.sensor_ip = sensor_ip;
-		this.room_id = room_id;
-		this.sensor_status = sensor_status;
 		this.sensor_positionX = sensor_positionX;
 		this.sensor_positionY = sensor_positionY;
 	}
@@ -162,18 +159,6 @@ public class Sensor {
 		this.sensor_ip = sensor_ip;
 	}
 
-	public int getSensor_status() {
-		return sensor_status;
-	}
-	public void setSensor_status(int sensor_status) {
-		this.sensor_status = 1;
-	}
-	public Room getRoom_id() {
-		return room_id;
-	}
-	public void setRoom_id(Room room_id) {
-		this.room_id = room_id;
-	}
 	/**
 	 * @return the sensor_positionX
 	 */

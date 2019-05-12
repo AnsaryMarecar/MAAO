@@ -42,6 +42,15 @@ public class Historic {
 	}
 	
 	/**
+	 * @param historic_id
+	 * @param sensor
+	 * @param historic_value
+	 */
+	public Historic(Sensor sensor) {
+		this.sensor = sensor;
+	}
+	
+	/**
 	 * @param sensor
 	 * @param historic_value
 	 */

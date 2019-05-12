@@ -21,7 +21,7 @@ public class ConnectionPool {
    //private String 		att_host		 = "10.10.5.1"	;
    private ServerSocket 	att_server 		 = null			;
    private boolean 			att_isRunning 	 = true			;
-   private static ArrayList<Sensor> att_sensors 	 = null			;
+   private static ArrayList<Sensor> att_sensors 	 = null	;
    private static GuavaCache 		[]att_cache;
    
    public ConnectionPool(){
@@ -97,8 +97,7 @@ public class ConnectionPool {
 					try {
 						//wait a connection
 						Socket client = att_server.accept();
-						//treatment of it in a separated thread
-						System.out.println("Client conection received");        
+						//treatment of it in a separated thread 
 						Thread t = new Thread(new RequestHandler(client));
 						t.start();
 					} catch (IOException e) {
@@ -116,10 +115,10 @@ public class ConnectionPool {
       t.start();
    }
    public void testFailure() {
-	   SimulateFailure t = new SimulateFailure("Simulate Failure");
-	    //TestThread t2 = new TestThread("  B");
-	    t.start();
-	    //t2.start();
+	  SimulateFailure t = new SimulateFailure("Simulate Failure"
+			   ,JDBCConnectionPool.getConnection()
+			   );
+	  t.start();
    }
    public void close(){
 	   att_isRunning = false;

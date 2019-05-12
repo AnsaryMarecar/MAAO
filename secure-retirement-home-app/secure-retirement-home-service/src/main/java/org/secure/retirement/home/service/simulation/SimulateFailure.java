@@ -3,7 +3,18 @@
  */
 package org.secure.retirement.home.service.simulation;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import org.secure.retirement.home.common.Failure;
+import org.secure.retirement.home.common.Historic;
+import org.secure.retirement.home.common.Risk;
+import org.secure.retirement.home.common.Sensor;
+import org.secure.retirement.home.common.transmission.information.Return_information;
+
 import secure.retirement.home.service.common.ConnectionPool;
+import secure.retirement.home.service.common.DAOFactory;
+import secure.retirement.home.service.common.JDBCConnectionPool;
 
 /**
  * @author Ansary MARECAR
@@ -11,6 +22,7 @@ import secure.retirement.home.service.common.ConnectionPool;
  */
 public class SimulateFailure extends Thread {
 
+	private DAOFactory att_daofactory;
 	/**
 	 * 
 	 */
@@ -29,8 +41,9 @@ public class SimulateFailure extends Thread {
 	/**
 	 * @param name
 	 */
-	public SimulateFailure(String name) {
+	public SimulateFailure(String name, DAOFactory param_daofactory) {
 		super(name);
+		this.att_daofactory = param_daofactory;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -84,20 +97,28 @@ public class SimulateFailure extends Thread {
 
 	public void run(){
 		int i;
-		while(true) {
 			try{
-			    Thread.sleep(1000);
-			    System.out.println("true");
-				for(i = 0; i < ConnectionPool.getAtt_sensors().size(); i++) {
-					ConnectionPool.getAtt_cache()[i].isFailure();
+				while(true) {
+				    Thread.sleep(2000);
+					for(i = 0; i < ConnectionPool.getAtt_sensors().size(); i++) {
+						 if(ConnectionPool.getAtt_cache()[i].isFailure()) {
+							System.out.println("****************failureeee monsieur*********");
+							Failure failure = new Failure(ConnectionPool.getAtt_sensors().get(i));
+							System.out.println("id_sensor : "+failure.getSensor().getSensor_id());
+							DAOFailure element_dao;
+							element_dao = new DAOFailure(att_daofactory);
+							element_dao.create(failure);
+						 }
+					}
 				}
 			}
 			catch(InterruptedException ex){
-			    Thread.currentThread().interrupt();
-			}
-			
-		}
-		
+				Thread.currentThread().interrupt();
+				//JDBCConnectionPool.AddConnection(att_daofactory);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
 	}
 	
 	/**

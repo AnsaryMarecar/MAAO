@@ -42,7 +42,7 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 		private JMenuItem settings_sensors = new JMenuItem("Set a sensor");
 		
 		 private JPanel pan2;
-		  public static int position_x, position_y;
+		  public static double position_x, position_y;
 		    Graphics g;
 		   
 		    
@@ -204,7 +204,7 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 			if(event.getSource()==delete) {
 				 {
 					 
-			 repaint(this.position_x,this.position_y,20,20);
+			 
 				}
 								
 			}
@@ -213,7 +213,7 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 		
 		}
 		   public void mouseClicked(MouseEvent e) {
-		    	  int x,y;
+		    	  double x,y;
 		          x = e.getX();
 		          y = e.getY();
 		          position_x=x; position_y=y;

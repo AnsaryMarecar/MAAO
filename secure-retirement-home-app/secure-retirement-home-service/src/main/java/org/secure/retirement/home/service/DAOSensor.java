@@ -32,7 +32,7 @@ public class DAOSensor implements DAO<Sensor>{
 		Return_information val_return_information = Return_information.att_notfoud;
 		try {
 			if(ifFind(param_sensor)) {
-				String SQL_INSERT = "INSERT INTO sensor (type_sensor_id,sensor_positionX,sensor_positionY,sensor_min,sensor_max,sensor_ip,sensor_mac) VALUES ( ?,?,?,?,?,?,?)";
+				String SQL_INSERT = "INSERT INTO sensor (type_sensor_id,sensor_min,sensor_max,sensor_mac,sensor_ip,,sensor_positionX,sensor_positionY) VALUES ( ?,?,?,?,?,?,?)";
 				
 				Connection val_connection = null;
 				PreparedStatement val_preparedStatement = null;
@@ -48,12 +48,12 @@ public class DAOSensor implements DAO<Sensor>{
 							,	true
 							
 							,   param_sensor.getType_sensor().getType_sensor_id()
-							,   param_sensor.getSensor_positionX()
-							,   param_sensor.getSensor_positionY()
 							,   param_sensor.getSensor_min()
 							,   param_sensor.getSensor_max()
-							,   param_sensor.getSensor_ip()
 							,   param_sensor.getSensor_mac()
+							,   param_sensor.getSensor_ip()
+							,   param_sensor.getSensor_positionX()
+							,   param_sensor.getSensor_positionY()
 						//	,   param_sensor.getRisq_id()
 
 							);
