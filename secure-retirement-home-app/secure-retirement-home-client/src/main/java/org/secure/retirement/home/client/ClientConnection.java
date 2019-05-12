@@ -65,7 +65,7 @@ public class ClientConnection implements Runnable{
         	  }
         	  
         	  
-        	  Object[] val_object =  Decode.to_decode(response, "Room");
+        	  Object[] val_object =  Decode.to_decode(response, "Sensor");
         	  att_frame.initialise_table(val_object); 
         	 
         	  	att_frame.getOptionpane()									  ;

@@ -102,8 +102,9 @@ public class DAOSensor implements DAO<Sensor>{
 	 */
 	public Return_information delete( Sensor param_sensor) throws SQLException {
 		//Remove
+		String s = param_sensor.getType_sensor();
 		Return_information val_return_information = Return_information.att_notfoud;
-		String SQL_DELETE = " DELETE FROM sensor WHERE sensor_id = ? ; 	";
+		String SQL_DELETE = " DELETE FROM sensor WHERE type_sensor =" +	param_sensor.getSensor_id();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		int status = 0;
@@ -112,9 +113,11 @@ public class DAOSensor implements DAO<Sensor>{
 			connexion = daofactory.getConnection();
 			preparedStatement = DAOUtility.initPreparedRequest( 
 			        			connexion
-			        		,	SQL_DELETE
-			        		,	true
+			        		,	SQL_DELETE, true
+			        		//param_sensor.getType_sensor()
+			   
 			        		);
+			
 			status = preparedStatement.executeUpdate();
 			System.out.println("status "+status);
 			if( status == 0 ) {
@@ -127,7 +130,7 @@ public class DAOSensor implements DAO<Sensor>{
 		}
 		catch ( SQLException e ) {
 			val_return_information = Return_information.att_db_error;
-			throw new DAOException( e );
+			throw new RuntimeException(e);
 		} 
 		finally {
 			DAOUtility.closeStatementConnection(preparedStatement, connexion);

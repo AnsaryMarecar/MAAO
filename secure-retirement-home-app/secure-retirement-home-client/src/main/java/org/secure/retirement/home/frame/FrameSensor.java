@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -28,7 +29,7 @@ import org.secure.retirement.home.common.Sensor;
 public class FrameSensor extends Frame<Sensor> {
 	
 	// forms atribut add name
-	private JTextField 	nameadd_textField 			= new JTextField()							;
+	private JComboBox nameadd_comboBox 			= new JComboBox()							;
 	private JLabel 		nameadd_label				= new JLabel("Add a type of sensor : ")		;
 	
 	// forms atribut update name
@@ -81,11 +82,18 @@ public class FrameSensor extends Frame<Sensor> {
 		Font police = new Font( "Arial" , Font.BOLD , 14 )				;
 		
 		// form add
-		nameadd_textField.setFont(police)								;
-		nameadd_textField.setPreferredSize(new Dimension(60, 30))		;
-		nameadd_textField.setForeground(Color.BLUE)						;
+		nameadd_comboBox.addItem("smoke");
+		nameadd_comboBox.addItem("humidity");
+		nameadd_comboBox.addItem("motion");
+		nameadd_comboBox.addItem("position");
+		nameadd_comboBox.addItem("brightness");
+		nameadd_comboBox.addItem("occupancy");
+		
+		nameadd_comboBox.setFont(police)								;
+		nameadd_comboBox.setPreferredSize(new Dimension(110, 30))		;
+		nameadd_comboBox.setForeground(Color.BLUE)						;
 		super.addform_panel.add(nameadd_label)							;
-		super.addform_panel.add(nameadd_textField)      				;
+		super.addform_panel.add(nameadd_comboBox)      				;
 		
 		xadd_textField .setFont(police)								;
 		xadd_textField .setPreferredSize(new Dimension(60, 30))		;
@@ -317,30 +325,33 @@ public class FrameSensor extends Frame<Sensor> {
 
 	public boolean delete_action() {
 		boolean to_return 			= false								;
-		int 	var_line_number 	= this.getW_table().getSelectedRow();
-		int 	var_id				= -1								;
-		int 	var_x					= 0								;
+		int var_line_number 	= this.getW_table().getSelectedRow();
+		int var_id				= -1								;
+		int	var_x				= 0								;
 		int 	var_y				= 0								;
 		int 	var_min				= 0						;
-		int 	var_max				= 0								;
+		int 	var_max				= 0;
 		
 		String var_ip=null;
 		String var_mac=null;
-		String 	var_name 			= null								;
+		String 	var_name = null								;
 		if(var_line_number>=0) {
 			try {
 				
-				var_id 		= Integer.decode( (String) this.getW_dtm().getValueAt(var_line_number, 0) );
+				var_id 		= Integer.decode(this.getW_dtm().getValueAt(var_line_number, 0).toString() );
 				var_name 	= (String) this.getW_dtm().getValueAt(var_line_number, 1)	;
 				Sensor var_sensor = new Sensor(var_id,var_name, var_x , var_y, var_min, var_max,var_ip,var_mac)			;
 				ArrayList<Sensor> var_sensors = new ArrayList<Sensor>()	;
 				var_sensors.add(var_sensor)									;
 				ClientTransmission.transmission("Sensor", "DELETE",var_sensors , this);	
 				this.update_table()							;
-				this.call_initialise_table()				;
+				//this.call_initialise_table()				;
 				to_return = true							;
+				JOptionPane.showMessageDialog(null, "Success", "MAAO - Error message", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e) {
 				e.printStackTrace()							;
+				JOptionPane.showMessageDialog(null, "Fail", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
+				
 			}
 		}	
 		return to_return;
@@ -349,7 +360,7 @@ public class FrameSensor extends Frame<Sensor> {
 
 	public boolean add_action() {
 		boolean to_return = false								;
-		String 	val_text  = nameadd_textField.getText().trim()	;
+		String 	val_text  = (String)nameadd_comboBox.getSelectedItem();
 
 		String	var_x				=xadd_textField .getText().trim();  
 		int v_x = Integer.parseInt(var_x);
@@ -367,8 +378,8 @@ public class FrameSensor extends Frame<Sensor> {
 		
 		
 									;
-		if(val_text.trim().equals("")) {
-		//	JOptionPane.showMessageDialog(null, "Sorry, but you can't add without a name.", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
+		if(var_x.equals("") || var_y.equals("") || var_sensor_min.equals("") || var_sensor_max.equals("") || var_ip.equals("") || var_mac.equals("")) {
+			JOptionPane.showMessageDialog(null, "You must put an entry in every field", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
 		}
 		else {
 		
@@ -379,7 +390,9 @@ public class FrameSensor extends Frame<Sensor> {
 				//this.call_initialise_table()				;
 					this.update_table()						;
 					to_return = true						;
+					JOptionPane.showMessageDialog(null, "The sensor " + val_text + " is successfully set", "MAAO - Success Message" , JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "You must put an entry in every field", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
 				e.printStackTrace()							;
 			}
 		}
@@ -411,7 +424,6 @@ public class FrameSensor extends Frame<Sensor> {
 	public static void main (String[] args) {
 		FrameSensor framesensor = new FrameSensor();
 		framesensor.setVisible(true);
-		System.out.println("FRAMEHome was launched");
 		
 	}
 }
