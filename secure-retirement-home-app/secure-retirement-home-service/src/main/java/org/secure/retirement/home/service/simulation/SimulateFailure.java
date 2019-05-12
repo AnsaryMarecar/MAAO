@@ -92,8 +92,7 @@ public class SimulateFailure extends Thread {
 					ConnectionPool.getAtt_cache()[i].isFailure();
 				}
 			}
-			catch(InterruptedException ex)
-			{
+			catch(InterruptedException ex){
 			    Thread.currentThread().interrupt();
 			}
 			

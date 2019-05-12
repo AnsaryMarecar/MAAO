@@ -2,14 +2,6 @@
  * 
  */
 package org.secure.retirement.home.service.simulation;
-
-import org.secure.retirement.home.common.Historic;
-import org.secure.retirement.home.common.Sensor;
-import org.secure.retirement.home.common.Type_sensor;
-
-import secure.retirement.home.service.common.DAOFactory;
-import secure.retirement.home.service.common.JDBCConnectionPool;
-
 /**
  * @author Ansary MARECAR
  *

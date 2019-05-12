@@ -1,5 +1,6 @@
 package org.secure.retirement.home.service.cache;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -128,41 +129,46 @@ public class GuavaCache {
    }
    
    public boolean isCurrentFailure(int param_iter, Instant param_instant_ref) {
-		boolean to_return = false;
-		Instant value = this.getAtt_historics().getHistoric_array().get(param_iter).getHistoric_datetime();
-		System.out.println("param_instant_ref = "+param_instant_ref+" value:"+value);
-		if (!( param_instant_ref.getEpochSecond()>value.getEpochSecond() )) {
+	   System.out.println("iscurrentfailure/begin");
+	   boolean to_return = false;
+	   Instant value = this.getAtt_historics().getHistoric_array().get(param_iter).getHistoric_datetime();
+	   Instant val_now = Instant.now();
+	   Instant val_min = val_now.minus(this.getAtt_sensor().getType_sensor().getType_sensor_interval(),ChronoUnit.SECONDS);
+	   System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" iscurrentfailure/val_min.getEpochSecond()"+val_min
+			   +" param_instant_ref:"+param_instant_ref
+			   +" value:"+value);
+	   if (param_instant_ref.getEpochSecond()>=val_min.getEpochSecond()) {
 			to_return = true;
-			System.out.println("param_iter="+param_iter+"isCurrentFAILURE/if param_instant_ref.isAfter(value)/");
-		}
-		else {
-			System.out.println("param_iter="+param_iter+"isCurrentFAILURE/else param_instant_ref.isAfter(value)/");
-			//this.getAtt_historics().getHistoric_array().remove(param_iter);
-		}
-		return to_return; 
+			System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" iscurrentfailure/if/param_iter="+param_iter+"isCurrentFAILURE/if param_instant_ref.isAfter(value)/");
 	   }
+	   else {
+			System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" iscurrentfailure/else/param_iter="+param_iter+"isCurrentFAILURE/else param_instant_ref.isAfter(value)/");
+			//this.getAtt_historics().getHistoric_array().remove(param_iter);
+	   }
+	   return to_return; 
+	}
    
    public boolean isFailure() {
 		boolean to_return = false;
 		int val_interval = this.getAtt_sensor().getType_sensor().getType_sensor_interval();
 		int val_max = this.getAtt_historics().getHistoric_array().size();
-		System.out.println("isFailure>val_interval:"+val_interval+" val_max:"+val_max);
+		System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" isFailure>val_interval:"+val_interval+" val_max:"+val_max);
 		
 		if(val_max!=0) {
 			Instant value = this.getAtt_historics().getHistoric_array().get(val_max-1).getHistoric_datetime();
-			System.out.println("isFailure>value:"+value);//exception
+			System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" isFailure>value:"+value);//exception
 			if(val_interval <= val_max) {
-				System.out.println("isFailure>val_interface<=val_max");//affiché
-				for(int i = val_max ; ( i > (val_max-val_interval) ) && !to_return ; i--) {
-					System.out.println("isFailure>val_interface<=val_max>for>i:"+i);//affiché
-					to_return = isCurrentFailure(i,value);//?
-					System.out.println("i: "+i+" to_return : "+to_return);//?
+				System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" isFailure>val_interface: <=val_max");//affiché
+				for(int i = val_max-1 ; ( i > (val_max-val_interval) ) && to_return ; i--) {
+					System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" isFailure>val_interface<=val_max>for>i:"+i);//affiché
+					to_return = isCurrentFailure(i,value);//
+					System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" i: "+i+" to_return : "+to_return);//
 				}
 			}
 		}else {
-			System.out.println("isFailure>val_max=0");
-			
+			System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" isFailure>val_max=0");		
 		}
+		System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" sortie");
 		return to_return;
   }
    
@@ -209,10 +215,6 @@ public class GuavaCache {
 	   this.setAtt_historics(select()); //?
 	   System.out.println(this.getAtt_historics().toString());
    }
-
-
-
-
 
 	/**
 	 * @return the att_sensor
