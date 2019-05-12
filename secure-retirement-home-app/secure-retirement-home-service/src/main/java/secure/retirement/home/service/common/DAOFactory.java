@@ -51,7 +51,6 @@ public class DAOFactory {
         InputStream fileProperties = classLoader.getResourceAsStream(FILE_PROPERTIES );        
         
         if ( fileProperties == null ) {
-        	System.out.println( "We cannot find the " + FILE_PROPERTIES + " file." );
             throw new DAOConfigurationException( "the file:  " + FILE_PROPERTIES + " does not exist." );
         }
         else {

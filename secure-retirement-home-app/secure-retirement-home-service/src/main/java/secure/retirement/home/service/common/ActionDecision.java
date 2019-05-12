@@ -74,10 +74,7 @@ public class ActionDecision {
 				  Historic[] history = null;
 				  try {
 			  		history = (Historic[]) Decode.to_decode(val_jsontext.get(1).toString(), "Historic");
-				  }catch(Exception e) {
-					  System.out.println(val_send_information[0].getSend_information_crud_action().toString()+" e: "+e.getLocalizedMessage());
-				  }
-			      if(val_send_information[0].getSend_information_crud_action().toString().equals("SELECT ALL")) {	
+			  		if(val_send_information[0].getSend_information_crud_action().toString().equals("SELECT ALL")) {	
 			  			System.out.println("RequestHandler>select all");
 			  			try {
 			  				Thread.sleep(500);
@@ -87,9 +84,7 @@ public class ActionDecision {
 			  			}
 			  	   }
 			  	   else if(val_send_information[0].getSend_information_crud_action().toString().equals("ADD")) {
-			  			System.out.println("RequestHandler>add");
 			  			String val_message_add = element_dao.add(history[0]);
-			  			System.out.println("val_message_add: "+val_message_add);
 			  			history[0].setHistoric_id(Integer.parseInt(val_message_add));
 			  			ArrayList<Return_information> return_info_array = new ArrayList<Return_information>();
 			  			
@@ -111,10 +106,13 @@ public class ActionDecision {
 			  				}
 			  			}
 			  	   }
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+				  }catch(Exception e) {
+					System.out.println(val_send_information[0].getSend_information_crud_action().toString()+" e: "+e.getLocalizedMessage());
+				  }
+			  } catch (Exception e1) {
+			  	// TODO Auto-generated catch block
+			  	e1.printStackTrace();
+			  }
 		  }
 		  else if(val_send_information[0].getSend_information_table().toString().equals("Room")) {
 			DAORoom element_dao;   

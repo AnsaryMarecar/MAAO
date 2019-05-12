@@ -1,10 +1,41 @@
 package org.secure.retirement.home.common;
 
-import java.util.Date;
+import java.time.Instant;
 
 public class Failure {
-	
 	private int failure_id;
+	private Instant failure_datetime = Instant.now();
+	private Sensor sensor = null;
+	
+	/**
+	 * @param failure_datetime
+	 * @param sensor
+	 */
+	public Failure(Instant failure_datetime, Sensor sensor) {
+		super();
+		this.failure_datetime = failure_datetime;
+		this.sensor = sensor;
+	}
+
+	/**
+	 * @param sensor
+	 */
+	public Failure(Sensor sensor) {
+		super();
+		this.sensor = sensor;
+	}
+	/**
+	 * @param failure_id
+	 * @param failure_datetime
+	 * @param sensor
+	 */
+	public Failure(int failure_id, Instant failure_datetime, Sensor sensor) {
+		super();
+		this.failure_id = failure_id;
+		this.failure_datetime = failure_datetime;
+		this.setSensor(sensor);
+	}
+
 	public int getFailure_id() {
 		return failure_id;
 	}
@@ -13,45 +44,42 @@ public class Failure {
 		this.failure_id = failure_id;
 	}
 
-	public Date getFailure_dateTime() {
-		return failure_dateTime;
+	
+	/**
+	 * @return the failure_datetime
+	 */
+	public Instant getFailure_datetime() {
+		return failure_datetime;
 	}
 
-	public void setFailure_dateTime(Date failure_dateTime) {
-		this.failure_dateTime = failure_dateTime;
+	/**
+	 * @param failure_datetime the failure_datetime to set
+	 */
+	public void setFailure_datetime(Instant failure_datetime) {
+		this.failure_datetime = failure_datetime;
 	}
 
-	public String getFailure_information() {
-		return failure_information;
-	}
-
-	public void setFailure_information(String failure_information) {
-		this.failure_information = failure_information;
-	}
-
+	/**
+	 * @return the sensor
+	 */
 	public Sensor getSensor() {
 		return sensor;
 	}
 
+	/**
+	 * @param sensor the sensor to set
+	 */
 	public void setSensor(Sensor sensor) {
 		this.sensor = sensor;
 	}
-
-	private Date failure_dateTime;
-	private String failure_information;
-	private Sensor sensor;
 	
-	public Failure (int failure_id, Date failure_dateTime, String failure_information, Sensor sensor) {
-		this.failure_id=failure_id;
-		this.failure_dateTime=failure_dateTime;
-		this.failure_information=failure_information;
-		this.sensor=sensor;
-	}
-	
-	public Failure(Date failure_dateTime, String failure_information, Sensor sensor) {
-		this.failure_dateTime=failure_dateTime;
-		this.failure_information=failure_information;
-		this.sensor=sensor;
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Failure [getFailure_id()=" + getFailure_id() + ", getFailure_datetime()=" + getFailure_datetime()
+				+ ", getSensor()=" + getSensor() + "]";
 	}
 
 }

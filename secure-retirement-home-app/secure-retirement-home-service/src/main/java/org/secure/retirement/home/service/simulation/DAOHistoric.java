@@ -107,6 +107,8 @@ public class DAOHistoric implements DAO<Historic> {
 				connexion = daofactory.getConnection();
 				System.out.println(" execute  ");
 				System.out.println("param_historic.getSensor().getSensor_id()"+param_historic.getSensor().getSensor_id());
+				
+				
 				preparedStatement = DAOUtility.initPreparedRequest(
 					connexion
 					,	SQL_INSERT
@@ -132,7 +134,6 @@ public class DAOHistoric implements DAO<Historic> {
 						System.out.println("error");
 					}
 					if ( resultSet.next() ) {
-						System.out.println(" to_return = -4  ");
 						 param_historic.setHistoric_id(resultSet.getInt( 1 ));
 						 val_return_information = String.valueOf(param_historic.getHistoric_id());
 						//to_return = -4;
@@ -155,6 +156,65 @@ public class DAOHistoric implements DAO<Historic> {
 		return val_return_information.toString();
 	}
 
+	
+	public String addFailure(Historic param_historic) throws SQLException {
+		// TODO Auto-generated method stub
+		System.out.println(param_historic.toString());
+		System.out.println("create");
+		String val_return_information = Return_information.att_notfoud.toString();
+		try {
+			String SQL_INSERT = "INSERT INTO historic (historic_datetime, sensor_id) VALUES (NOW(),?)";
+			Connection connexion = null;
+			PreparedStatement preparedStatement = null;
+			ResultSet resultSet = null;
+			int status = 0;
+			try {
+				/* Get connection from the Factory */
+				connexion = daofactory.getConnection();
+				preparedStatement = DAOUtility.initPreparedRequest(
+					connexion
+					,	SQL_INSERT
+					,	true
+					,	param_historic.getSensor().getSensor_id()
+				);
+				status = preparedStatement.executeUpdate();
+				if( status == 0 ) {
+					System.out.println("error execute  ");
+					val_return_information = Return_information.att_db_cannot_insert.toString();
+					throw new DAOException( "Insertion error" );
+				}
+				else {
+					/* take the generated id */
+					try{
+						System.out.println("generate key");
+						resultSet = preparedStatement.getGeneratedKeys();
+					}
+					catch(Exception e) {
+						val_return_information = Return_information.att_notfoud.toString();
+						System.out.println("error");
+					}
+					if ( resultSet.next() ) {
+
+						 param_historic.setHistoric_id(resultSet.getInt( 1 ));
+						 val_return_information = String.valueOf(param_historic.getHistoric_id());
+					} 
+					else {
+						val_return_information = Return_information.att_db_not_return.toString();
+						System.out.println(" insertion id is not return to us  ");
+						throw new DAOException( "insertion id is not return to us" );
+					}
+				}
+				} catch ( SQLException e ) {
+					val_return_information = Return_information.att_db_error.toString();
+					throw new DAOException( e );
+				} finally {
+					DAOUtility.closeAll(preparedStatement, connexion,   resultSet );
+				}
+		}catch(Exception e) {
+			val_return_information = Return_information.att_db_cannot_insert.toString();
+		}
+		return val_return_information.toString();
+	}
 	public Return_information delete(Historic obj) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;

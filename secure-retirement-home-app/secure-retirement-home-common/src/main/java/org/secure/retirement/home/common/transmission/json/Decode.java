@@ -21,8 +21,6 @@ public class Decode {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String string = "[10/12.0]";
-		string.replace("[","").replace("]","");
 		
 		/**try {
 			to_decode("","Send_information");

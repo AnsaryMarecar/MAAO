@@ -45,10 +45,10 @@ public class RequestHandler implements Runnable{
 	              debug += "ASK IP @dress : " + remote.getAddress().getHostAddress() +".";
 	              debug += " port : " + remote.getPort() + ".\n";
 	              debug += "\t -> Received on server : " + response + "\n";
-	    		  System.out.println(debug);
+	    		  //System.out.println(debug);
 	    		  ArrayList<?> val_jsontext = new ArrayList<String>(Arrays.asList(response.split(";")));
 	    		  Send_information[] val_send_information = (Send_information[]) Decode.to_decode(val_jsontext.get(0).toString(), "Send_information");
-
+	    		  
 	    		  elements = ActionDecision.Actions( elements,daof, val_send_information,val_jsontext);
 	    		  
 	    		  to_return = Encode.to_encode(elements);
@@ -74,7 +74,7 @@ public class RequestHandler implements Runnable{
 	    	  
 	      }
     	  else {
-	    	  System.out.println("Connection is empty");
+	    	  System.out.println("RequestHandler>else");
 	      }
       }
    }

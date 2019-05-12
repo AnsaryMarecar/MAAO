@@ -105,7 +105,6 @@ public class GuavaCache {
    public boolean isCurrentRisq(int param_iter, double min, double max) {
 		boolean to_return = false;
 		double value = this.getAtt_historics().getHistoric_array().get(param_iter).getHistoric_value();
-		System.out.println("param_iter="+param_iter+" min: "+min+" max: "+max+" value: "+value);
 		if (min > value || value > max ) {
 			to_return = true;
 		}
@@ -113,7 +112,6 @@ public class GuavaCache {
    }
    
    public boolean isRisq() {
-	    System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" isrisq()/begin");
 		boolean to_return = false;
 		int val_size = this.getAtt_historics().getHistoric_array().size();
 		int val_interval = this.getAtt_sensor().getType_sensor().getType_sensor_interval();
@@ -123,21 +121,17 @@ public class GuavaCache {
 		double max = this.getAtt_sensor().getSensor_max();
 		
 		if (min < value && value < max ) {
-			System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" isrisq()/min<value<max");
 			to_return = false;
 		}else {
 			if(val_size!=0) {
-				System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" isrisq()/else/for");
 				to_return = true;
 				for(int i = val_size-1 ; (i >= val_dif) && (to_return) && (i>=0) ; i--) {
 					to_return = isCurrentRisq(i, min, max);
-					System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" isrisq()/else/for i : "+i+" /to_return: "+to_return);
 				}
 			}
 			else {
 				to_return = true;
 			}
-			System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" isrisq()/else/end/to_return: "+to_return);
 		}
 		return to_return;
    }
@@ -156,7 +150,6 @@ public class GuavaCache {
 	   else {
 			System.out.println("sensor:"+this.getAtt_sensor().getSensor_id()+" iscurrentfailure/else/param_iter="+param_iter+"isCurrentFAILURE/else param_instant_ref.isAfter(value)/");
 			to_return = true;
-			//this.getAtt_historics().getHistoric_array().remove(param_iter);
 	   }
 	   return to_return; 
 	}
@@ -241,14 +234,12 @@ public class GuavaCache {
 		   e.printStackTrace();
 	   }
 	   create();
-	   System.out.println(this.getAtt_historics().getHistoric_array().toString());
 	   return this.isRisq();
    }
    
    public void edition() {
 	   try {
 		   this.setAtt_historics(select());
-		   System.out.println(this.getAtt_historics().toString());
 		   cache.invalidate(this.getAtt_sensor().getSensor_id());
 	   }
 	   catch(Exception e) {
