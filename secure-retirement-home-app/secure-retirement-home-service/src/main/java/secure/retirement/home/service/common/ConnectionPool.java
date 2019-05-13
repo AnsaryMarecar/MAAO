@@ -115,10 +115,10 @@ public class ConnectionPool {
       t.start();
    }
    public void testFailure() {
-	  SimulateFailure t = new SimulateFailure("Simulate Failure"
+	 /** SimulateFailure t = new SimulateFailure("Simulate Failure"
 			   ,JDBCConnectionPool.getConnection()
 			   );
-	  t.start();
+	  t.start(); **/
    }
    public void close(){
 	   att_isRunning = false;

@@ -3,12 +3,19 @@ package org.secure.retirement.home.frame;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
+
+import org.secure.retirement.home.common.Room;
+import org.secure.retirement.home.common.Sensor;
 
 
 
 class MyPanel extends JPanel{
+	
+	private static ArrayList<Sensor> sensors;
+	private static ArrayList<Room> rooms;
 	
 	public MyPanel ( ) {
 	
@@ -58,6 +65,30 @@ class MyPanel extends JPanel{
 	// Draw String
 	public void drawStr(Graphics g,String text, int x, int y ) {
 		g.drawString(text, x,y) ;
+	}
+	/**
+	 * @return the sensors
+	 */
+	public static ArrayList<Sensor> getSensors() {
+		return sensors;
+	}
+	/**
+	 * @param sensors the sensors to set
+	 */
+	public static void setSensors(ArrayList<Sensor> sensors) {
+		MyPanel.sensors = sensors;
+	}
+	/**
+	 * @return the rooms
+	 */
+	public static ArrayList<Room> getRooms() {
+		return rooms;
+	}
+	/**
+	 * @param rooms the rooms to set
+	 */
+	public static void setRooms(ArrayList<Room> rooms) {
+		MyPanel.rooms = rooms;
 	}
 	
 }

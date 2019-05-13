@@ -68,9 +68,11 @@ public class FrameSensor extends Frame<Sensor> {
 	
 	public static int sensor_id;
 	public static double position_x, position_y, sensor_min, sensor_max;
-	public static int [] tabId = new int [40];
 	public static String  address_ip, address_mac;
 	public static String type_sensor;
+	
+	public static int [] tabId = new int [40];
+	
 	public static int type_sensor_id;
 	public static double [] tabx = new double [40];
 	public static double [] tabsensor_min= new double[40];
@@ -81,8 +83,26 @@ public class FrameSensor extends Frame<Sensor> {
 	public static String [] tabMac= new String [40];
 	public static int [] tabtypesensor_id= new int [40];
 	
-	private ArrayList<Type_sensor> type_sensors;
+	private ArrayList<Type_sensor> att_type_sensors;
 	
+	/**
+	 * @return the att_type_sensors
+	 */
+	public final ArrayList<Type_sensor> getAtt_type_sensors() {
+		return att_type_sensors;
+	}
+
+
+
+
+
+	/**
+	 * @param att_type_sensors the att_type_sensors to set
+	 */
+	public final void setAtt_type_sensors(ArrayList<Type_sensor> att_type_sensors) {
+		this.att_type_sensors = att_type_sensors;
+	}
+
 	private JOptionPane joptionpane_information;
 	
 	public FrameSensor() {
@@ -95,15 +115,15 @@ public class FrameSensor extends Frame<Sensor> {
 		Font police = new Font( "Arial" , Font.BOLD , 14 )				;
 		
 		// form add
-		type_sensors = new ArrayList<Type_sensor>();
-		type_sensors.add(new Type_sensor(1,"Température"));
-		type_sensors.add(new Type_sensor(2,"Humidity"));
-		type_sensors.add(new Type_sensor(3,"Motin"));
-		type_sensors.add(new Type_sensor(4,"Position"));
-		type_sensors.add(new Type_sensor(5,"Brigtness"));
-		type_sensors.add(new Type_sensor(6,"Occupancy"));
-		for (int i = 0 ; i<type_sensors.size(); i++) {
-			nameadd_comboBox.addItem(type_sensors.get(i).toString());
+		att_type_sensors = new ArrayList<Type_sensor>();
+		att_type_sensors.add(new Type_sensor(1,"Température"));
+		att_type_sensors.add(new Type_sensor(2,"Humidity"));
+		att_type_sensors.add(new Type_sensor(3,"Motin"));
+		att_type_sensors.add(new Type_sensor(4,"Position"));
+		att_type_sensors.add(new Type_sensor(5,"Brigtness"));
+		att_type_sensors.add(new Type_sensor(6,"Occupancy"));
+		for (int i = 0 ; i<att_type_sensors.size(); i++) {
+			nameadd_comboBox.addItem(att_type_sensors.get(i));
 		}
 		/**
 		nameadd_comboBox.addItem("smoke");
@@ -117,7 +137,7 @@ public class FrameSensor extends Frame<Sensor> {
 		nameadd_comboBox.setPreferredSize(new Dimension(110, 30))		;
 		nameadd_comboBox.setForeground(Color.BLUE)						;
 		super.addform_panel.add(nameadd_label)							;
-		super.addform_panel.add(nameadd_comboBox)      				;
+		super.addform_panel.add(nameadd_comboBox)      					;
 		
 		sensor_min_textField.setFont(police)								;
 		sensor_min_textField .setPreferredSize(new Dimension(60,30))	;
@@ -415,46 +435,45 @@ public class FrameSensor extends Frame<Sensor> {
 
 	public boolean add_action() {
 		boolean to_return = false								;
-		String	val_text  = nameadd_comboBox.getSelectedItem().toString();
+		
+		
+		
+		String	val_type_sensor_name  = nameadd_comboBox.getSelectedItem().toString(); //type_sensor.name
 		//nameadd_comboBox.get
-		String	var_x				=xadd_textField .getText().trim();  
-		double v_x = Double.parseDouble(var_x);
-		
-		String	var_y				=yadd_textField .getText().trim(); 
-		double v_y = Double.parseDouble(var_y);
-		String	var_sensor_min				=sensor_min_textField.getText().trim();  
-		double v_sensor_min = Double.parseDouble(var_sensor_min	);
-		String	var_sensor_max		=sensor_max_textField.getText().trim();  
-		double v_sensor_max = Double.parseDouble(var_sensor_max);
-		String	var_ip				=address_ip_textField.getText().trim();  
-	
-		String	var_mac				=address_mac_textField.getText().trim();  
-		int var_type_sensor_id   = Integer.parseInt(type_sensor_id_textField.getText());
-		
-									;
-		if(var_x.equals("") || var_y.equals("") || var_sensor_min.equals("") || var_sensor_max.equals("") || var_ip.equals("") || var_mac.equals("")) {
-			JOptionPane.showMessageDialog(null, "You must put an entry in every field", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
-		}
-		else {
-		
+		position_x 	= Double.parseDouble(xadd_textField .getText().trim())			;
+		position_y 	= Double.parseDouble(yadd_textField .getText().trim())			; 
+		sensor_min 	= Double.parseDouble(sensor_min_textField .getText().trim())	; 
+		sensor_max 	= Double.parseDouble(sensor_max_textField .getText().trim())	; 
+		address_ip 	= address_ip_textField.getText().trim()							;
+		address_mac	= address_mac_textField.getText().trim()						;
+
+		//if(position_x.equals("") || var_y.equals("") || var_sensor_min.equals("") || var_sensor_max.equals("") || var_ip.equals("") || var_mac.equals("")) {
+			//JOptionPane.showMessageDialog(null, "You must put an entry in every field", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
+		//}
+		//else {
 			ArrayList<Sensor> val_sensors = new ArrayList<Sensor>();
-			/// A revoir par vos soins
-			Type_sensor type_sensor_structure = new Type_sensor(var_type_sensor_id,val_text);
-			val_sensors.add(new Sensor(0,type_sensor_structure	,v_sensor_min,v_sensor_max,var_mac, var_ip	,v_x	,v_y))	;
+			int val_type_sensor_id = 0;
+			for (int i = 0; i < this.getAtt_type_sensors().size(); i++) {
+				if(this.getAtt_type_sensors().get(i).getType_sensor_name() == val_type_sensor_name) {
+					val_type_sensor_id = this.getAtt_type_sensors().get(i).getType_sensor_id();
+				}
+			}
+			Type_sensor type_sensor_structure = new Type_sensor(val_type_sensor_id,val_type_sensor_name);
+			val_sensors.add(new Sensor(0,type_sensor_structure	,sensor_min,sensor_max,address_mac, address_ip,position_x,position_y));
 			
 			//val_sensors.add(new Sensor(0,val_text, v_sensor_min ,v_sensor_max, var_mac,var_ip,v_x,v_y));
 			/// A revoir par vos soins
 			try {
 				ClientTransmission.transmission("Sensor", "ADD", val_sensors, this);	
-				//this.call_initialise_table()				;
-					this.update_table()						;
-					to_return = true						;
-					JOptionPane.showMessageDialog(null, "The sensor " + val_text + " is successfully set", "MAAO - Success Message" , JOptionPane.INFORMATION_MESSAGE);
+				this.call_initialise_table()			;
+				this.update_table()						;
+				to_return = true						;
+				JOptionPane.showMessageDialog(null, "The sensor " + val_type_sensor_name + " is successfully set", "MAAO - Success Message" , JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "You must put an entry in every field", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
-				e.printStackTrace()							;
+				e.printStackTrace()						;
 			}
-		}
+		//}
 		return to_return;
 	}
 	

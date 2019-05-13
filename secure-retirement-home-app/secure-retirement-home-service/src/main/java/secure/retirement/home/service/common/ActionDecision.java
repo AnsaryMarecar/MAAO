@@ -162,7 +162,7 @@ public class ActionDecision {
 					  System.out.println(val_send_information[0].getSend_information_crud_action().toString()+" e: "+e.getLocalizedMessage());
 				  }
 			      if(val_send_information[0].getSend_information_crud_action().toString().equals("SELECT ALL")) {	
-			  			System.out.println("RequestHandler>select all");
+			  			System.out.println("select all");
 			  			try {
 			  				Thread.sleep(500);
 			  				elements = element_dao.presentData();
@@ -171,7 +171,7 @@ public class ActionDecision {
 			  			}
 			  	   }
 			  	   else if(val_send_information[0].getSend_information_crud_action().toString().equals("ADD")) {
-			  			System.out.println("RequestHandler>add");
+			  			System.out.println("add");
 			  			Return_information val_message = element_dao.create(sensors[0]);
 			  			ArrayList<Return_information> test = new ArrayList<Return_information>();
 			  			test.add(val_message);

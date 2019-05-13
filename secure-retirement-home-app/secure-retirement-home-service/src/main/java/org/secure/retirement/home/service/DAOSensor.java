@@ -32,7 +32,20 @@ public class DAOSensor implements DAO<Sensor>{
 		Return_information val_return_information = Return_information.att_notfoud;
 		try {
 			if(ifFind(param_sensor)) {
-				String SQL_INSERT = "INSERT INTO sensor (type_sensor,sensor_min,sensor_max,sensor_mac,sensor_ip,,sensor_positionX,sensor_positionY) VALUES ( ?,?,?,?,?,?,?)";
+				String SQL_INSERT = "INSERT INTO sensor "
+						+ "("
+						+ " type_sensor_id  "
+					/**	+ ", sensor_min "
+						+ ", sensor_max "
+						+ ", sensor_mac "
+						+ ", sensor_ip "
+						+ ", sensor_positionX "
+						+ ", sensor_positionY " **/
+						+ ") VALUES "
+						+ "( "
+					//	+ "?,?,?,?,?,?,"
+						+ "?"
+						+ ")";
 				
 				Connection val_connection = null;
 				PreparedStatement val_preparedStatement = null;
@@ -47,13 +60,13 @@ public class DAOSensor implements DAO<Sensor>{
 							,	SQL_INSERT
 							,	true
 							
-							,   param_sensor.getType_sensor()
-							,   param_sensor.getSensor_min()
+							,   param_sensor.getType_sensor().getType_sensor_id()
+						/**	,   param_sensor.getSensor_min()
 							,   param_sensor.getSensor_max()
 							,   param_sensor.getSensor_mac()
 							,   param_sensor.getSensor_ip()
 							,   param_sensor.getSensor_positionX()
-							,   param_sensor.getSensor_positionY()
+							,   param_sensor.getSensor_positionY() **/
 
 							);
 					val_status = val_preparedStatement.executeUpdate();
@@ -85,7 +98,7 @@ public class DAOSensor implements DAO<Sensor>{
 				DAOUtility.closeAll(val_preparedStatement, val_connection, val_resultSet );
 				}
 			}else {
-				System.out.println("error");
+				System.out.println("error att_intern transmission");
 				val_return_information = Return_information.att_intern_transmission;
 			}
 		} catch (SQLException e1) {
@@ -184,7 +197,7 @@ public class DAOSensor implements DAO<Sensor>{
 	public boolean ifFind(Sensor param_sensor) throws SQLException {
 		// verification of the presence of the same value in the data base
 		boolean to_return = false;
-		String SQL_SELECTALL = "SELECT count(*) as number from sensor where type_sensor = ? ";
+		String SQL_SELECTALL = "SELECT count(*) as number from sensor where sensor = ? ";
 		Connection connexion = null;
 	    PreparedStatement preparedStatement = null;
 	    ResultSet resultSet = null;
