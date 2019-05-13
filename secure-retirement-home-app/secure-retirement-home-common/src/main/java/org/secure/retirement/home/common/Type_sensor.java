@@ -42,6 +42,13 @@ public class Type_sensor {
 	}
 
 	/**
+	 * @param type_sensor_id
+	 */
+	public Type_sensor(int type_sensor_id) {
+		this.type_sensor_id = type_sensor_id;
+	}
+
+	/**
 	 * @return the type_sensor_id
 	 */
 	public int getType_sensor_id() {

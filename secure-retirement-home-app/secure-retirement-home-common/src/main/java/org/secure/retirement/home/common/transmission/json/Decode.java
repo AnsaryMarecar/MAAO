@@ -1,10 +1,13 @@
 package org.secure.retirement.home.common.transmission.json;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.secure.retirement.home.common.Historic;
 import org.secure.retirement.home.common.Room;
 import org.secure.retirement.home.common.Sensor;
+import org.secure.retirement.home.common.Sensors;
 import org.secure.retirement.home.common.Type_sensor;
 import org.secure.retirement.home.common.transmission.information.Return_information;
 import org.secure.retirement.home.common.transmission.information.Send_information;
@@ -48,7 +51,12 @@ public class Decode {
 			  case "Sensor":
 				  to_decodeSensor(param_todecode);
 				   val_object = objectMapper.readValue(param_todecode, Sensor[].class);
-				   objectMapper.configure(DeserializationFeature.EAGER_DESERIALIZER_FETCH, false);
+				 
+				   //objectMapper.configure(DeserializationFeature.EAGER_DESERIALIZER_FETCH, false);
+				break;
+			  case "Sensors":
+				  to_decodeSensor(param_todecode);
+				   val_object = objectMapper.readValue(param_todecode, Sensors[].class);
 				break;
 			  case "Room":
 				  val_object = objectMapper.readValue(param_todecode, Room[].class);
@@ -67,10 +75,17 @@ public class Decode {
 	}
 	
 	public static Object[] to_decodeSensor (String param_todecode) throws IOException {
+		System.out.println("********************************************");
 		System.out.println("param_todecode: "+param_todecode);
+		//Sensor s = param_todecode;
 		String[] val_array = param_todecode.split(",");
-		System.out.println("val_array: "+val_array);
-		return null;
+		System.out.println("val_array: "+val_array.toString());
+		ArrayList<String> nom = new ArrayList<String>(Arrays.asList(val_array));
+		
+		System.out.println("********************************************");
+		System.out.println("nom 0 : "+nom.get(0));
+		return val_array; 
+
 	}
 	
 	public static Object[] to_decodeHistoric(String param_todecode)throws IOException {
