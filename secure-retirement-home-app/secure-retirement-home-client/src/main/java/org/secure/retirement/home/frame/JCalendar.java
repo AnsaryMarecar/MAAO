@@ -140,7 +140,6 @@ public class JCalendar {
 		pan2.add(comboYear);
 		pan2.add(comboMonth);
 		pan2.add(comboDay);
-
 		pan1.add(pan2);
 	}
 
@@ -159,6 +158,15 @@ public class JCalendar {
 	private String DayFormat(Date date) {
 		DateFormat dateDayFormat = new SimpleDateFormat("dd");
 		return dateDayFormat.format(date.getTime());
+	}
+	
+	public String getDate(){
+		SimpleDateFormat formatter= new SimpleDateFormat("yyyy/MM//dd");
+		String sDate= (year+"/"+month+"/"+day);
+		GregorianCalendar calendar = new GregorianCalendar();
+		calendar.set(year,month -1,day);
+		return (new DateItem(calendar.getTime()).toString());
+		
 	}
 	
 
