@@ -9,7 +9,7 @@ package org.secure.retirement.home.common;
  */
 public class Sensor {
 	private int sensor_id = 0;
-	private String type_sensor;
+	private Type_sensor type_sensor = null;
 	private double sensor_min = 0;
 	private double sensor_max = 0;
 	private String sensor_mac = null;
@@ -22,7 +22,7 @@ public class Sensor {
 	 * @param type_sensor
 	 */
 	
-	public Sensor(int sensor_id, String type_sensor) {
+	public Sensor(int sensor_id, Type_sensor type_sensor) {
 		super();
 		this.sensor_id = sensor_id;
 		this.type_sensor = type_sensor;
@@ -45,7 +45,7 @@ public class Sensor {
 	 * @param sensor_positionX
 	 * @param sensor_positionY
 	 */
-	public Sensor(int sensor_id, String type_sensor, double sensor_min, double sensor_max, String sensor_mac,
+	public Sensor(int sensor_id, Type_sensor type_sensor, double sensor_min, double sensor_max, String sensor_mac,
 			String sensor_ip, double sensor_positionX, double sensor_positionY) {
 		super();
 		this.sensor_id = sensor_id;
@@ -63,7 +63,7 @@ public class Sensor {
 	 * @param sensor_min
 	 * @param sensor_max
 	 */
-	public Sensor(int sensor_id, String type_sensor, double sensor_min, double sensor_max) {
+	public Sensor(int sensor_id, Type_sensor type_sensor, double sensor_min, double sensor_max) {
 		super();
 		this.sensor_id = sensor_id;
 		this.type_sensor = type_sensor;
@@ -73,7 +73,7 @@ public class Sensor {
 	
 	
 	
-	public Sensor(int sensor_id, String type_sensor, String sensor_mac, String sensor_ip, double sensor_min, double sensor_max, double sensor_positionX, double sensor_positionY) {
+	public Sensor(int sensor_id, Type_sensor type_sensor, String sensor_mac, String sensor_ip, double sensor_min, double sensor_max, double sensor_positionX, double sensor_positionY) {
 		super();
 		this.sensor_id = sensor_id;
 		this.type_sensor = type_sensor;
@@ -85,8 +85,6 @@ public class Sensor {
 		this.sensor_positionY = sensor_positionY;
 	}
 	
-
-
 	public int getSensor_id() {
 		return sensor_id;
 	}
@@ -96,13 +94,13 @@ public class Sensor {
 	/**
 	 * @return the type_sensor
 	 */
-	public String getType_sensor() {
+	public Type_sensor getType_sensor() {
 		return type_sensor;
 	}
 	/**
 	 * @param type_sensor the type_sensor to set
 	 */
-	public void setType_sensor(String type_sensor) {
+	public void setType_sensor(Type_sensor type_sensor) {
 		this.type_sensor = type_sensor;
 	}
 	/* (non-Javadoc)
@@ -184,6 +182,5 @@ public class Sensor {
 	 */
 	public void setSensor_positionY(double sensor_positionY) {
 		this.sensor_positionY = sensor_positionY;
-	}
-		
+	}		
 }

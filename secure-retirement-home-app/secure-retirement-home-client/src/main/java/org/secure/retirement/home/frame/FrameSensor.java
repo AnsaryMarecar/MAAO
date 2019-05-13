@@ -35,6 +35,7 @@ public class FrameSensor extends Frame<Sensor> {
 	// forms atribut add name
 	private JComboBox nameadd_comboBox 			= new JComboBox()							;
 	private JLabel 		nameadd_label				= new JLabel("Add a type of sensor : ")		;
+	private JTextField type_sensor_id_textField        = new JTextField();
 	
 	// forms atribut update name
 	private JTextField 	nameupdate_textField 		= new JTextField()							;
@@ -70,6 +71,7 @@ public class FrameSensor extends Frame<Sensor> {
 	public static int [] tabId = new int [40];
 	public static String  address_ip, address_mac;
 	public static String type_sensor;
+	public static int type_sensor_id;
 	public static double [] tabx = new double [40];
 	public static double [] tabsensor_min= new double[40];
 	public static double [] taby = new double [40];
@@ -77,7 +79,7 @@ public class FrameSensor extends Frame<Sensor> {
 	public static String [] tabtype= new String [40];
 	public static String [] tabIp = new String [40];
 	public static String [] tabMac= new String [40];
-	
+	public static int [] tabtypesensor_id= new int [40];
 	
 	
 	
@@ -262,18 +264,20 @@ public class FrameSensor extends Frame<Sensor> {
 		for(int i = 0 ; i<param_sensor.length; i++) {
 			this.add_table(param_sensor[i])	;
 			sensor_id	=param_sensor[i].getSensor_id() ;
-			type_sensor	=param_sensor[i].getType_sensor() ;
+			type_sensor	=param_sensor[i].getType_sensor().getType_sensor_name() ;
 			position_x	=param_sensor[i].getSensor_positionX() ;
 			position_y	=param_sensor[i].getSensor_positionY();
 			sensor_min	=param_sensor[i].getSensor_min() ;
 			sensor_max	=param_sensor[i].getSensor_max() ;
 			address_ip	=param_sensor[i].getSensor_ip() ;
 			address_mac	=param_sensor[i].getSensor_mac();
+			type_sensor_id = param_sensor[i].getType_sensor().getType_sensor_id();
 			
 			
 			
 			tabId[i]=sensor_id;
 			tabtype[i]=type_sensor;
+			tabtypesensor_id[i] = type_sensor_id;
 			tabx[i]=position_x;
 			taby[i]=position_y;
 			tabsensor_min[i]=sensor_min;
@@ -322,13 +326,16 @@ public class FrameSensor extends Frame<Sensor> {
 		double	 var_sensor_max	= Integer.decode(this.getW_dtm().getValueAt(var_line_number, 0).toString() );
 		String	 var_address_ip	= this.address_ip_textField.getText().trim().toString();
 		String	 var_address_mac	= this.address_mac_textField.getText().trim().toString();
-
+		int 	 var_type_sensor_id = this.type_sensor_id;
+		
 		Sensor	 var_sensor						;		
 		if(var_line_number>=0) {
 			try {
 				if(!var_typesensor.equals("")) {
 					// A revoir par vos soins
-					var_sensor= new Sensor(var_sensor_id,var_typesensor	,var_sensor_min,var_sensor_max,var_address_mac, var_address_ip	,var_position_x	,var_position_y)	;
+					Type_sensor type_sensor_structure = new Type_sensor(var_type_sensor_id,var_typesensor);
+					var_sensor= new Sensor(var_sensor_id,type_sensor_structure	,var_sensor_min,var_sensor_max,var_address_mac, var_address_ip	,var_position_x	,var_position_y)	;
+					//var_sensor= new Sensor(var_sensor_id,var_typesensor	,var_sensor_min,var_sensor_max,var_address_mac, var_address_ip	,var_position_x	,var_position_y)	;
 					//
 					ArrayList<Sensor> val_sensors = new ArrayList<Sensor>();
 					val_sensors.add(var_sensor)	;
@@ -367,7 +374,7 @@ public class FrameSensor extends Frame<Sensor> {
 		double	var_y				= 0								;
 		double	var_min				= 0						;
 		double	var_max				= 0;
-		
+		int var_type_sensor_id = 0;
 		String var_ip=null;
 		String var_mac=null;
 		String 	var_name = null								;
@@ -376,8 +383,14 @@ public class FrameSensor extends Frame<Sensor> {
 				
 				var_id 		= Integer.decode(this.getW_dtm().getValueAt(var_line_number, 0).toString() );
 				var_name 	= this.getW_dtm().getValueAt(var_line_number, 1).toString()	;
-				Sensor var_sensor = new Sensor(var_id,var_name, var_min ,var_max, var_mac,var_ip,var_x,var_y)			;
-				//
+				//!!!
+				var_type_sensor_id = Integer.decode(this.getW_dtm().getValueAt(var_line_number, 2).toString() );
+				//!!!
+				Type_sensor type_sensor_structure = new Type_sensor(var_type_sensor_id,var_name);
+				Sensor var_sensor= new Sensor(var_id,type_sensor_structure	,var_min,var_max,var_mac, var_ip	,var_x	,var_y)	;
+				
+				//Sensor var_sensor = new Sensor(var_id,var_name, var_min ,var_max, var_mac,var_ip,var_x,var_y)			;
+				//!!!
 				ArrayList<Sensor> var_sensors = new ArrayList<Sensor>()	; 
 				var_sensors.add(var_sensor)									;
 				ClientTransmission.transmission("Sensor", "DELETE",var_sensors , this);	
@@ -411,7 +424,7 @@ public class FrameSensor extends Frame<Sensor> {
 		String	var_ip				=address_ip_textField.getText().trim();  
 	
 		String	var_mac				=address_mac_textField.getText().trim();  
-		
+		int var_type_sensor_id   = Integer.parseInt(type_sensor_id_textField.getText());
 		
 		
 									;
@@ -422,7 +435,10 @@ public class FrameSensor extends Frame<Sensor> {
 		
 			ArrayList<Sensor> val_sensors = new ArrayList<Sensor>();
 			/// A revoir par vos soins
-			val_sensors.add(new Sensor(0,val_text, v_sensor_min ,v_sensor_max, var_mac,var_ip,v_x,v_y));
+			Type_sensor type_sensor_structure = new Type_sensor(var_type_sensor_id,val_text);
+			val_sensors.add(new Sensor(0,type_sensor_structure	,v_sensor_min,v_sensor_max,var_mac, var_ip	,v_x	,v_y))	;
+			
+			//val_sensors.add(new Sensor(0,val_text, v_sensor_min ,v_sensor_max, var_mac,var_ip,v_x,v_y));
 			/// A revoir par vos soins
 			try {
 				ClientTransmission.transmission("Sensor", "ADD", val_sensors, this);	
