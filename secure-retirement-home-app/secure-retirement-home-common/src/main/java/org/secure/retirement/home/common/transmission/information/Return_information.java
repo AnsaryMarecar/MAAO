@@ -7,6 +7,8 @@ package org.secure.retirement.home.common.transmission.information;
  * @author Ansary MARECAR
  *
  */
+@AllArgsConstructor
+
 public enum Return_information {
 		att_success				(1,"The request was realized successfully")
 	,	att_number_connection	(2,"Please try later, the network is bussy")

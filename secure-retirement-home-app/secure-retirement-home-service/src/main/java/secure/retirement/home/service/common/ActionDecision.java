@@ -9,6 +9,7 @@ import org.secure.retirement.home.common.Historic;
 import org.secure.retirement.home.common.Risk;
 import org.secure.retirement.home.common.Room;
 import org.secure.retirement.home.common.Sensor;
+import org.secure.retirement.home.common.Sensors;
 import org.secure.retirement.home.common.Type_sensor;
 import org.secure.retirement.home.common.transmission.information.Return_information;
 import org.secure.retirement.home.common.transmission.information.Send_information;
@@ -150,14 +151,14 @@ public class ActionDecision {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			  }
-		  }
-		  else if(val_send_information[0].getSend_information_table().toString().equals("Sensor")) {
+		  }	  
+		  else if(val_send_information[0].getSend_information_table().toString().equals("Sensors")) {
 			  DAOSensor element_dao;   
 			  try {
 				  element_dao = new DAOSensor(daof);
-				  Sensor[] sensors = null;
+				  Sensors[] sensors = null;
 				  try {
-			  		sensors = (Sensor[]) Decode.to_decode(val_jsontext.get(1).toString(), "Sensor");
+			  		sensors = (Sensors[]) Decode.to_decode(val_jsontext.get(1).toString(), "Sensors");
 				  }catch(Exception e) {
 					  System.out.println(val_send_information[0].getSend_information_crud_action().toString()+" e: "+e.getLocalizedMessage());
 				  }
@@ -172,16 +173,106 @@ public class ActionDecision {
 			  	   }
 			  	   else if(val_send_information[0].getSend_information_crud_action().toString().equals("ADD")) {
 			  			System.out.println("add");
-			  			Return_information val_message = element_dao.create(sensors[0]);
-			  			ArrayList<Return_information> test = new ArrayList<Return_information>();
-			  			test.add(val_message);
-			  			elements = test;
+			  			//System.out.println("sensors"+sensors[0]);
+			  			try{
+				  			Sensor[] sensor = new Sensor [1];
+				  			sensor[0] = new Sensor(
+				  						new Type_sensor(sensors[0].getType_sensor_id())
+				  					,	sensors[0].getSensor_min()
+				  					,	sensors[0].getSensor_max()
+				  					,	sensors[0].getSensor_mac()
+				  					,	sensors[0].getSensor_ip()
+				  					,	sensors[0].getSensor_positionX()
+				  					,	sensors[0].getSensor_positionY()
+				  					);
+				  			Return_information val_message = element_dao.create(sensor[0]);
+				  			ArrayList<Return_information> test = new ArrayList<Return_information>();
+				  			test.add(val_message);
+				  			elements = test;
+			  			}catch(Exception e) {
+			  				System.out.println("test error");
+			  			}
+			  	  }
+			  	 else if(val_send_information[0].getSend_information_crud_action().toString().equals("DELETE")) {
+			  			System.out.println("DELETE");
+			  			//System.out.println("sensors"+sensors[0]);
+			  			try{
+				  			Sensor[] sensor = new Sensor [1];
+				  			sensor[0] = new Sensor(sensors[0].getSensor_id());
+				  			Return_information val_message = element_dao.create(sensor[0]);
+				  			ArrayList<Return_information> test = new ArrayList<Return_information>();
+				  			test.add(val_message);
+				  			elements = test;
+			  			}catch(Exception e) {
+			  				System.out.println("test error");
+			  			}
 			  	   }
+			  	 else if(val_send_information[0].getSend_information_crud_action().toString().equals("UPDATE")) {
+			  			System.out.println("UPDATE");
+			  			//System.out.println("sensors"+sensors[0]);
+			  			try{
+				  			Sensor[] sensor = new Sensor [1];
+				  			sensor[0] = new Sensor(
+				  						sensors[0].getSensor_id()
+				  					,	new Type_sensor(sensors[0].getType_sensor_id())
+				  					,	sensors[0].getSensor_min()
+				  					,	sensors[0].getSensor_max()
+				  					,	sensors[0].getSensor_mac()
+				  					,	sensors[0].getSensor_ip()
+				  					,	sensors[0].getSensor_positionX()
+				  					,	sensors[0].getSensor_positionY()
+				  					);
+				  			Return_information val_message = element_dao.create(sensor[0]);
+				  			ArrayList<Return_information> test = new ArrayList<Return_information>();
+				  			test.add(val_message);
+				  			elements = test;
+			  			}catch(Exception e) {
+			  				System.out.println("test error");
+			  			}
+			  	  }
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
+		else if(val_send_information[0].getSend_information_table().toString().equals("Sensors")) {
+		   DAOSensor element_dao;   
+		  try {
+			  element_dao = new DAOSensor(daof);
+			  Sensor[] sensors = null;
+			  try {
+		  		sensors = (Sensor[]) Decode.to_decode(val_jsontext.get(1).toString(), "Sensor");
+			  }catch(Exception e) {
+				  System.out.println(val_send_information[0].getSend_information_crud_action().toString()+" e: "+e.getLocalizedMessage());
+			  }
+		      if(val_send_information[0].getSend_information_crud_action().toString().equals("SELECT ALL")) {	
+		  			System.out.println("select all");
+		  			try {
+		  				Thread.sleep(500);
+		  				elements = element_dao.presentData();
+		  			}catch (Exception e) {
+		  				e.printStackTrace();
+		  			}
+		  	   }
+		  	   else if(val_send_information[0].getSend_information_crud_action().toString().equals("ADD")) {
+		  			System.out.println("add");
+		  			//System.out.println("sensors"+sensors[0]);
+		  			try{
+		  			Return_information val_message = element_dao.create(sensors[0]);
+		  			ArrayList<Return_information> test = new ArrayList<Return_information>();
+		  			test.add(val_message);
+		  			elements = test;
+		  			System.out.println("test error");
+		  			}catch(Exception e) {
+		  				System.out.println("test error");
+		  			}
+		  			
+		  	   }
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
 		return elements;
 	}
 }
