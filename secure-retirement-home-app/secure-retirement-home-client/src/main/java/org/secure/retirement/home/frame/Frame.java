@@ -40,7 +40,7 @@ public abstract class Frame<T> extends JFrame implements ActionListener{
 	protected 	JButton 			update_button 		= new JButton("Update"		);
 	private 	JButton 			fupdate_button 		= new JButton("Submit"		);
 	protected 	JButton 			delete_button 		= new JButton("Delete"		);
-	protected 	JButton 			disconnect_button 	= new JButton("Actualise"	);
+	protected 	JButton 			disconnect_button 	= new JButton("Refresh"	);
 	
 	//Other element
 	protected 	JLabel				title_label			= new JLabel()				 ;
