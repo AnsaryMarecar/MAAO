@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import org.secure.retirement.home.client.ClientTransmission;
 import org.secure.retirement.home.common.Room;
 import org.secure.retirement.home.common.Sensor;
+import org.secure.retirement.home.common.Sensors;
 import org.secure.retirement.home.common.Type_sensor;
 
 /**
@@ -206,7 +207,7 @@ public class FrameSensor extends Frame<Sensor> {
 			
 		// table
 		this.getW_dtm().addColumn( "Id"		)							;
-		this.getW_dtm().addColumn( "Type_Sensor"	)							;
+		this.getW_dtm().addColumn( "Type_Sensor"	)						;
 		this.getW_dtm().addColumn( "Sensor_Min"	)							;
 		this.getW_dtm().addColumn( "Sensor_Max"	)							;
 		this.getW_dtm().addColumn( "Address_Mac")							;
@@ -238,11 +239,7 @@ public class FrameSensor extends Frame<Sensor> {
 	            randomnummac();
 	        }
 	    });
-
-
-	} 
-	
-	
+	} 	
 	
 	class BoutonListener implements ActionListener{
 		  public void actionPerformed(ActionEvent e) {		
@@ -264,12 +261,8 @@ public class FrameSensor extends Frame<Sensor> {
 						,param_sensor.getSensor_positionX()
 						,param_sensor.getSensor_positionY()
 						
-						}); 
-				
+						});
 			}
-	
-	
-
 
 	
 	@Override
@@ -294,17 +287,15 @@ public class FrameSensor extends Frame<Sensor> {
 	public void initialise_table(Sensor[]  param_sensor) {
 		for(int i = 0 ; i<param_sensor.length; i++) {
 			this.add_table(param_sensor[i])	;
-			sensor_id	=param_sensor[i].getSensor_id() ;
-			type_sensor	=param_sensor[i].getType_sensor().getType_sensor_name() ;
-			position_x	=param_sensor[i].getSensor_positionX() ;
-			position_y	=param_sensor[i].getSensor_positionY();
-			sensor_min	=param_sensor[i].getSensor_min() ;
-			sensor_max	=param_sensor[i].getSensor_max() ;
-			address_ip	=param_sensor[i].getSensor_ip() ;
-			address_mac	=param_sensor[i].getSensor_mac();
+			sensor_id	= param_sensor[i].getSensor_id() ;
+			type_sensor	= param_sensor[i].getType_sensor().getType_sensor_name() ;
+			position_x	= param_sensor[i].getSensor_positionX() ;
+			position_y	= param_sensor[i].getSensor_positionY();
+			sensor_min	= param_sensor[i].getSensor_min() ;
+			sensor_max	= param_sensor[i].getSensor_max() ;
+			address_ip	= param_sensor[i].getSensor_ip() ;
+			address_mac	= param_sensor[i].getSensor_mac();
 			type_sensor_id = param_sensor[i].getType_sensor().getType_sensor_id();
-			
-			
 			
 			tabId[i]=sensor_id;
 			tabtype[i]=type_sensor;
@@ -326,7 +317,7 @@ public class FrameSensor extends Frame<Sensor> {
 	public void call_initialise_table() {
 		this.getW_dtm().setRowCount(0)									;
 		try {
-			ClientTransmission.transmission("Sensor", "SELECT ALL", null, this);	
+			ClientTransmission.transmission("Sensors", "SELECT ALL", null, this);	
 		} catch (Exception e) {
 			e.printStackTrace()											;
 		}
@@ -335,7 +326,7 @@ public class FrameSensor extends Frame<Sensor> {
 	@Override
 	/**
 	 * <p>action do after push the update button</p>
-	 * 
+	 *
 	 * @author ansary.marecar
 	 */
 	public boolean update_action() {
@@ -387,7 +378,6 @@ public class FrameSensor extends Frame<Sensor> {
 	/**
 	 * <p>action do after a click of a delete button</p>
 	 * 
-	 * @author ansary.marecar
 
 	 */
 
@@ -397,8 +387,8 @@ public class FrameSensor extends Frame<Sensor> {
 		int var_id				= -1								;
 		double	var_x				= 0								;
 		double	var_y				= 0								;
-		double	var_min				= 0						;
-		double	var_max				= 0;
+		double	var_min				= 0								;
+		double	var_max				= 0								;
 		int var_type_sensor_id = 0;
 		String var_ip=null;
 		String var_mac=null;
@@ -451,20 +441,27 @@ public class FrameSensor extends Frame<Sensor> {
 			//JOptionPane.showMessageDialog(null, "You must put an entry in every field", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
 		//}
 		//else {
-			ArrayList<Sensor> val_sensors = new ArrayList<Sensor>();
+			ArrayList<Sensors> val_sensors = new ArrayList<Sensors>();
 			int val_type_sensor_id = 0;
 			for (int i = 0; i < this.getAtt_type_sensors().size(); i++) {
 				if(this.getAtt_type_sensors().get(i).getType_sensor_name() == val_type_sensor_name) {
 					val_type_sensor_id = this.getAtt_type_sensors().get(i).getType_sensor_id();
 				}
 			}
+			
 			Type_sensor type_sensor_structure = new Type_sensor(val_type_sensor_id,val_type_sensor_name);
-			val_sensors.add(new Sensor(0,type_sensor_structure	,sensor_min,sensor_max,address_mac, address_ip,position_x,position_y));
+			val_sensors.add(new Sensors(type_sensor_structure.getType_sensor_id()
+					,sensor_min
+					,sensor_max
+					,address_mac
+					, address_ip
+					,position_x
+					,position_y));
 			
 			//val_sensors.add(new Sensor(0,val_text, v_sensor_min ,v_sensor_max, var_mac,var_ip,v_x,v_y));
 			/// A revoir par vos soins
 			try {
-				ClientTransmission.transmission("Sensor", "ADD", val_sensors, this);	
+				ClientTransmission.transmission("Sensors", "ADD", val_sensors, this);	
 				this.call_initialise_table()			;
 				this.update_table()						;
 				to_return = true						;

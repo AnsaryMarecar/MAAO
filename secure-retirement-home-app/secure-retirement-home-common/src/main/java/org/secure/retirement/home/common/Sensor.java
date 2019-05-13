@@ -12,6 +12,25 @@ public class Sensor {
 	private Type_sensor type_sensor = null;
 	private double sensor_min = 0;
 	private double sensor_max = 0;
+	/**
+	 * @param type_sensor
+	 * @param sensor_min
+	 * @param sensor_max
+	 * @param sensor_mac
+	 * @param sensor_ip
+	 * @param sensor_positionX
+	 * @param sensor_positionY
+	 */
+	public Sensor(Type_sensor type_sensor, double sensor_min, double sensor_max, String sensor_mac, String sensor_ip,
+			double sensor_positionX, double sensor_positionY) {
+		this.type_sensor = type_sensor;
+		this.sensor_min = sensor_min;
+		this.sensor_max = sensor_max;
+		this.sensor_mac = sensor_mac;
+		this.sensor_ip = sensor_ip;
+		this.sensor_positionX = sensor_positionX;
+		this.sensor_positionY = sensor_positionY;
+	}
 	private String sensor_mac = null;
 	private String sensor_ip = null;
 	private double sensor_positionX;
