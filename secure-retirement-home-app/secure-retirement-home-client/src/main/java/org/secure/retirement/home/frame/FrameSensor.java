@@ -81,7 +81,7 @@ public class FrameSensor extends Frame<Sensor> {
 	public static String [] tabMac= new String [40];
 	public static int [] tabtypesensor_id= new int [40];
 	
-	
+	private ArrayList<Type_sensor> type_sensors;
 	
 	private JOptionPane joptionpane_information;
 	
@@ -95,13 +95,24 @@ public class FrameSensor extends Frame<Sensor> {
 		Font police = new Font( "Arial" , Font.BOLD , 14 )				;
 		
 		// form add
+		type_sensors = new ArrayList<Type_sensor>();
+		type_sensors.add(new Type_sensor(1,"Température"));
+		type_sensors.add(new Type_sensor(2,"Humidity"));
+		type_sensors.add(new Type_sensor(3,"Motin"));
+		type_sensors.add(new Type_sensor(4,"Position"));
+		type_sensors.add(new Type_sensor(5,"Brigtness"));
+		type_sensors.add(new Type_sensor(6,"Occupancy"));
+		for (int i = 0 ; i<type_sensors.size(); i++) {
+			nameadd_comboBox.addItem(type_sensors.get(i).toString());
+		}
+		/**
 		nameadd_comboBox.addItem("smoke");
 		nameadd_comboBox.addItem("humidity");
 		nameadd_comboBox.addItem("motion");
 		nameadd_comboBox.addItem("position");
 		nameadd_comboBox.addItem("brightness");
 		nameadd_comboBox.addItem("occupancy");
-		
+		**/
 		nameadd_comboBox.setFont(police)								;
 		nameadd_comboBox.setPreferredSize(new Dimension(110, 30))		;
 		nameadd_comboBox.setForeground(Color.BLUE)						;
@@ -287,12 +298,6 @@ public class FrameSensor extends Frame<Sensor> {
 			tabMac[i]=address_mac;
 			
 			System.out.println(tabx[i]+"     "+taby[i]);
-			
-			
-			
-			
-	
-			
 		}
 	//	FrameSensorMap f = new FrameSensorMap();
 	//	f.setVisible(true);
@@ -411,7 +416,7 @@ public class FrameSensor extends Frame<Sensor> {
 	public boolean add_action() {
 		boolean to_return = false								;
 		String	val_text  = nameadd_comboBox.getSelectedItem().toString();
-
+		//nameadd_comboBox.get
 		String	var_x				=xadd_textField .getText().trim();  
 		double v_x = Double.parseDouble(var_x);
 		
@@ -425,7 +430,6 @@ public class FrameSensor extends Frame<Sensor> {
 	
 		String	var_mac				=address_mac_textField.getText().trim();  
 		int var_type_sensor_id   = Integer.parseInt(type_sensor_id_textField.getText());
-		
 		
 									;
 		if(var_x.equals("") || var_y.equals("") || var_sensor_min.equals("") || var_sensor_max.equals("") || var_ip.equals("") || var_mac.equals("")) {
