@@ -46,9 +46,10 @@ public class Decode {
 				  val_object = objectMapper.readValue(param_todecode, Type_sensor[].class);
 			    break;
 			  case "Sensor":
-				  objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-				  val_object = objectMapper.readValue(param_todecode, Sensor[].class);
-			    break;
+				  to_decodeSensor(param_todecode);
+				   val_object = objectMapper.readValue(param_todecode, Sensor[].class);
+				   objectMapper.configure(DeserializationFeature.EAGER_DESERIALIZER_FETCH, false);
+				break;
 			  case "Room":
 				  val_object = objectMapper.readValue(param_todecode, Room[].class);
 				    break;
@@ -63,6 +64,13 @@ public class Decode {
 			}
 		}
 		return val_object;
+	}
+	
+	public static Object[] to_decodeSensor (String param_todecode) throws IOException {
+		System.out.println("param_todecode: "+param_todecode);
+		String[] val_array = param_todecode.split(",");
+		System.out.println("val_array: "+val_array);
+		return null;
 	}
 	
 	public static Object[] to_decodeHistoric(String param_todecode)throws IOException {

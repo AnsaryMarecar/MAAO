@@ -71,8 +71,7 @@ public class Type_sensor {
 	 */
 	@Override
 	public String toString() {
-		return "Type_sensor [getType_sensor_id()=" + getType_sensor_id() + ", getType_sensor_name()="
-				+ getType_sensor_name() + "]";
+		return getType_sensor_name();
 	}
 
 	/**

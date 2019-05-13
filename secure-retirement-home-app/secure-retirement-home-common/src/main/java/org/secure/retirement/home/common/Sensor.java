@@ -108,7 +108,7 @@ public class Sensor {
 	 */
 	@Override
 	public String toString() {
-		return "Sensor [getSensor_id()=" + getSensor_id() + ", getType_sensor()=" + getType_sensor() + "]";
+		return getType_sensor().getType_sensor_name();
 	}
 	/**
 	 * @return the sensor_min
