@@ -24,6 +24,7 @@ import javax.swing.JTable;
 
 import org.secure.retirement.home.client.ClientTransmission;
 import org.secure.retirement.home.common.Room;
+import org.secure.retirement.home.common.Sensor;
 import org.secure.retirement.home.common.Type_sensor;
 
 public class FrameTableAnalysis extends Frame {
@@ -46,6 +47,8 @@ public class FrameTableAnalysis extends Frame {
 	private ArrayList<Type_sensor> typeSensor = new ArrayList<Type_sensor>();
 
 	private String table = null;
+	private String strRoom = null;
+	private String strType = null;
 
 	public FrameTableAnalysis() {
 		super();
@@ -96,11 +99,21 @@ public class FrameTableAnalysis extends Frame {
 		panFilter.setLayout(new GridLayout(2, 1));
 		panFilter.add(panComboFilter);
 		panFilter.add(panDateFilt);
-		
-		
+
 		panComboFilter.add(list_typesensor);
+		list_typesensor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				strType = list_typesensor.getSelectedItem().toString();
+			}
+		});
 		list_typesensor.setEnabled(false);
+
 		panComboFilter.add(list_room);
+		list_room.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				strRoom = list_room.getSelectedItem().toString();
+			}
+		});
 		list_room.setEnabled(false);
 
 		panDateFilt.setLayout(new GridLayout(5, 1));
@@ -149,6 +162,7 @@ public class FrameTableAnalysis extends Frame {
 
 		// The principal table of datas will be there
 		tablePanPrincip = new JPanel();
+		tablePanPrincip.setLayout(new BorderLayout());
 		tablePanPrincip.setBackground(new Color(215, 240, 245));
 
 		// If users want to compare datas by date it will be there
@@ -159,14 +173,21 @@ public class FrameTableAnalysis extends Frame {
 		// Adding the two panel of data's to the frame
 		tablePan.add(tablePanPrincip);
 		tablePan.add(tablePanComp);
-		
-		
+
 		// table
-				this.getW_dtm().addColumn("Id");
-				this.getW_dtm().addColumn("Nom");
-				this.call_initialise_table("Type_sensor");
-				w_table = new JTable(this.getW_dtm()); 
-				tablePanPrincip.add( super.getW_table());														;
+		this.getW_dtm().addColumn( "MacSensor");
+		this.getW_dtm().addColumn( "IPSensor");
+		this.getW_dtm().addColumn( "TypeSensor");
+		this.getW_dtm().addColumn( "Room");
+		this.getW_dtm().addColumn( "Date");
+		this.getW_dtm().addColumn( "HistoricValue");
+		this.call_initialise_table("Sensor");
+		this.call_initialise_table("Type_sensor");
+		this.call_initialise_table("Room");
+		this.call_initialise_table("Historic");
+		
+		w_table = new JTable(this.getW_dtm()); 
+		tablePanPrincip.add( super.getW_table());				
 
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setLocationRelativeTo(null);
@@ -205,7 +226,7 @@ public class FrameTableAnalysis extends Frame {
 
 			if (room.isSelected() == true & list_room.getItemCount() < 1) {
 				list_room.setEnabled(true);
-				table="Room";
+				table = "Room";
 				call_initialise_table(table);
 			}
 			if (room.isSelected() == false) {
@@ -283,8 +304,43 @@ public class FrameTableAnalysis extends Frame {
 	@Override
 	public void add_table(Object obj) {
 		// TODO Auto-generated method stub
+		if((Sensor) obj != null) {
+			this.getW_dtm().addRow(
+					new String[]{
+						String.valueOf(((Sensor) obj).getSensor_id()),
+						((Sensor) obj).getSensor_mac(),
+						((Sensor)obj).getSensor_ip()
+					}); 
+			
+		}
+		if((Type_sensor) obj != null) {
+			this.getW_dtm().addRow(
+					new String[]{
+						String.valueOf(((Type_sensor) obj).getType_sensor_name())
+					}); 
+			
+		}
+		
+		if((Type_sensor) obj != null) {
+			this.getW_dtm().addRow(
+					new String[]{
+						String.valueOf(((Type_sensor) obj).getType_sensor_id()),
+						((Type_sensor) obj).getType_sensor_name()
+					}); 
+			
+		}
+		if((Room) obj != null) {
+			this.getW_dtm().addRow(
+					new String[]{
+						String.valueOf(((Room) obj).getRoom_id()),
+						((Room) obj).getRoom_name()
+					}); 
+			
+		}
+		}
+		
 
-	}
+	
 
 	@Override
 	public void update_table() {
@@ -295,19 +351,31 @@ public class FrameTableAnalysis extends Frame {
 	@Override
 	public void initialise_table(Object[] obj) {
 
-		if (type_sensor.isSelected()==true) {
+
+		if (type_sensor.isSelected() == true & list_typesensor.getItemCount()<1) {
+			list_typesensor.removeAllItems();
+			list_typesensor.addItem("All Type sensor");
 			for (int i = 0; i < obj.length; i++) {
 				typeSensor.add((Type_sensor) obj[i]);
 				this.list_typesensor.addItem(typeSensor.get(i).getType_sensor_name());
 			}
 		}
 
-		if (room.isSelected()==true) {
+		if (room.isSelected() == true & list_room.getItemCount()<1) {
+			list_room.removeAllItems();
+			list_room.addItem("All rooms");
 			for (int i = 0; i < obj.length; i++) {
 				arrRoom.add((Room) obj[i]);
 				this.list_room.addItem(arrRoom.get(i).getRoom_name());
 			}
 		}
-	}
+		
 
+		if (room.isSelected()==false & type_sensor.isSelected()==false & date.isSelected()==false) {
+		
+			for(int i = 0 ; i<obj.length; i++) {
+				this.add_table(obj[i]);
+			}
+	}
+	}
 }
