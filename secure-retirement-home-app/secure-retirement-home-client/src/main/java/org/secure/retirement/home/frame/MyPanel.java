@@ -12,84 +12,87 @@ import org.secure.retirement.home.common.Sensor;
 
 
 
+
 class MyPanel extends JPanel{
-	
-	private static ArrayList<Sensor> sensors;
-	private static ArrayList<Room> rooms;
-	
-	public MyPanel ( ) {
-	
-		
-	}
 	public void paintComponent(Graphics g) {
 		try {
 		super.paintComponent(g);
-		for (int i=0 ; i<40; i++) {
+		
+		/*
+		for (int i = 0 ; i< sensors.size(); i++) {
+			sensors.get(i).getSensor_positionX();
+			sensors.get(i).getSensor_positionY();
+			double value;
+			Historic 
+			//dessine
+			if(sensors.get(i).getSensor_min() <=value <=sensors.get(i).getSensor_max() ) {
+				//green
+			}
+			else if(historic_id elle est dans risque) {
+				//red
+			}
+			if(Risque.datetime Instant.now() ) {
+				//grey
+			}
 			
+		}
+	
+		
+		
+		
+		
+		//
+		
+		
+		
+			/*
 		 String name = FrameRoom.tabName[i];
 		 int position_X = FrameRoom.tabx[i];
 		int  position_XX =FrameRoom.tabxx[i];
 		int position_Y=FrameRoom.taby[i];
 		int  position_YY=FrameRoom.tabyy[i];
+		*/
 		
-		drawRectangle(g,position_X,position_XX,position_Y,position_YY);
+		for (int i=0 ; i<40; i++) {
+		 String name = FrameSensorMap.tabName[i];
+		 int position_X = FrameSensorMap.tabx[i];
+		int  position_XX =FrameSensorMap.tabxx[i];
+		int position_Y=FrameSensorMap.taby[i];
+		int  position_YY=FrameSensorMap.tabyy[i];
+		
+		drawRectangle(g,position_X,position_Y,position_XX,position_YY);
 		
 		if(position_XX==0 && position_YY==0) {
 		drawStr(g,name,position_X,position_Y);
 		}
-		}}catch(Exception e) {}
+		}}
+		catch(Exception e) {}
 	}
+
+	/*
+	for (int i = 0 ; i< rooms.size(); i++) {
+		rooms.get(i).getX_max();
+		rooms.get(i).getY_max();
+		rooms.get(i).getX_min();
+		rooms.get(i).getY_min();
+	}
+	}*/
 		/*for (int i =0 ; i<40 ; i++) {
 			int position_x1= FrameSensor.tabx[i];
 			int position_y1= FrameSensor.taby[i];
-			int min= FrameSensor.tabsensor_min[i];
-			
-			if(min<10) {
-			g.setColor(Color.RED);
-			g.fillOval(position_x1, position_y1,20,20);
-		}
-			else if (min>20) {
-				g.setColor(Color.GREEN);
-				g.fillOval(position_x1, position_y1,20,20);
-			}
-			else {
-				g.setColor(Color.GRAY);
-				g.fillOval(position_x1, position_y1,20,20);
+@ -51,6 +90,7 @@ class MyPanel extends JPanel{
 			}
 	}
 	}*/
+	
 	// Draw Rectangle 
 	public void drawRectangle(Graphics g,int x , int y , int z, int f ) {
 		g.drawRect( x ,  y ,  z, f);
 	}
-	// Draw String
 	public void drawStr(Graphics g,String text, int x, int y ) {
 		g.drawString(text, x,y) ;
 	}
-	/**
-	 * @return the sensors
-	 */
-	public static ArrayList<Sensor> getSensors() {
-		return sensors;
-	}
-	/**
-	 * @param sensors the sensors to set
-	 */
-	public static void setSensors(ArrayList<Sensor> sensors) {
-		MyPanel.sensors = sensors;
-	}
-	/**
-	 * @return the rooms
-	 */
-	public static ArrayList<Room> getRooms() {
-		return rooms;
-	}
-	/**
-	 * @param rooms the rooms to set
-	 */
-	public static void setRooms(ArrayList<Room> rooms) {
-		MyPanel.rooms = rooms;
-	}
+
 	
 }
 		   // g.drawRect(0,0,200,500);
