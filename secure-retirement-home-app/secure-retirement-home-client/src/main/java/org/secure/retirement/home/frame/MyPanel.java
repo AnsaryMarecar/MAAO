@@ -67,6 +67,26 @@ class MyPanel extends JPanel{
 		}
 		}}
 		catch(Exception e) {}
+	
+	for (int i=0 ; i<40; i++) {
+	double position_x1= FrameSensor.tabx[i];
+	double  position_y1= FrameSensor.taby[i];
+	double sensor_min = FrameSensor.tabsensor_min[i];
+	g.setColor(Color.WHITE);
+	g.fillOval((int)position_x1, (int)position_y1,10,10);
+	if (sensor_min <10) {
+		g.setColor(Color.RED);
+		g.fillOval((int)position_x1, (int)position_y1,10,10);
+	}
+	else if  (sensor_min >10) {
+		g.setColor(Color.GREEN);
+		g.fillOval((int)position_x1, (int)position_y1,10,10);
+	}
+	else {
+		g.setColor(Color.GRAY);
+		g.fillOval((int)position_x1, (int)position_y1,10,10);
+	}
+	}
 	}
 	/*
 	for (int i = 0 ; i< rooms.size(); i++) {
