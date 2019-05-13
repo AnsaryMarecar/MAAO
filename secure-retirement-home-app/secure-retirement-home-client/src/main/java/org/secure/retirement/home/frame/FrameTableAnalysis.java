@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 
 import org.secure.retirement.home.client.ClientTransmission;
+import org.secure.retirement.home.common.Historic;
 import org.secure.retirement.home.common.Room;
 import org.secure.retirement.home.common.Sensor;
 import org.secure.retirement.home.common.Type_sensor;
@@ -329,11 +330,10 @@ public class FrameTableAnalysis extends Frame {
 					}); 
 			
 		}
-		if((Room) obj != null) {
+		if((Historic) obj != null) {
 			this.getW_dtm().addRow(
 					new String[]{
-						String.valueOf(((Room) obj).getRoom_id()),
-						((Room) obj).getRoom_name()
+						String.valueOf(((Historic) obj).getHistoric_value())
 					}); 
 			
 		}
