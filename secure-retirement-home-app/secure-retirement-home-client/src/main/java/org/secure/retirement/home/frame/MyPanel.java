@@ -68,7 +68,6 @@ class MyPanel extends JPanel{
 		}}
 		catch(Exception e) {}
 	}
-
 	/*
 	for (int i = 0 ; i< rooms.size(); i++) {
 		rooms.get(i).getX_max();
