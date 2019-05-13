@@ -9,7 +9,10 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Random;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -56,7 +59,8 @@ public class FrameSensor extends Frame<Sensor> {
 	private JTextField 	yadd_textField 		= new JTextField(" "+FrameSensorMap.position_y)							;
 	private JLabel 		yadd_label			= new JLabel("add position_y: ")	;
 	
-	
+	private JButton generate_random_ip = new JButton ("B");
+	private JButton generate_random_mac = new JButton ("M");
 	
 
 	
@@ -139,6 +143,9 @@ public class FrameSensor extends Frame<Sensor> {
 		super.addform_panel.add(	yadd_label)							;
 		super.addform_panel.add(	yadd_textField );
 		
+		super.addform_panel.add(generate_random_ip);
+		super.addform_panel.add(generate_random_mac);
+		
 		
 		
 	    //placement in the grid layout
@@ -147,6 +154,8 @@ public class FrameSensor extends Frame<Sensor> {
 	    left_panel.add(	this.update_button		)						 ;
 	    left_panel.add(	this.delete_button		)						 ;
 	    left_panel.add(	this.disconnect_button	)						 ;
+	    left_panel.add(this.generate_random_mac);
+	    left_panel.add(this.generate_random_ip);
 	    component_panel.add(this.left_panel, BorderLayout.WEST)			 ;
 	    component_panel.add(title_label, BorderLayout.NORTH)			 ;
 		
@@ -184,6 +193,19 @@ public class FrameSensor extends Frame<Sensor> {
 		// visibility
 		this.setVisible( true )											;
 		
+		
+		generate_random_ip.addActionListener(new java.awt.event.ActionListener() {
+		        public void actionPerformed(java.awt.event.ActionEvent evt) {
+		            randomnumip();
+		        }
+		    });
+		
+		generate_random_mac.addActionListener(new java.awt.event.ActionListener() {
+	        public void actionPerformed(java.awt.event.ActionEvent evt) {
+	            randomnummac();
+	        }
+	    });
+
 
 	} 
 	
@@ -268,8 +290,8 @@ public class FrameSensor extends Frame<Sensor> {
 	
 			
 		}
-		FrameSensorMap f = new FrameSensorMap();
-		f.setVisible(true);
+	//	FrameSensorMap f = new FrameSensorMap();
+	//	f.setVisible(true);
 
 	}
 	public void call_initialise_table() {
@@ -437,6 +459,30 @@ public class FrameSensor extends Frame<Sensor> {
 
 	public JOptionPane getJoptionpane_information() {
 		return joptionpane_information;
+	}
+	
+	public void randomnumip() {
+		Random r = new Random();
+		String v = r.nextInt(256) + "." + r.nextInt(256) + "." + r.nextInt(256) + "." + r.nextInt(256);
+		address_ip_textField.setText(v);
+		}
+	
+	
+	private void randomnummac(){
+	    Random rand = new Random();
+	    byte[] macAddr = new byte[6];
+	    rand.nextBytes(macAddr);
+
+	    macAddr[0] = (byte)(macAddr[0] & (byte)254);
+
+	    StringBuilder sb = new StringBuilder(18);
+	    for(byte b : macAddr){
+
+	        if(sb.length() > 0)
+	            sb.append(":");
+	        sb.append(String.format("%02x", b));
+	    }
+	    address_mac_textField.setText(sb.toString());
 	}
 
 	public static void main (String[] args) {

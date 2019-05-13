@@ -20,6 +20,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 
 import org.secure.retirement.home.client.ClientTransmission;
 import org.secure.retirement.home.common.Room;
@@ -41,8 +42,8 @@ public class FrameTableAnalysis extends Frame {
 	private JCheckBox room = new JCheckBox("Room");
 	private JCheckBox type_sensor = new JCheckBox("Type Sensors");
 
-	private ArrayList arrRoom = new ArrayList();
-	private ArrayList<Type_sensor> typeSensor=new ArrayList<Type_sensor>();
+	private ArrayList<Room> arrRoom = new ArrayList<Room>();
+	private ArrayList<Type_sensor> typeSensor = new ArrayList<Type_sensor>();
 
 	private String table = null;
 
@@ -95,7 +96,8 @@ public class FrameTableAnalysis extends Frame {
 		panFilter.setLayout(new GridLayout(2, 1));
 		panFilter.add(panComboFilter);
 		panFilter.add(panDateFilt);
-
+		
+		
 		panComboFilter.add(list_typesensor);
 		list_typesensor.setEnabled(false);
 		panComboFilter.add(list_room);
@@ -110,7 +112,8 @@ public class FrameTableAnalysis extends Frame {
 		cal2 = new JCalendar(panDateFilt3);
 		panDateFilt.add(validate1 = new JButton("validate"));
 		validate1.addActionListener(new ButtonListener());
-		panDateFilt.setVisible(false);
+		panDateFilt2.setVisible(false);
+		panDateFilt3.setVisible(false);
 		// Add button Compare to its pan
 		compareButton = new JButton("Compare");
 		compareButton.addActionListener(new ButtonListener() {
@@ -147,7 +150,6 @@ public class FrameTableAnalysis extends Frame {
 		// The principal table of datas will be there
 		tablePanPrincip = new JPanel();
 		tablePanPrincip.setBackground(new Color(215, 240, 245));
-		tablePanPrincip.setVisible(false);
 
 		// If users want to compare datas by date it will be there
 		tablePanComp = new JPanel();
@@ -157,6 +159,14 @@ public class FrameTableAnalysis extends Frame {
 		// Adding the two panel of data's to the frame
 		tablePan.add(tablePanPrincip);
 		tablePan.add(tablePanComp);
+		
+		
+		// table
+				this.getW_dtm().addColumn("Id");
+				this.getW_dtm().addColumn("Nom");
+				this.call_initialise_table("Type_sensor");
+				w_table = new JTable(this.getW_dtm()); 
+				tablePanPrincip.add( super.getW_table());														;
 
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setLocationRelativeTo(null);
@@ -181,23 +191,22 @@ public class FrameTableAnalysis extends Frame {
 				list_typesensor.removeAllItems();
 				list_typesensor.setEnabled(false);
 			}
-			
-			
+
 			if (date.isSelected() == true) {
-				panDateFilt.setVisible(true);
+				panDateFilt2.setVisible(true);
+				panDateFilt3.setVisible(true);
 				compareButton.setEnabled(true);
 			}
 			if (date.isSelected() == false) {
-				panDateFilt.setVisible(false);
+				panDateFilt2.setVisible(false);
+				panDateFilt3.setVisible(false);
 				compareButton.setEnabled(false);
 			}
-			
-			
+
 			if (room.isSelected() == true & list_room.getItemCount() < 1) {
 				list_room.setEnabled(true);
-				for (int i = 0; i < arrRoom.size(); i++) {
-					list_room.addItem(arrRoom.get(i));
-				}
+				table="Room";
+				call_initialise_table(table);
 			}
 			if (room.isSelected() == false) {
 				list_room.removeAllItems();
@@ -213,7 +222,7 @@ public class FrameTableAnalysis extends Frame {
 				if (date.isSelected() == true) {
 					String date1 = cal.getDate();
 					String date2 = cal2.getDate();
-					
+
 				}
 
 				if (room.isSelected() == true) {
@@ -230,23 +239,6 @@ public class FrameTableAnalysis extends Frame {
 
 	}
 
-	public void initialise_table(Room[] param_room){
-		for (int i = 0; i < param_room.length; i++) {
-			String roomName=param_room[i].getRoom_name() ;
-			arrRoom.add(roomName);
-		}
-	}
-
-	public void initalise_table(Type_sensor[] param_type_sensor) {
-	
-		for (int i = 0; i < param_type_sensor.length; i++) {
-			typeSensor.add(param_type_sensor[i]);
-			this.list_typesensor.addItem(typeSensor.get(i).getType_sensor_name());
-			System.out.println("Type sensor name :"+typeSensor.get(i).getType_sensor_name());
-		}
-	}
-
-	
 	public void call_initialise_table(String table) {
 		try {
 			ClientTransmission.transmission(table, "SELECT ALL", null, this);
@@ -255,7 +247,6 @@ public class FrameTableAnalysis extends Frame {
 		}
 	}
 
-	
 	public static void main(String[] args) {
 		FrameTableAnalysis frameHome = new FrameTableAnalysis();
 	}
@@ -289,8 +280,6 @@ public class FrameTableAnalysis extends Frame {
 
 	}
 
-
-
 	@Override
 	public void add_table(Object obj) {
 		// TODO Auto-generated method stub
@@ -305,7 +294,20 @@ public class FrameTableAnalysis extends Frame {
 
 	@Override
 	public void initialise_table(Object[] obj) {
-		// TODO Auto-generated method stub
+
+		if (type_sensor.isSelected()==true) {
+			for (int i = 0; i < obj.length; i++) {
+				typeSensor.add((Type_sensor) obj[i]);
+				this.list_typesensor.addItem(typeSensor.get(i).getType_sensor_name());
+			}
+		}
+
+		if (room.isSelected()==true) {
+			for (int i = 0; i < obj.length; i++) {
+				arrRoom.add((Room) obj[i]);
+				this.list_room.addItem(arrRoom.get(i).getRoom_name());
+			}
+		}
 	}
 
 }
