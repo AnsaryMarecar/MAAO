@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,10 +23,14 @@ import javax.swing.border.BevelBorder;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
+import org.secure.retirement.home.client.ClientTransmission;
+import org.secure.retirement.home.common.Room;
+import org.secure.retirement.home.common.Sensor;
 
 
 
-public class FrameSensorMap extends JFrame implements ActionListener, MouseListener{
+
+public class FrameSensorMap extends Frame<Room> implements ActionListener, MouseListener{
 	
 		
 		private JPanel pan1, pan3, pan4, pan5;
@@ -44,6 +50,14 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 		 private JPanel pan2;
 		  public static double position_x, position_y;
 		    Graphics g;
+			public static int room_id, x_min, x_max, y_min, y_max;
+			public static int [] tabId = new int [40];
+			public static String  names;
+			public static int [] tabx = new int [40];
+			public static int [] tabxx= new int [40];
+			public static int [] taby = new int [40];
+			public static int [] tabyy = new int [40];
+			public static String [] tabName= new String [40];
 		   
 		    
 		public FrameSensorMap() {
@@ -52,6 +66,8 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 			this.setSize(1200, 650);
 			this.setResizable(false);
 			
+			
+		
 			
 			pan1= new JPanel();
 			
@@ -119,28 +135,25 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 			      }
 			    });
 			this.setJMenuBar(menuBar);
+			 this.call_initialise_table()									;
 			
 			// adding a submenu
 			 this.settings.add(settings_type_sensor);
 			 this.settings.add(settings_add_user);
-			 this.settings.add(settings_sensors);
-			
+			 this.settings.add(settings_sensors);			
 			pan1.setLayout(new BorderLayout());
 			pan1.add(jlabel, BorderLayout.CENTER);
 			this.setLayout(new BorderLayout());
 			this.getContentPane().add(pan1, BorderLayout.NORTH);
 			this.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER));
-		
+
 		//create and draw a map
-		
-		
-		pan2 = new MyPanel();
-		
+			
+			pan2 = new MyPanel();
 		pan2.setBackground(Color.WHITE);
 		pan2.setPreferredSize(new Dimension(1200,500));
 		pan2.addMouseListener(this);
 
-	
 		this.getContentPane().add(pan2, BorderLayout.CENTER);
 		this.getContentPane().add(pan3, BorderLayout.CENTER);
 		this.getContentPane().add(pan4, BorderLayout.SOUTH);
@@ -158,16 +171,12 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 			jlabel4.setBackground(Color.green);
 			jlabel5.setOpaque(true);
 			jlabel5.setBackground(Color.gray);
-			
-			
+					
 			pan3.add(jlabel1);
 			pan3.add(jlabel2);
 			pan3.add(jlabel3);
 			pan3.add(jlabel4);
 			pan3.add(jlabel5);
-			
-		
-			
 			
 			pan4.setLayout(new FlowLayout());
 			pan4.add(add);
@@ -182,7 +191,7 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 			this.setLocationRelativeTo(null);
 			this.setVisible(true);
 			
-			
+		
 	
 			
 		}
@@ -190,7 +199,7 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 			//à mettre dans la classe de melissa 
 			if(event.getSource()==add) {
 			
-	FrameSensor f= new FrameSensor();
+FrameSensorMap f = new FrameSensorMap();
 	
 			}
 
@@ -250,14 +259,81 @@ public class FrameSensorMap extends JFrame implements ActionListener, MouseListe
 	public static void main(String [] args) {
 		FrameSensorMap f = new FrameSensorMap();
 		f.setVisible(true);
-	
-		
-	
+	}
+	@Override
+	public boolean add_action() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean update_action() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean delete_action() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public void update_on(int line_number) {
+		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public void initialise_table(Room[] param_room) {
+		// TODO Auto-generated method stub
+		//
+		for(int i = 0 ; i<param_room.length; i++) {
+			room_id=param_room[i].getRoom_id() ;
+			names=param_room[i].getRoom_name() ;
+			x_min=param_room[i].getX_min() ;
+			x_max=param_room[i].getX_max() ;
+			y_min=param_room[i].getY_min() ;
+			y_max=param_room[i].getY_max() ;
+			
+			
+			System.out.println(room_id);
+			tabId[i]=room_id;
+			tabName[i]=names;
+			tabx[i]=x_min;
+			tabxx[i]=x_max;
+			taby[i]=y_min;
+			tabyy[i]=y_max;
+			
 		}
-
 		
+	}
+	
+	public void initialise_table(Sensor[] param_sensor) {
+		// TODO Auto-generated method stub
+		for(int i = 0 ; i<param_sensor.length; i++) {
+			System.out.println(param_sensor);
+		}
 		
+	}
+	@Override
+	public void add_table(Room obj) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void update_table() {
+		// TODO Auto-generated method stub
+		
+	}
+	public void call_initialise_table() {
+		try {
+			ClientTransmission.transmission("Sensor", "SELECT ALL", null, this);	
+		} catch (Exception e) {
+			e.printStackTrace()											;
+		}
+		try {
+			ClientTransmission.transmission("Room", "SELECT ALL", null, this);	
+		} catch (Exception e) {
+			e.printStackTrace()											;
+		}
+		
+	}
 
-
+}
