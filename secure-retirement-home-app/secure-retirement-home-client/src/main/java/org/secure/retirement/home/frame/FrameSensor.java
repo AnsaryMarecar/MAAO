@@ -69,7 +69,7 @@ public class FrameSensor extends Frame<Sensor> {
 	public static double position_x, position_y, sensor_min, sensor_max;
 	public static int [] tabId = new int [40];
 	public static String  address_ip, address_mac;
-	public static Type_sensor type_sensor;
+	public static String type_sensor;
 	public static double [] tabx = new double [40];
 	public static double [] tabsensor_min= new double[40];
 	public static double [] taby = new double [40];
@@ -223,7 +223,7 @@ public class FrameSensor extends Frame<Sensor> {
 				this.getW_dtm().addRow(
 						new Object[]{
 						 param_sensor.getSensor_id()
-						,param_sensor.getType_sensor().getType_sensor_name() 
+						,param_sensor.getType_sensor()
 						,param_sensor.getSensor_min()
 						,param_sensor.getSensor_max()
 						,param_sensor.getSensor_mac() 
@@ -273,7 +273,7 @@ public class FrameSensor extends Frame<Sensor> {
 			
 			
 			tabId[i]=sensor_id;
-			tabtype[i]=type_sensor.getType_sensor_name();
+			tabtype[i]=type_sensor;
 			tabx[i]=position_x;
 			taby[i]=position_y;
 			tabsensor_min[i]=sensor_min;
@@ -313,15 +313,15 @@ public class FrameSensor extends Frame<Sensor> {
 		boolean  to_return 				= false;
 		int 	 var_line_number 		= this.getW_table().getSelectedRow();
 		int 	 var_sensor_id		= Integer.decode( (String) this.getW_dtm().getValueAt(var_line_number, 0) );
-		//j'ai mis comme type type_sensor, mais je ne sais pas ce que tu recupère
-		Type_sensor	 var_typesensor	= null;
+
+		String	 var_typesensor	= null;
 		//
-		double	 var_position_x	= Integer.decode( (String) this.getW_dtm().getValueAt(var_line_number, 0) );
-		double	 var_position_y		= Integer.decode( (String) this.getW_dtm().getValueAt(var_line_number, 0) );
-		double	 var_sensor_min	= Integer.decode( (String) this.getW_dtm().getValueAt(var_line_number, 0) );
-		double	 var_sensor_max	= Integer.decode( (String) this.getW_dtm().getValueAt(var_line_number, 0) );
-		String	 var_address_ip	= (String) this.address_ip_textField.getText().trim();
-		String	 var_address_mac	= (String) this.address_mac_textField.getText().trim();
+		double	 var_position_x	= Integer.decode(this.getW_dtm().getValueAt(var_line_number, 0).toString() );
+		double	 var_position_y		= Integer.decode(this.getW_dtm().getValueAt(var_line_number, 0).toString() );
+		double	 var_sensor_min	= Integer.decode(this.getW_dtm().getValueAt(var_line_number, 0).toString() );
+		double	 var_sensor_max	= Integer.decode(this.getW_dtm().getValueAt(var_line_number, 0).toString() );
+		String	 var_address_ip	= this.address_ip_textField.getText().trim().toString();
+		String	 var_address_mac	= this.address_mac_textField.getText().trim().toString();
 
 		Sensor	 var_sensor						;		
 		if(var_line_number>=0) {
@@ -370,13 +370,12 @@ public class FrameSensor extends Frame<Sensor> {
 		
 		String var_ip=null;
 		String var_mac=null;
-		Type_sensor 	var_name = null								;
+		String 	var_name = null								;
 		if(var_line_number>=0) {
 			try {
 				
 				var_id 		= Integer.decode(this.getW_dtm().getValueAt(var_line_number, 0).toString() );
-				var_name 	= (Type_sensor) this.getW_dtm().getValueAt(var_line_number, 1)	;
-				//A revoir par vos soins
+				var_name 	= this.getW_dtm().getValueAt(var_line_number, 1).toString()	;
 				Sensor var_sensor = new Sensor(var_id,var_name, var_min ,var_max, var_mac,var_ip,var_x,var_y)			;
 				//
 				ArrayList<Sensor> var_sensors = new ArrayList<Sensor>()	; 
@@ -398,7 +397,7 @@ public class FrameSensor extends Frame<Sensor> {
 
 	public boolean add_action() {
 		boolean to_return = false								;
-		Type_sensor	val_text  = (Type_sensor)nameadd_comboBox.getSelectedItem();
+		String	val_text  = nameadd_comboBox.getSelectedItem().toString();
 
 		String	var_x				=xadd_textField .getText().trim();  
 		double v_x = Double.parseDouble(var_x);

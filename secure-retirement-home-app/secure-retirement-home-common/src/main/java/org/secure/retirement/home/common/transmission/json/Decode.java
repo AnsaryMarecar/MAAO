@@ -9,6 +9,7 @@ import org.secure.retirement.home.common.Type_sensor;
 import org.secure.retirement.home.common.transmission.information.Return_information;
 import org.secure.retirement.home.common.transmission.information.Send_information;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -31,6 +32,7 @@ public class Decode {
 	
 	public static Object[] to_decode(String param_todecode, String param_class)throws IOException {
 		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 		Object[] val_object = null;
 		if(param_todecode!=null) {
 			switch(param_class) {
@@ -44,6 +46,7 @@ public class Decode {
 				  val_object = objectMapper.readValue(param_todecode, Type_sensor[].class);
 			    break;
 			  case "Sensor":
+				  objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 				  val_object = objectMapper.readValue(param_todecode, Sensor[].class);
 			    break;
 			  case "Room":
