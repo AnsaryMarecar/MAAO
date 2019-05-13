@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.secure.retirement.home.common.Analysis;
 import org.secure.retirement.home.common.Historic;
 import org.secure.retirement.home.common.Room;
 import org.secure.retirement.home.common.Sensor;
@@ -67,6 +68,9 @@ public class Decode {
 			  case "Failure":
 				    // code block
 				    break;
+			  case "Analysis" :
+			  		val_object  =  objectMapper.readValue(param_todecode, Analysis[].class);
+			  		break;
 			  default:
 			    // code block
 			}

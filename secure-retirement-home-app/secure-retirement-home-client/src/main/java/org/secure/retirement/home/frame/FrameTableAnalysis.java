@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 
 import org.secure.retirement.home.client.ClientTransmission;
+import org.secure.retirement.home.common.Analysis;
 import org.secure.retirement.home.common.Historic;
 import org.secure.retirement.home.common.Room;
 import org.secure.retirement.home.common.Sensor;
@@ -182,10 +183,7 @@ public class FrameTableAnalysis extends Frame {
 		this.getW_dtm().addColumn( "Room");
 		this.getW_dtm().addColumn( "Date");
 		this.getW_dtm().addColumn( "HistoricValue");
-		this.call_initialise_table("Sensor");
-		this.call_initialise_table("Type_sensor");
-		this.call_initialise_table("Room");
-		this.call_initialise_table("Historic");
+		this.call_initialise_table("Analysis");
 		
 		w_table = new JTable(this.getW_dtm()); 
 		tablePanPrincip.add( super.getW_table());				
@@ -305,35 +303,15 @@ public class FrameTableAnalysis extends Frame {
 	@Override
 	public void add_table(Object obj) {
 		// TODO Auto-generated method stub
-		if((Sensor) obj != null) {
+		if((Analysis) obj != null) {
 			this.getW_dtm().addRow(
 					new String[]{
-						String.valueOf(((Sensor) obj).getSensor_id()),
-						((Sensor) obj).getSensor_mac(),
-						((Sensor)obj).getSensor_ip()
-					}); 
-			
-		}
-		if((Type_sensor) obj != null) {
-			this.getW_dtm().addRow(
-					new String[]{
-						String.valueOf(((Type_sensor) obj).getType_sensor_name())
-					}); 
-			
-		}
-		
-		if((Type_sensor) obj != null) {
-			this.getW_dtm().addRow(
-					new String[]{
-						String.valueOf(((Type_sensor) obj).getType_sensor_id()),
-						((Type_sensor) obj).getType_sensor_name()
-					}); 
-			
-		}
-		if((Historic) obj != null) {
-			this.getW_dtm().addRow(
-					new String[]{
-						String.valueOf(((Historic) obj).getHistoric_value())
+						String.valueOf(((Analysis) obj).getSensor_mac()),
+						((Analysis) obj).getSensor_ip(),
+						((Analysis) obj).getType_sensor_name(),
+						((Analysis)obj).getRoom_name(),
+						((Analysis) obj).getHistoric_datetime().toString(),
+						((Analysis) obj).getHistoric_value().toString()
 					}); 
 			
 		}
