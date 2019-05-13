@@ -237,7 +237,6 @@ public class ActionDecision {
 				e1.printStackTrace();
 			}
 		}
-<<<<<<< HEAD
 		  else if(val_send_information[0].getSend_information_table().toString().equals("Analysis")) {
 			  DAOAnalysis element_dao;   
 			  try {
@@ -261,7 +260,6 @@ public class ActionDecision {
 						e1.printStackTrace();
 					}
 		  }
-=======
 		else if(val_send_information[0].getSend_information_table().toString().equals("Sensors")) {
 		   DAOSensor element_dao;   
 		  try {
@@ -300,7 +298,6 @@ public class ActionDecision {
 			e1.printStackTrace();
 		}
 	}
->>>>>>> cd2223b2fe23a0690a2355fd93de2bdd064bae3a
 		return elements;
 	}
 }
