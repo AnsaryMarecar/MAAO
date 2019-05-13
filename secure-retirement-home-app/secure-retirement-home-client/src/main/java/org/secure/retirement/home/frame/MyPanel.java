@@ -3,8 +3,12 @@ package org.secure.retirement.home.frame;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
+
+import org.secure.retirement.home.common.Room;
+import org.secure.retirement.home.common.Sensor;
 
 
 
@@ -17,21 +21,56 @@ class MyPanel extends JPanel{
 	public void paintComponent(Graphics g) {
 		try {
 		super.paintComponent(g);
+		
+		/*
+		for (int i = 0 ; i< sensors.size(); i++) {
+			sensors.get(i).getSensor_positionX();
+			sensors.get(i).getSensor_positionY();
+			double value;
+			Historic 
+			//dessine
+			if(sensors.get(i).getSensor_min() <=value <=sensors.get(i).getSensor_max() ) {
+				//green
+			}
+			else if(historic_id elle est dans risque) {
+				//red
+			}
+			if(Risque.datetime Instant.now() ) {
+				//grey
+			}
+			
+		}
+	
+		
+		
+		
+		
+		//
+		
+		*/
 		for (int i=0 ; i<40; i++) {
 			
-		 String name = FrameRoom.tabName[i];
-		 int position_X = FrameRoom.tabx[i];
-		int  position_XX =FrameRoom.tabxx[i];
-		int position_Y=FrameRoom.taby[i];
-		int  position_YY=FrameRoom.tabyy[i];
+		 String name = FrameSensorMap.tabName[i];
+		 int position_X = FrameSensorMap.tabx[i];
+		int  position_XX =FrameSensorMap.tabxx[i];
+		int position_Y=FrameSensorMap.taby[i];
+		int  position_YY=FrameSensorMap.tabyy[i];
 		
 		drawRectangle(g,position_X,position_XX,position_Y,position_YY);
 		
 		if(position_XX==0 && position_YY==0) {
 		drawStr(g,name,position_X,position_Y);
-		}
+		}	
 		}}catch(Exception e) {}
 	}
+	/*
+	for (int i = 0 ; i< rooms.size(); i++) {
+		rooms.get(i).getX_max();
+		rooms.get(i).getY_max();
+		rooms.get(i).getX_min();
+		rooms.get(i).getY_min();
+	}
+	}*/
 		/*for (int i =0 ; i<40 ; i++) {
 			int position_x1= FrameSensor.tabx[i];
 			int position_y1= FrameSensor.taby[i];
@@ -51,6 +90,7 @@ class MyPanel extends JPanel{
 			}
 	}
 	}*/
+	
 	// Draw Rectangle 
 	public void drawRectangle(Graphics g,int x , int y , int z, int f ) {
 		g.drawRect( x ,  y ,  z, f);
@@ -59,6 +99,7 @@ class MyPanel extends JPanel{
 	public void drawStr(Graphics g,String text, int x, int y ) {
 		g.drawString(text, x,y) ;
 	}
+
 	
 }
 		   // g.drawRect(0,0,200,500);
