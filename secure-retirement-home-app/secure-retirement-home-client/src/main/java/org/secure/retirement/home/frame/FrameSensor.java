@@ -68,7 +68,8 @@ public class FrameSensor extends Frame<Sensor> {
 	
 	
 	public static int sensor_id;
-	public static double position_x, position_y, sensor_min, sensor_max;
+	public double position_x, position_y, sensor_min, sensor_max;
+	public static String pos_x, pos_y, sen_min, sen_max;
 	public static String  address_ip, address_mac;
 	public static String type_sensor;
 	
@@ -426,21 +427,23 @@ public class FrameSensor extends Frame<Sensor> {
 	public boolean add_action() {
 		boolean to_return = false								;
 		
-		
-		
+	
 		String	val_type_sensor_name  = nameadd_comboBox.getSelectedItem().toString(); //type_sensor.name
 		//nameadd_comboBox.get
-		position_x 	= Double.parseDouble(xadd_textField .getText().trim())			;
-		position_y 	= Double.parseDouble(yadd_textField .getText().trim())			; 
-		sensor_min 	= Double.parseDouble(sensor_min_textField .getText().trim())	; 
-		sensor_max 	= Double.parseDouble(sensor_max_textField .getText().trim())	; 
-		address_ip 	= address_ip_textField.getText().trim()							;
-		address_mac	= address_mac_textField.getText().trim()						;
-
-		//if(position_x.equals("") || var_y.equals("") || var_sensor_min.equals("") || var_sensor_max.equals("") || var_ip.equals("") || var_mac.equals("")) {
-			//JOptionPane.showMessageDialog(null, "You must put an entry in every field", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
-		//}
-		//else {
+		
+		pos_x 	= (xadd_textField .getText().toString())			;
+		pos_y 	= (yadd_textField .getText())			; 
+		sen_min 	= (sensor_min_textField .getText().toString())	; 
+		sen_max 	= (sensor_max_textField .getText().toString())	; 
+		address_ip 	= address_ip_textField.getText()						;
+		address_mac	= address_mac_textField.getText()						;
+		
+		if ((pos_x.trim().equals("") || pos_y.trim().equals("") || sen_min.trim().equals("") || sen_max.trim().equals("") ||address_ip.trim().equals("") || address_mac.trim().equals(""))) {
+			JOptionPane.showMessageDialog(null, "You must put an entry in every field", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
+		} else if (!sen_min.matches("[0-9]") || (!sen_max.matches("[0-9]"))) { 
+			JOptionPane.showMessageDialog(null, "You can only enter a number for your sensor's min and max", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
+		}    
+		else {
 			ArrayList<Sensors> val_sensors = new ArrayList<Sensors>();
 			int val_type_sensor_id = 0;
 			for (int i = 0; i < this.getAtt_type_sensors().size(); i++) {
@@ -459,7 +462,7 @@ public class FrameSensor extends Frame<Sensor> {
 					,position_y));
 			
 			//val_sensors.add(new Sensor(0,val_text, v_sensor_min ,v_sensor_max, var_mac,var_ip,v_x,v_y));
-			/// A revoir par vos soins
+		
 			try {
 				ClientTransmission.transmission("Sensors", "ADD", val_sensors, this);	
 				this.call_initialise_table()			;
@@ -470,7 +473,7 @@ public class FrameSensor extends Frame<Sensor> {
 				JOptionPane.showMessageDialog(null, "You must put an entry in every field", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
 				e.printStackTrace()						;
 			}
-		//}
+		}
 		return to_return;
 	}
 	
