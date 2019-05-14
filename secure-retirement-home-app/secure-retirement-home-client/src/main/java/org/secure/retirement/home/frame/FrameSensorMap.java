@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -38,42 +39,41 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 	
 		
 		private JPanel pan1, pan3, pan4, pan5;
-		private JButton add, update, delete;
+		private JButton configuration, refresh;
 		private JLabel jlabel,jlabel1, jlabel4, jlabel5, jlabel6;
-		
 		public static ArrayList<Sensor> att_sensors; 
 		
 		private JMenuBar menuBar = new JMenuBar();
-		private JMenu settings = new JMenu("Settings");
 		private JMenu map = new JMenu("Notification");
 		private JMenu analysis 	= new JMenu("Analysis"); 
-		private JMenuItem settings_type_sensor = new JMenuItem("Add a type sensor");
-		private JMenuItem settings_add_user = new JMenuItem("Add a user");
-		private JMenuItem settings_sensors = new JMenuItem("Set a sensor");
+		
 		
 		 private JPanel pan2;
-		  public static double position_x, position_y,x,y;
+		 private String value;
+		  public static double position_x, position_y,x,y,min,max;
 		    Graphics g;
-			public static int room_id, x_min, x_max, y_min, y_max;
-			public static int [] tabId = new int [40];
+			public static int room_id, x_min, x_max, y_min, y_max,historic_value;
+			public static int [] tabId = new int [60];
 			public static String  names;
-			public static int [] tabx = new int [40];
-			public static int [] tabxx= new int [40];
-			public static int [] taby = new int [40];
-			public static int [] tabyy = new int [40];
-			public static String [] tabName= new String [40];
-			public static double [] tabsensor_x = new double [40];
-			public static double [] tabsensor_y = new double [40];
+			public static int [] tabx = new int [60];
+			public static int [] tabxx= new int [60];
+			public static int [] taby = new int [60];   
+			public static int [] tabyy = new int [60];
+			public static String [] tabName= new String [60];
+			public static double [] tabsensor_x = new double [60];
+			public static double [] tabsensor_y = new double [60];
+			public static double [] tabsensor_min= new double [60];
+			public static double [] tabsensor_max= new double [60];
 			
+			public static int  [] tabhistoric_value = new int [60];
 			
-			
-		   
 		    
-		public FrameSensorMap() {
+		    public FrameSensorMap() {
 			
 			this.setLocationRelativeTo(null);
 			this.setSize(1200, 650);
 			this.setResizable(false);
+			this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			
 			
 			pan1= new JPanel();
@@ -82,13 +82,13 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 			pan4 = new JPanel();
 			pan5 = new JPanel();
 			
-			add= new JButton("ADD");
-			update= new JButton ("UPDATE");
-			delete = new JButton ("DELETE");
+			configuration= new JButton("ConfigurationSensor");
+			
+			refresh = new JButton ("REFRESH");
 			jlabel1 = new JLabel("Danger");
 			jlabel4= new JLabel("Normal");
 			jlabel5= new JLabel("No Reponse");
-			jlabel6 = new JLabel("Etat");
+			jlabel6 = new JLabel("STATE");
 			
 			
 			jlabel= new JLabel("left-click on the sensor position");
@@ -98,54 +98,32 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 			pan5.setBorder(new BevelBorder (BevelBorder.LOWERED));
 			pan5.setBackground(Color.CYAN);
 			
-			
-			
-		
-			
 			// adding a menu 
 			menuBar.add(map);
-			menuBar.add(settings);
 			menuBar.add(analysis);
 			
 			
 			analysis.addMenuListener(new MenuListener() {
 
-			      public void menuSelected(MenuEvent e) {
+			        public void menuSelected(MenuEvent e) {
 			        System.out.println("menuSelected");
 			        FrameTableAnalysis frm= new FrameTableAnalysis();
 			      }
 
-			      public void menuDeselected(MenuEvent e) {
-			        System.out.println("menuDeselected");
+			         public void menuDeselected(MenuEvent e) {
+			         System.out.println("menuDeselected");
 
 			      }
 
-			      public void menuCanceled(MenuEvent e) {
-			        System.out.println("menuCanceled");
-
-			      }
-			    });
-			
-			settings.addMenuListener(new MenuListener() {
-
-			      public void menuSelected(MenuEvent e) {
-			        FrameSettings sets = new FrameSettings();
-			      }
-
-			      public void menuDeselected(MenuEvent e) {
-			      }
-
-			      public void menuCanceled(MenuEvent e) {
+			         public void menuCanceled(MenuEvent e) {
+			         System.out.println("menuCanceled");
 
 			      }
 			    });
+
 			this.setJMenuBar(menuBar);
 			this.call_initialise_table()									;
-			// adding a submenu
-			 this.settings.add(settings_type_sensor);
-			 this.settings.add(settings_add_user);
-			 this.settings.add(settings_sensors);
-			
+	
 			pan1.setLayout(new BorderLayout());
 			pan1.add(jlabel, BorderLayout.CENTER);
 			this.setLayout(new BorderLayout());
@@ -156,7 +134,6 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 		
 		
 		pan2 = new MyPanel();
-		
 		pan2.setBackground(Color.WHITE);
 		pan2.setPreferredSize(new Dimension(1200,500));
 		pan2.addMouseListener(this);
@@ -180,19 +157,13 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 			pan3.add(jlabel1);
 			pan3.add(jlabel4);
 			pan3.add(jlabel5);
-			
 		
-			
-			
 			pan4.setLayout(new FlowLayout());
-			pan4.add(add);
-			pan4.add(update);
-			pan4.add(delete);
+			pan4.add(configuration);
+			pan4.add(refresh);
 			
-			
-			add.addActionListener(this);
-			update.addActionListener(this);
-			delete.addActionListener(this);
+			configuration.addActionListener(this);
+			refresh.addActionListener(this);
 		
 			//FrameSensorMap f = new FrameSensorMap();
 			
@@ -200,17 +171,14 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 			this.setVisible(true);
 			
 		}
-		public void actionPerformed(ActionEvent event) {
+		 public void actionPerformed(ActionEvent event) {
 			//à mettre dans la classe de melissa 
-			if(event.getSource()==add) {
+			    if(event.getSource()==configuration) {
 				FrameSensor f= new FrameSensor();
 			}
-
-			if(event.getSource()==update) {
-			}
-
-			if(event.getSource()==delete) {
-				pan2.repaint();								
+			if(event.getSource()==refresh) {
+				pan2.repaint();		
+				FrameSensorMap f= new FrameSensorMap();
 			}
 		}
 		public void mouseClicked(MouseEvent e) {
@@ -239,20 +207,12 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 		        }
 		          
 		   } 
-		   public void mousePressed(MouseEvent e) {}
-		   public void mouseEntered(MouseEvent e) {
-		    	if (e.getX()==position_x && e.getY()==position_y) {
-		    		pan2.setToolTipText("jkbjk");
-		    	}
-		   }  
-		    
+		    public void mousePressed(MouseEvent e) {}
+		    public void mouseEntered(MouseEvent e) {}   
 		    public void mouseExited(MouseEvent e){}
 			public void mouseReleased(MouseEvent e) {}
 			
-	public static void main(String [] args) {
-		FrameSensorMap f = new FrameSensorMap();
-		f.setVisible(true);	
-	}
+
 	@Override
 	public boolean add_action() {
 		// TODO Auto-generated method stub
@@ -276,8 +236,7 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 	}
 	@Override
 	public void initialise_table(Room[] param_room) {
-		// TODO Auto-generated method stub
-		//
+		
 		for(int i = 0 ; i<param_room.length; i++) {
 			room_id=param_room[i].getRoom_id() ;
 			names=param_room[i].getRoom_name() ;
@@ -297,55 +256,36 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 		}
 		
 	}
-	/**
-	 * @param sensor_id
-	 * @param type_sensor
-	 * @param sensor_min
-	 * @param sensor_max
-	 * @param sensor_mac
-	 * @param sensor_ip
-	 * @param room_id
-	 * @param sensor_status
-	 * @param sensor_positionX
-	 * @param sensor_positionY
-	 */
+
 	public void initialise_tableSensors(Sensors[] param_sensor) {
 		// TODO Auto-generated method stub
-		//this.getAtt_sensors()
-		//att_sensors= new ArrayList<Sensor>();
+	
 		for(int i = 0 ; i<param_sensor.length; i++) {
 			x=param_sensor[i].getSensor_positionX();
 			y=param_sensor[i].getSensor_positionY();
+			min =param_sensor[i].getSensor_min();
+			max=param_sensor[i].getSensor_max();
 			
 			tabsensor_x[i]=x;
 			tabsensor_y[i]=y;
-			System.out.println(" tabsensor_x[i]: " +tabsensor_x[i]+ "  y :  "+tabsensor_y[i]);
+			tabsensor_min[i]=min;
+			tabsensor_max[i]=max;
+			
 		}
 		}
 		
 		public void initialise_tableHistorics(String[] param) {
 			// TODO Auto-generated method stub
-			for(int i = 0 ; i<param.length; i++) {
-				System.out.println("on recois la valeur :"+ param[i]);
+			ArrayList<String> list_string;
+			for(int i =0; i<=param.length; i++) {
+		int j= i*4;
+				System.out.println		  ("sensor_value    "+ param[i]  );
+				list_string = new ArrayList<String>(Arrays.asList(param));	
 			}
-			/*
-			att_sensors.get(i);
-			
-			Type_sensor ts = new Type_sensor();
-			att_sensors.add(new Sensor(
-					att_sensors.get(i).getSensor_id()
-				,	ts
-				,	att_sensors.get(i).getSensor_min()
-				,	att_sensors.get(i).getSensor_max()
-				,	att_sensors.get(i).getSensor_mac()
-				,	att_sensors.get(i).getSensor_ip()
-				,	att_sensors.get(i).getSensor_positionX()
-				,   att_sensors.get(i).getSensor_positionY()));
-			System.out.println("" +att_sensors.get(i));
-		}*/
+		}
 
 		
-	}
+	
 	@Override
 	public void add_table(Room obj) {
 		// TODO Auto-generated method stub
@@ -394,8 +334,6 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 	@Override
 	public void initialise(String param_json, String param_class) throws IOException {
 		// TODO Auto-generated method stub
-		//Object[] val_object;
-		//val_object =  
 		switch(param_class) {
 		case "Sensors":
 			System.out.println("swith sensors begin" );
@@ -415,6 +353,10 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 			break;
 		}
 		
+	}
+	public static void main(String [] args) {
+		FrameSensorMap f = new FrameSensorMap();
+		f.setVisible(true);	
 	}
 }
 
