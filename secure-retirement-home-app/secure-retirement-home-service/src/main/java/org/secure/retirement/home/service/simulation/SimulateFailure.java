@@ -108,9 +108,10 @@ public class SimulateFailure extends Thread {
 				    Thread.sleep(2000);
 					for(i = 0; i < ConnectionPool.getAtt_cache().length; i++) {
 						 if(ConnectionPool.getAtt_cache()[i].isFailure()) {
-							System.out.println("****************failure **************");
-							Failure failure = new Failure(ConnectionPool.getAtt_cache()[i].getAtt_sensor());
-							System.out.println("id_sensor : "+failure.getSensor().getSensor_id());
+							 System.out.println("Failure : connection not received on sensor : "+ConnectionPool.getAtt_cache()[i].getAtt_sensor().getSensor_id()
+							 +"("+ConnectionPool.getAtt_cache()[i].getAtt_sensor().getType_sensor().getType_sensor_name()+")");
+							 
+							 Failure failure = new Failure(ConnectionPool.getAtt_cache()[i].getAtt_sensor());
 							DAOFailure element_dao;
 							element_dao = new DAOFailure(att_daofactory);
 							element_dao.create(failure);

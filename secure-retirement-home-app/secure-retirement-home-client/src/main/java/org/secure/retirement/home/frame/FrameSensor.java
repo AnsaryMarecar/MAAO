@@ -442,7 +442,7 @@ public class FrameSensor extends Frame<Sensor> {
 		
 		if ((pos_x.trim().equals("") || pos_y.trim().equals("") || sen_min.trim().equals("") || sen_max.trim().equals("") ||address_ip.trim().equals("") || address_mac.trim().equals(""))) {
 			JOptionPane.showMessageDialog(null, "You must put an entry in every field", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
-		} else if (!sen_min.matches("[0-9]*") || (!sen_max.matches("[0-9]*"))) { 
+		} else if (!sen_min.matches("[0-9]*") || (!sen_max.matches("[0-9]*")) || (!pos_x.trim().matches("[0-9]*.[0-9]*")) || (!pos_y.trim().matches("[0-9]*.[0-9]*"))){ 
 			JOptionPane.showMessageDialog(null, "You can only enter a number for your sensor's min and max", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
 		} else {
 			ArrayList<Sensors> val_sensors = new ArrayList<Sensors>();
@@ -458,6 +458,10 @@ public class FrameSensor extends Frame<Sensor> {
 				double d_pos_x = Double.parseDouble(xadd_textField.getText().trim());
 				double d_pos_y = Double.parseDouble(yadd_textField.getText().trim());	
 				
+				if (d_sen_min > d_sen_max) {
+					JOptionPane.showMessageDialog(null, "Please verify coherence", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
+
+				} else {
 			
 				
 			Type_sensor type_sensor_structure = new Type_sensor(val_type_sensor_id,val_type_sensor_name);
@@ -468,7 +472,7 @@ public class FrameSensor extends Frame<Sensor> {
 				,address_mac
 				,d_pos_x
 				,d_pos_y));
-			
+				
 
 			try {
 				ClientTransmission.transmission("Sensors", "ADD", val_sensors, this);	
@@ -478,7 +482,7 @@ public class FrameSensor extends Frame<Sensor> {
 				JOptionPane.showMessageDialog(null, "The sensor " + val_type_sensor_name + " is successfully set", "MAAO - Success Message" , JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e) {
 				e.printStackTrace()						;
-			}
+			}	}
 		}
 		return to_return;
 	}

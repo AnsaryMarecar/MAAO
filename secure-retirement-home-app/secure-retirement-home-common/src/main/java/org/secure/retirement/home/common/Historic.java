@@ -23,7 +23,7 @@ public class Historic {
 		this.historic_datetime = historic_datetime;
 		this.historic_value = historic_value;
 		this.historic_datetime = Instant.now();
-		System.out.println(this.getHistoric_datetime());
+		//System.out.println(this.getHistoric_datetime());
 	}
 	 
 	
@@ -60,7 +60,7 @@ public class Historic {
 		this.historic_value = historic_value;
 		this.historic_datetime = Instant.now();
 		this.historic_datetime = Instant.now();
-		System.out.println(this.getHistoric_datetime());
+		//System.out.println(this.getHistoric_datetime());
 	}
 
 	/**

@@ -26,7 +26,6 @@ public class ConnectionPool {
    private static final String PROPERTY_PORT	 = "port";
    private static final String PROPERTY_HOST	 = "host";
    
-   //private String 				att_host		 = "10.10.5.1"	;
    private ServerSocket 			att_server 		 = null			;
    private boolean 					att_isRunning 	 = true			;
    private static ArrayList<Sensor> att_sensors 	 = null			;
@@ -35,6 +34,7 @@ public class ConnectionPool {
    public ConnectionPool(){
 	   this.setAtt_server();
 	   setAtt_sensors();
+	   att_cache = GuavaCache.createAllCach(getAtt_sensors());
 	   this.testFailure();
    }
 
@@ -107,7 +107,7 @@ public class ConnectionPool {
 	    DAOSensor daosensor = new DAOSensor(daof);
 	    try {
 	    	att_sensors = daosensor.presentData();
-	    	att_cache = GuavaCache.createAllCach(getAtt_sensors());
+	    	//att_cache = GuavaCache.createAllCach(getAtt_sensors());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -144,7 +144,7 @@ public class ConnectionPool {
 	  SimulateFailure t = new SimulateFailure("Simulate Failure"
 			   ,JDBCConnectionPool.getConnection()
 			   );
-	  t.start(); 
+	  t.start();
    }
    public void close(){
 	   att_isRunning = false;

@@ -67,7 +67,6 @@ public class DAOFailure implements DAO<Failure> {
 				else {
 					/* take the generated id */
 					try{
-						System.out.println("generate key");
 						resultSet = preparedStatement.getGeneratedKeys();
 					}
 					catch(Exception e) {

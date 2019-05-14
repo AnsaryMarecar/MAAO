@@ -131,18 +131,28 @@ public class ActionDecision {
 				  						val_bool = true;
 				  					}
 				  			}
+				  			
 				  			if(val_bool) {	
 				  				if(ConnectionPool.getAtt_cache()[val_number].edition(history[0])) {
 				  					
 				  					Risk val_risk = new Risk(history[0].getSensor(),history[0]);
 				  					DAORisk daorisk = new DAORisk(daof);
 				  					daorisk.create(val_risk);
-				  					System.out.println("RISK on sensor : "+history[0].getSensor().getSensor_id()+" ("+history[0].getSensor().getType_sensor().getType_sensor_name()+")");
+				  					System.out.println(
+				  							"RISK on sensor : value : "+history[0].getHistoric_value()
+				  							+ " min: " + ConnectionPool.getAtt_cache()[val_number].getAtt_sensor().getSensor_min()
+				  							+ " max: " + ConnectionPool.getAtt_cache()[val_number].getAtt_sensor().getSensor_max()
+				  							);
 				  				}
 				  				else {
-				  					System.out.println("OK on sensor : "+history[0].getSensor().getSensor_id()+" ("+history[0].getSensor().getType_sensor().getType_sensor_name()+")");
+				  					System.out.println(
+				  							"OK on sensor : value : "+history[0].getHistoric_value()
+				  							+ " min: " + ConnectionPool.getAtt_cache()[val_number].getAtt_sensor().getSensor_min()
+				  							+ " max: " + ConnectionPool.getAtt_cache()[val_number].getAtt_sensor().getSensor_max()
+				  							);
 				  				}
 				  			}
+				  			
 			  			}
 				  	}catch(Exception e) {
 				  		System.out.println(val_send_information[0].getSend_information_crud_action().toString()+" e: "+e.getLocalizedMessage());
