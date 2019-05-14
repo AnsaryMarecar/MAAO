@@ -442,7 +442,7 @@ public class FrameSensor extends Frame<Sensor> {
 		
 		if ((pos_x.trim().equals("") || pos_y.trim().equals("") || sen_min.trim().equals("") || sen_max.trim().equals("") ||address_ip.trim().equals("") || address_mac.trim().equals(""))) {
 			JOptionPane.showMessageDialog(null, "You must put an entry in every field", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
-		} else if (!sen_min.matches("[0-9]*") || (!sen_max.matches("[0-9]*"))) { 
+		} else if (!sen_min.matches("[0-9]*") || (!sen_max.matches("[0-9]*")) || (!pos_x.trim().matches("[0-9]*.[0-9]*")) || (!pos_y.trim().matches("[0-9]*.[0-9]*"))){ 
 			JOptionPane.showMessageDialog(null, "You can only enter a number for your sensor's min and max", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
 		} else {
 			ArrayList<Sensors> val_sensors = new ArrayList<Sensors>();
