@@ -302,12 +302,26 @@ public class FrameTableAnalysis extends Frame {
 	@Override
 	public void add_table(Object obj) {
 		// TODO Auto-generated method stub
+		
+		System.out.println("FrameAnalaysis>add_table");
 		if ((Analysis) obj != null) {
+			System.out.println("FrameAnalysis>add_table_ifclose");
 			this.getW_dtm()
 					.addRow(new String[] { String.valueOf(((Analysis) obj).getSensor_mac()),
-							((Analysis) obj).getSensor_ip(), ((Analysis) obj).getType_sensor_name(),
-							((Analysis) obj).getRoom_name(), ((Analysis) obj).getHistoric_datetime(),
-							((Analysis) obj).getHistoric_value().toString() });
+							((Analysis) obj).getSensor_ip(),
+							((Analysis) obj).getType_sensor_name(),
+							((Analysis) obj).getRoom_name(),
+							((Analysis) obj).getHistoric_datetime(),
+							((Analysis) obj).getHistoric_value()
+							});
+			
+			System.out.println(((Analysis) obj).getSensor_mac()+
+							((Analysis) obj).getSensor_ip()+
+							((Analysis) obj).getType_sensor_name()+
+							((Analysis) obj).getRoom_name()+
+							((Analysis) obj).getHistoric_datetime()+
+							((Analysis) obj).getHistoric_value()
+							);
 
 		}
 	}
@@ -320,6 +334,14 @@ public class FrameTableAnalysis extends Frame {
 
 	@Override
 	public void initialise_table(Object[] obj) {
+		
+		
+		if (type_sensor.isSelected()==false & date.isSelected()==false & room.isSelected()==false) {
+		for (int i = 0; i < obj.length; i++) {
+			System.out.println("salut");
+			System.out.println(obj[i]);
+			this.add_table(obj[i]);
+		}}
 
 		if (type_sensor.isSelected() == true & list_typesensor.getItemCount() < 1) {
 			list_typesensor.removeAllItems();
@@ -338,12 +360,7 @@ public class FrameTableAnalysis extends Frame {
 				}
 			}
 
-			if (room.isSelected() == false & type_sensor.isSelected() == false & date.isSelected() == false) {
-
-				for (int i = 0; i < obj.length; i++) {
-					this.add_table(obj[i]);
-				}
-			}
+				
 		}
 	}
 

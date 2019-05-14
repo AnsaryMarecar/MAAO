@@ -1,11 +1,17 @@
 
 package org.secure.retirement.home.common;
 
-import java.util.Date;
 
 public class Analysis {
+	private String sensor_mac=null;
+	private String sensor_ip=null;
+	private String type_sensor_name=null;
+	private String room_name=null;
+	private String historic_datetime=null;
+	private String historic_value=null;
+	
 	public Analysis(String sensor_mac, String sensor_ip, String type_sensor_name, String room_name,
-				String historic_datetime, Double historic_value) {
+		String historic_datetime, String historic_value) {
 		super();
 		this.sensor_mac = sensor_mac;
 		this.sensor_ip = sensor_ip;
@@ -44,18 +50,13 @@ public class Analysis {
 	public void setHistoric_datetime(String historic_datetime) {
 		this.historic_datetime = historic_datetime;
 	}
-	public Double getHistoric_value() {
+	public String getHistoric_value() {
 		return historic_value;
 	}
-	public void setHistoric_value(Double historic_value) {
+	public void setHistoric_value(String historic_value) {
 		this.historic_value = historic_value;
 	}
-	private String sensor_mac;
-	private String sensor_ip;
-	private String type_sensor_name;
-	private String room_name;
-	private String historic_datetime;
-	private Double historic_value;
+
 	
 	
 	
