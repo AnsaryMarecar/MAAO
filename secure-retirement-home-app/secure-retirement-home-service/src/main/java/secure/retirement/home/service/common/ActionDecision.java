@@ -165,9 +165,11 @@ public class ActionDecision {
 			      if(val_send_information[0].getSend_information_crud_action().toString().equals("SELECT ALL")) {	
 			  			System.out.println("select all");
 			  			try {
+			  				System.out.println("select all>try");
 			  				Thread.sleep(500);
-			  				elements = element_dao.presentData();
+			  				elements = element_dao.presentDatas();
 			  			}catch (Exception e) {
+			  				System.out.println("select all>catch");
 			  				e.printStackTrace();
 			  			}
 			  	   }
@@ -235,7 +237,7 @@ public class ActionDecision {
 				e1.printStackTrace();
 			}
 		}
-		else if(val_send_information[0].getSend_information_table().toString().equals("Sensors")) {
+		else if(val_send_information[0].getSend_information_table().toString().equals("Sensor")) {
 		   DAOSensor element_dao;   
 		  try {
 			  element_dao = new DAOSensor(daof);
@@ -273,6 +275,7 @@ public class ActionDecision {
 			e1.printStackTrace();
 		}
 	}
+		
 		return elements;
 	}
 }

@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -523,6 +524,16 @@ public class FrameSensor extends Frame<Sensor> {
 	public static void main (String[] args) {
 		FrameSensor framesensor = new FrameSensor();
 		framesensor.setVisible(true);
+		
+	}
+
+
+
+
+
+	@Override
+	public void initialise(String param_json, String param_class) throws IOException {
+		// TODO Auto-generated method stub
 		
 	}
 }

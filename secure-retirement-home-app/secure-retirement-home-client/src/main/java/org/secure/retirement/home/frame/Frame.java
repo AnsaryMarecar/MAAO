@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -82,19 +83,13 @@ public abstract class Frame<T> extends JFrame implements ActionListener{
 	    
 	    //content page placement
 	    component_panel.setLayout(new BorderLayout())						 ;
-
-	        
 	    
 	    //Action listener for Button
 	    this.getAdd_button().addActionListener		(new ButtonListener())	 ;
 	    this.getUpdate_button().addActionListener	(new ButtonListener())	 ;
 	    this.getDelete_button().addActionListener	(new ButtonListener())	 ;
 	    this.getFupdate_button().addActionListener	(new ButtonListener())	 ;
-	    this.getFDisconnect_button().addActionListener	(new ButtonListener());
-	    
-
-	    
-	    
+	    this.getFDisconnect_button().addActionListener	(new ButtonListener());	    
 	}
 	
 	/**
@@ -212,6 +207,8 @@ public abstract class Frame<T> extends JFrame implements ActionListener{
 	 * Init the JTable
 	 */
 	public abstract void initialise_table	(T[] obj)				;
+	
+	public abstract void initialise(String param_json, String param_class)throws IOException;
 	
 	/**
 	 * add a line of the JTable

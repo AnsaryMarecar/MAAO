@@ -17,6 +17,41 @@ public class Sensors {
 		return sensor_id;
 	}
 
+	/**
+	 * @param sensor_id
+	 * @param type_sensor_id
+	 * @param sensor_min
+	 * @param sensor_max
+	 * @param sensor_mac
+	 * @param sensor_ip
+	 * @param sensor_positionX
+	 * @param sensor_positionY
+	 */
+	public Sensors(int sensor_id, int type_sensor_id, double sensor_min, double sensor_max, String sensor_mac,
+			String sensor_ip, double sensor_positionX, double sensor_positionY) {
+		super();
+		this.sensor_id = sensor_id;
+		this.type_sensor_id = type_sensor_id;
+		this.sensor_min = sensor_min;
+		this.sensor_max = sensor_max;
+		this.sensor_mac = sensor_mac;
+		this.sensor_ip = sensor_ip;
+		this.sensor_positionX = sensor_positionX;
+		this.sensor_positionY = sensor_positionY;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Sensors [getSensor_id()=" + getSensor_id() + ", getType_sensor_id()=" + getType_sensor_id()
+				+ ", getSensor_min()=" + getSensor_min() + ", getSensor_max()=" + getSensor_max() + ", getSensor_mac()="
+				+ getSensor_mac() + ", getSensor_ip()=" + getSensor_ip() + ", getSensor_positionX()="
+				+ getSensor_positionX() + ", getSensor_positionY()=" + getSensor_positionY() + ", getClass()="
+				+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+	}
+
 	public Sensors(int type_sensor_id, double sensor_min, double sensor_max, String sensor_mac, String sensor_ip,
 			double sensor_positionX, double sensor_positionY) {
 		super();

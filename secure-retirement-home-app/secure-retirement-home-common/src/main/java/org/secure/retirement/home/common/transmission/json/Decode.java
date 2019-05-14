@@ -51,12 +51,11 @@ public class Decode {
 			  case "Sensor":
 				  to_decodeSensor(param_todecode);
 				   val_object = objectMapper.readValue(param_todecode, Sensor[].class);
-				 
-				   //objectMapper.configure(DeserializationFeature.EAGER_DESERIALIZER_FETCH, false);
 				break;
 			  case "Sensors":
-				  to_decodeSensor(param_todecode);
+				  System.out.println("to_decode>sensors>begin");
 				   val_object = objectMapper.readValue(param_todecode, Sensors[].class);
+				   System.out.println("to_decode>sensors>end");
 				break;
 			  case "Room":
 				  val_object = objectMapper.readValue(param_todecode, Room[].class);
@@ -104,5 +103,13 @@ public class Decode {
 	    	historic_tab[val_iter]= historic;
 	    }
 	    return historic_tab;
+	}
+	public static Sensors[] to_decodeSensors(String param_todecode, String param_class)throws IOException {
+		ObjectMapper objectMapper = new ObjectMapper();
+		Sensors[] val_object = null;
+		System.out.println("to_decode>sensors>begin");
+		val_object = objectMapper.readValue(param_todecode, Sensors[].class);
+		System.out.println("to_decode>sensors>end");
+		return val_object;
 	}
 }

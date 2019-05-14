@@ -17,7 +17,31 @@ class MyPanel extends JPanel{
 	public void paintComponent(Graphics g) {
 		try {
 		super.paintComponent(g);
+		for (int i=0 ; i< 40 ; i++) {
+			int x = (int)FrameSensorMap.tabsensor_x[i];
+			int y=(int)FrameSensorMap.tabsensor_y[i];
+			
+			g.setColor(Color.GRAY);
+		g.fillOval(x, y, 10, 10);
+		}
+		}
+		catch (Exception e) {}
 		
+		for (int i=0 ; i<40; i++) {
+			 String name = FrameSensorMap.tabName[i];
+			 int position_X = FrameSensorMap.tabx[i];
+			int  position_XX =FrameSensorMap.tabxx[i];
+			int position_Y=FrameSensorMap.taby[i];
+			int  position_YY=FrameSensorMap.tabyy[i];
+			g.setColor(Color.BLACK);
+			drawRectangle(g,position_X,position_Y,position_XX,position_YY);
+			try {
+			if(position_XX==0 && position_YY==0) {
+				drawStr(g,name,position_X,position_Y);
+				}
+			}catch (Exception e) {}
+		}
+		}
 		/*
 		for (int i = 0 ; i< sensors.size(); i++) {
 			sensors.get(i).getSensor_positionX();
@@ -52,7 +76,7 @@ class MyPanel extends JPanel{
 		int position_Y=FrameRoom.taby[i];
 		int  position_YY=FrameRoom.tabyy[i];
 		*/
-		
+		/*
 		for (int i=0 ; i<40; i++) {
 		 String name = FrameSensorMap.tabName[i];
 		 int position_X = FrameSensorMap.tabx[i];
@@ -67,13 +91,8 @@ class MyPanel extends JPanel{
 		}
 		}}
 		catch(Exception e) {}
-	
-	for (int i=0 ; i<40; i++) {
-	double position_x1= FrameSensor.tabx[i];
-	double  position_y1= FrameSensor.taby[i];
-	double sensor_min = FrameSensor.tabsensor_min[i];
-	g.setColor(Color.WHITE);
-	g.fillOval((int)position_x1, (int)position_y1,10,10);
+	}*/
+	/*
 	if (sensor_min <10) {
 		g.setColor(Color.RED);
 		g.fillOval((int)position_x1, (int)position_y1,10,10);
@@ -85,9 +104,8 @@ class MyPanel extends JPanel{
 	else {
 		g.setColor(Color.GRAY);
 		g.fillOval((int)position_x1, (int)position_y1,10,10);
-	}
-	}
-	}
+	}*/
+	
 	/*
 	for (int i = 0 ; i< rooms.size(); i++) {
 		rooms.get(i).getX_max();

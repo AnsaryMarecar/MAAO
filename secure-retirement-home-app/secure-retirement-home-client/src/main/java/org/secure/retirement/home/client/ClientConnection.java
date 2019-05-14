@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import javax.swing.JOptionPane;
 
+import org.secure.retirement.home.common.Sensors;
 import org.secure.retirement.home.common.Type_sensor;
 import org.secure.retirement.home.common.transmission.json.Decode;
 import org.secure.retirement.home.frame.Frame;
@@ -54,29 +55,33 @@ public class ClientConnection implements Runnable{
     	   att_writer.write(commande)											 ;
            att_writer.flush()													 ;
             
-           System.out.println(" " + commande + " send to the server")			 ;
+           System.out.println(" " + commande + " send to the server : "+att_class)			 ;
             
            //Wait the answer
            try {
         	  try {
-        	   response = read()												 ;
-        	   System.out.println(" answer received: " + response)	;
-        	
+        		response = read()												 ;
+        	   	System.out.println(" answer received: " + response+" Att_class: "+att_class)	; 
+        	   	
+        	   	if(att_class=="Sensors") {
+        	   		System.out.println("clientconnection>try>sensors");
+        	   		att_frame.initialise(response, att_class);
+        	   	}else {
+        	   		Object[] val_object =  Decode.to_decode(response, att_class); 
+        	   		att_frame.initialise_table(val_object); 
+        	   	}
         	  }catch(Exception ex1) {
         		  System.out.println("ex1: "+ex1.getMessage());
         	  }
         	  
-        	  
-        	  Object[] val_object =  Decode.to_decode(response, att_class);
-        	  att_frame.initialise_table(val_object); 
         	 
-        	  	att_frame.getOptionpane()									  ;
+        	  /**	att_frame.getOptionpane()									  ;
 				// same value is existing
         	  	att_frame.getOptionpane().showMessageDialog(att_frame, 
         	  			val_message,
      		         " SECURE RETIREMENT HOMME "+val_title,
      		         JOptionPane.WARNING_MESSAGE);	
-        	  
+        	  **/
             }catch(Exception e) {
             	System.out.println("\t * " + "error" + " : problem with answer "+e.getMessage());
             }
