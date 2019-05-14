@@ -61,7 +61,7 @@ public class RequestHandler implements Runnable{
 	              writer.flush();
 	               
 	              if(closeConnection){
-	            	  System.out.println(val_send_information[0].getSend_information_crud_action().toString()+" : RequesHandler>CLOSE  ");
+	            	  //System.out.println(val_send_information[0].getSend_information_crud_action().toString()+" : RequesHandler>CLOSE  ");
 	                  writer = null;
 	                  reader = null;
 	                  sock.close();
@@ -69,12 +69,12 @@ public class RequestHandler implements Runnable{
 	              }
 	    	  }
 	    	  catch(Exception e) {
-	    		  System.out.println("RequestHandler>Catch>e: "+e.getMessage());
+	    		  //System.out.println("RequestHandler>Catch>e: "+e.getMessage());
 	    	  }
 	    	  
 	      }
     	  else {
-	    	  System.out.println("RequestHandler>else");
+	    	  //System.out.println("RequestHandler>else");
 	      }
       }
    }
