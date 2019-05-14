@@ -76,7 +76,7 @@ public class ActionDecision {
 				  	try {
 				  		history = (Historic[]) Decode.to_decode(val_jsontext.get(1).toString(), "Historic");
 			  			if(val_send_information[0].getSend_information_crud_action().toString().equals("SELECT ALL")) {	
-			  				System.out.println("RequestHandler>select all");
+			  				System.out.println("select all");
 			  				try {
 			  					Thread.sleep(500);
 			  					elements = element_dao.presentData();
@@ -95,12 +95,14 @@ public class ActionDecision {
 			  				boolean val_bool = false;
 			  				int i = -1;
 			  				int val_number = -1;
+			  				
 				  			for(i = 0 ; i < ConnectionPool.getAtt_sensors().size() && (!val_bool); i++) {
 				  					if(history[0].getSensor().getSensor_id() == ConnectionPool.getAtt_cache()[i].getAtt_sensor().getSensor_id()) {
-				  						System.out.println("i:"+i+"***************************************************************"
+				  						//ConnectionPool.getAtt_cache()[i].setAtt_sensors();
+				  						/**System.out.println("i:"+i+"***************************************************************"
 				  							+"\n"+"i:"+i+" History getsensor_id: "+history[0].getSensor().getSensor_id()
 				  							+"\n"+"i:"+i+" connectionpool getsensor_id: "+ConnectionPool.getAtt_cache()[i].getAtt_sensor().getSensor_id() 
-				  							+"\n"+"i: "+i+"***************************************************************");
+				  							+"\n"+"i: "+i+"***************************************************************"); **/
 				  						val_number = i; 
 				  						val_bool = true;
 				  					}
@@ -163,13 +165,13 @@ public class ActionDecision {
 					  System.out.println(val_send_information[0].getSend_information_crud_action().toString()+" e: "+e.getLocalizedMessage());
 				  }
 			      if(val_send_information[0].getSend_information_crud_action().toString().equals("SELECT ALL")) {	
-			  			System.out.println("select all");
+			  			//System.out.println("select all");
 			  			try {
-			  				System.out.println("select all>try");
+			  				//System.out.println("select all>try");
 			  				Thread.sleep(500);
 			  				elements = element_dao.presentDatas();
 			  			}catch (Exception e) {
-			  				System.out.println("select all>catch");
+			  				//System.out.println("select all>catch");
 			  				e.printStackTrace();
 			  			}
 			  	   }
@@ -197,7 +199,6 @@ public class ActionDecision {
 			  	  }
 			  	 else if(val_send_information[0].getSend_information_crud_action().toString().equals("DELETE")) {
 			  			System.out.println("DELETE");
-			  			//System.out.println("sensors"+sensors[0]);
 			  			try{
 				  			Sensor[] sensor = new Sensor [1];
 				  			sensor[0] = new Sensor(sensors[0].getSensor_id());

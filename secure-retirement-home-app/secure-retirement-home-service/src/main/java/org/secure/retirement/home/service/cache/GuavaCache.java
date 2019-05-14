@@ -17,6 +17,8 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
+import secure.retirement.home.service.common.ConnectionPool;
+
 public class GuavaCache {
    
 	private Map<Integer, Historics> att_data;
@@ -72,7 +74,7 @@ public class GuavaCache {
 	}
 	
 	public static GuavaCache [] createAllCach(ArrayList<Sensor> param_sensors_array) {
-		setAtt_sensors(param_sensors_array);
+		setAtt_sensors();
 		GuavaCache []gc = new GuavaCache [ param_sensors_array.size()];
 		for(int i = 0 ; i <  param_sensors_array.size() ; i++) {
 			gc[i] = new GuavaCache(param_sensors_array.get(i));
@@ -95,9 +97,9 @@ public class GuavaCache {
    private Historics getValue() {
 	   this.att_data = new HashMap<Integer, Historics>();
 	   this.att_data.put(att_sensor.getSensor_id(), att_historics);
-	   for (Integer i : this.att_data.keySet()) {
+	  /** for (Integer i : this.att_data.keySet()) {
 		   System.out.println("key: " + i + " value: " + this.att_data.get(i).toString());
-	   }
+	   }**/
 	   return this.att_data.get(att_sensor.getSensor_id());		
    }
 
@@ -136,7 +138,7 @@ public class GuavaCache {
    }
    
    public boolean isCurrentFailure(int param_iter, Instant param_instant_ref, Instant param_instant_min) {
-	   System.out.println("iscurrentfailure/begin");
+	   //System.out.println("iscurrentfailure/begin");
 	   boolean to_return = false;
 	   if (param_instant_ref.getEpochSecond()>=param_instant_min.getEpochSecond()) {
 			to_return = false;
@@ -154,10 +156,10 @@ public class GuavaCache {
 		int val_max = this.getAtt_historics().getHistoric_array().size();
 		Instant val_now = Instant.now();
 		Instant val_min = val_now.minus(this.getAtt_sensor().getType_sensor().getType_sensor_interval(),ChronoUnit.SECONDS);
-		System.out.println("--------------------------------------------"
+		/**System.out.println("--------------------------------------------"
 				+"\n"+"sensor:"+this.getAtt_sensor().getSensor_id()
 				+" tostring getHistoric:"+this.getAtt_historics().toString()
-				+"\n"+"--------------------------------------------");
+				+"\n"+"--------------------------------------------");**/
 		if(val_max!=0) {
 			Instant val_current = this.getAtt_historics().getHistoric_array().get(val_max-1).getHistoric_datetime();
 			if (val_current.getEpochSecond()>=val_min.getEpochSecond()) {
@@ -200,6 +202,7 @@ public class GuavaCache {
    }
 
    public boolean edition(Historic param_historic) {
+	   setAtt_sensors();
 	   this.cache.invalidate(this.getAtt_sensor().getSensor_id());
 	   if(this.getAtt_historics().getHistoric_array()==null) {
 		   ArrayList<Historic> historic_array = new ArrayList<Historic>();
@@ -207,8 +210,7 @@ public class GuavaCache {
 	   }
 	   try {
 		   removeHistoric();
-		   this.getAtt_historics().getHistoric_array().add(param_historic);
-		   
+		   this.getAtt_historics().getHistoric_array().add(param_historic);   
 	   }catch(Exception e) {
 		   e.printStackTrace();
 	   }
@@ -222,7 +224,7 @@ public class GuavaCache {
 		   cache.invalidate(this.getAtt_sensor().getSensor_id());
 	   }
 	   catch(Exception e) {
-		   System.out.println("create cache of sensor:"+this.getAtt_sensor().getSensor_id());
+		   System.out.println("create cache of sensor: "+this.getAtt_sensor().getSensor_id());
 		   ArrayList<Historic> historic_array = new ArrayList<Historic>();
 		   this.setAtt_historics(new Historics(this.getAtt_sensor().getSensor_id(),historic_array));
 	   }
@@ -272,10 +274,7 @@ public class GuavaCache {
 	/**
 	 * @param att_sensors the att_sensors to set
 	 */
-	public static void setAtt_sensors(ArrayList<Sensor> att_sensors) {
-		GuavaCache.att_sensors = att_sensors;
+	public static void setAtt_sensors() {
+		GuavaCache.att_sensors = ConnectionPool.getAtt_sensors();
 	}
-
-
-
 }
