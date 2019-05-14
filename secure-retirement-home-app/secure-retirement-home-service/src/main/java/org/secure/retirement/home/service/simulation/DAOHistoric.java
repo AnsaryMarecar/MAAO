@@ -31,8 +31,6 @@ public class DAOHistoric implements DAO<Historic> {
 	
 	public Return_information create(Historic param_historic) throws SQLException {
 		// TODO Auto-generated method stub
-		
-		System.out.println("create");
 		Return_information val_return_information = Return_information.att_notfoud;
 		try {
 			String SQL_INSERT = "INSERT INTO historic (historic_datetime, historic_value, sensor_id) VALUES (  NOW(), ?, ?  )";
@@ -43,8 +41,6 @@ public class DAOHistoric implements DAO<Historic> {
 			try {
 				/* Get connection from the Factory */
 				connexion = daofactory.getConnection();
-				System.out.println(" execute  ");
-				System.out.println("param_historic.getSensor().getSensor_id()"+param_historic.getSensor().getSensor_id());
 				preparedStatement = DAOUtility.initPreparedRequest(
 					connexion
 					,	SQL_INSERT
@@ -59,10 +55,8 @@ public class DAOHistoric implements DAO<Historic> {
 					throw new DAOException( "Insertion error" );
 				}
 				else {
-					System.out.println("else");
 					/* take the generated id */
 					try{
-						System.out.println("generate key");
 						resultSet = preparedStatement.getGeneratedKeys();
 					}
 					catch(Exception e) {
@@ -94,8 +88,6 @@ public class DAOHistoric implements DAO<Historic> {
 	
 	public String add(Historic param_historic) throws SQLException {
 		// TODO Auto-generated method stub
-		
-		System.out.println("create");
 		String val_return_information = Return_information.att_notfoud.toString();
 		try {
 			String SQL_INSERT = "INSERT INTO historic (historic_datetime, historic_value, sensor_id) VALUES (  NOW(), ?, ?  )";
@@ -106,10 +98,6 @@ public class DAOHistoric implements DAO<Historic> {
 			try {
 				/* Get connection from the Factory */
 				connexion = daofactory.getConnection();
-				System.out.println(" execute  ");
-				System.out.println("param_historic.getSensor().getSensor_id()"+param_historic.getSensor().getSensor_id());
-				
-				
 				preparedStatement = DAOUtility.initPreparedRequest(
 					connexion
 					,	SQL_INSERT
@@ -124,10 +112,8 @@ public class DAOHistoric implements DAO<Historic> {
 					throw new DAOException( "Insertion error" );
 				}
 				else {
-					System.out.println("else");
 					/* take the generated id */
 					try{
-						System.out.println("generate key");
 						resultSet = preparedStatement.getGeneratedKeys();
 					}
 					catch(Exception e) {
