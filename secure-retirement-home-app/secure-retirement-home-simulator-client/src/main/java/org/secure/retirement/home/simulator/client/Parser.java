@@ -15,7 +15,7 @@ public final class Parser {
   public static void to_parse(int param_sensor_id, FrameSimulator param_frame) {
 	  
 	  try {
-			File file = new File("data_"+param_sensor_id+".properties");
+			File file = new File("data/data_"+param_sensor_id+".properties");
 			FileReader fileReader = new FileReader(file);
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			StringBuffer stringBuffer = new StringBuffer();

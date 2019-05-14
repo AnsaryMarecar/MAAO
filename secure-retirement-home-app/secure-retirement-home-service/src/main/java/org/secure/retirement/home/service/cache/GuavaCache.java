@@ -95,7 +95,6 @@ public class GuavaCache {
    private Historics getValue() {
 	   this.att_data = new HashMap<Integer, Historics>();
 	   this.att_data.put(att_sensor.getSensor_id(), att_historics);
-	   //database.containsKey(key);
 	   for (Integer i : this.att_data.keySet()) {
 		   System.out.println("key: " + i + " value: " + this.att_data.get(i).toString());
 	   }
@@ -223,7 +222,7 @@ public class GuavaCache {
 		   cache.invalidate(this.getAtt_sensor().getSensor_id());
 	   }
 	   catch(Exception e) {
-		   System.out.println("do not exist");
+		   System.out.println("create cache of sensor:"+this.getAtt_sensor().getSensor_id());
 		   ArrayList<Historic> historic_array = new ArrayList<Historic>();
 		   this.setAtt_historics(new Historics(this.getAtt_sensor().getSensor_id(),historic_array));
 	   }
