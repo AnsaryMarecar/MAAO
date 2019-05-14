@@ -458,6 +458,10 @@ public class FrameSensor extends Frame<Sensor> {
 				double d_pos_x = Double.parseDouble(xadd_textField.getText().trim());
 				double d_pos_y = Double.parseDouble(yadd_textField.getText().trim());	
 				
+				if (d_sen_min > d_sen_max) {
+					JOptionPane.showMessageDialog(null, "Please verify coherence", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
+
+				} else {
 			
 				
 			Type_sensor type_sensor_structure = new Type_sensor(val_type_sensor_id,val_type_sensor_name);
@@ -468,7 +472,7 @@ public class FrameSensor extends Frame<Sensor> {
 				,address_mac
 				,d_pos_x
 				,d_pos_y));
-			
+				
 
 			try {
 				ClientTransmission.transmission("Sensors", "ADD", val_sensors, this);	
@@ -478,7 +482,7 @@ public class FrameSensor extends Frame<Sensor> {
 				JOptionPane.showMessageDialog(null, "The sensor " + val_type_sensor_name + " is successfully set", "MAAO - Success Message" , JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e) {
 				e.printStackTrace()						;
-			}
+			}	}
 		}
 		return to_return;
 	}
