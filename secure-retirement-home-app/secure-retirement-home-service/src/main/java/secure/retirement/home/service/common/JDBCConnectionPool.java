@@ -32,7 +32,7 @@ public class JDBCConnectionPool {
 	 *
 	 */
 	public  static ArrayList<DAOFactory> initializList(){
-		System.out.println("nb " + att_number_connection);
+		//System.out.println("nb " + att_number_connection);
 		DAOFactory var_daofactory = DAOFactory.getInstance();
 		if (var_daofactory!= null) {
 			for(int i=0; i<att_number_connection;i++) { 
@@ -55,7 +55,7 @@ public class JDBCConnectionPool {
 
 	// to give a connection
 	public  static DAOFactory getConnection() {	 
-			System.out.println("getConnection");
+			//System.out.println("getConnection");
 			att_daofactory = att_list.get(0);
 			att_list.remove(0);
 			return att_daofactory;

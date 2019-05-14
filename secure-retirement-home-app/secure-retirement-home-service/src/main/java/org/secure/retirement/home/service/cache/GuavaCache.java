@@ -103,7 +103,7 @@ public class GuavaCache {
 	   return this.att_data.get(att_sensor.getSensor_id());		
    }
 
-   public boolean isCurrentRisq(int param_iter, double min, double max) {
+   private boolean isCurrentRisq(int param_iter, double min, double max) {
 		boolean to_return = false;
 		double value = this.getAtt_historics().getHistoric_array().get(param_iter).getHistoric_value();
 		if (min > value || value > max ) {
@@ -137,7 +137,7 @@ public class GuavaCache {
 		return to_return;
    }
    
-   public boolean isCurrentFailure(int param_iter, Instant param_instant_ref, Instant param_instant_min) {
+   private boolean isCurrentFailure(int param_iter, Instant param_instant_ref, Instant param_instant_min) {
 	   //System.out.println("iscurrentfailure/begin");
 	   boolean to_return = false;
 	   if (param_instant_ref.getEpochSecond()>=param_instant_min.getEpochSecond()) {
