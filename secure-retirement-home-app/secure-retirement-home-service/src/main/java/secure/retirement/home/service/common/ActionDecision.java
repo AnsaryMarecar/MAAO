@@ -109,9 +109,14 @@ public class ActionDecision {
 				  			}
 				  			if(val_bool) {	
 				  				if(ConnectionPool.getAtt_cache()[val_number].edition(history[0])) {
+				  					
 				  					Risk val_risk = new Risk(history[0].getSensor(),history[0]);
 				  					DAORisk daorisk = new DAORisk(daof);
 				  					daorisk.create(val_risk);
+				  					System.out.println("RISK on sensor : "+history[0].getSensor().getSensor_id()+" ("+history[0].getSensor().getType_sensor().getType_sensor_name()+")");
+				  				}
+				  				else {
+				  					System.out.println("OK on sensor : "+history[0].getSensor().getSensor_id()+" ("+history[0].getSensor().getType_sensor().getType_sensor_name()+")");
 				  				}
 				  			}
 			  			}
