@@ -35,7 +35,7 @@ public class FrameSensor extends Frame<Sensor> {
 	
 	// forms atribut add name
 	private JComboBox nameadd_comboBox 			= new JComboBox()							;
-	private JLabel 		nameadd_label				= new JLabel("Add a type of sensor : ")		;
+	private JLabel 		nameadd_label				= new JLabel("Choose your sensor's type : ")		;
 	private JTextField type_sensor_id_textField        = new JTextField();
 	
 	// forms atribut update name
@@ -44,25 +44,25 @@ public class FrameSensor extends Frame<Sensor> {
 	
 	
 	private JTextField 	sensor_min_textField 		= new JTextField()							;
-	private JLabel 		sensor_min_label			= new JLabel("add sensor_min: ")	;
+	private JLabel 		sensor_min_label			= new JLabel("Sensor min: ")	;
 	
 	private JTextField 	sensor_max_textField 		= new JTextField()							;
-	private JLabel 		sensor_max_label			= new JLabel("add sensor_max: ")	;
+	private JLabel 		sensor_max_label			= new JLabel("Sensor max: ")	;
 	
 	private JTextField address_mac_textField 		= new JTextField()							;
-	private JLabel 		address_mac_label			= new JLabel("add adress_mac: ")	;
+	private JLabel 		address_mac_label			= new JLabel("MAC Address: ")	;
 	
 	private JTextField 	address_ip_textField 		= new JTextField()							;
-	private JLabel 		address_ip_label			= new JLabel("add address_ip: ")	;
+	private JLabel 		address_ip_label			= new JLabel("IP Address: ")	;
 	
 	private JTextField 	xadd_textField 		= new JTextField(" "+FrameSensorMap.position_x)							;
-	private JLabel 		xadd_label			= new JLabel("add position_x: ")	;
+	private JLabel 		xadd_label			= new JLabel("Position X: ")	;
 	
 	private JTextField 	yadd_textField 		= new JTextField(" "+FrameSensorMap.position_y)							;
-	private JLabel 		yadd_label			= new JLabel("add position_y: ")	;
+	private JLabel 		yadd_label			= new JLabel("Position Y: ")	;
 	
-	private JButton generate_random_ip = new JButton ("B");
-	private JButton generate_random_mac = new JButton ("M");
+	private JButton generate_random_ip = new JButton ("Generate IP");
+	private JButton generate_random_mac = new JButton ("Generate MAC Address");
 	
 
 	
@@ -118,49 +118,42 @@ public class FrameSensor extends Frame<Sensor> {
 		
 		// form add
 		att_type_sensors = new ArrayList<Type_sensor>();
-		att_type_sensors.add(new Type_sensor(1,"Température"));
+		att_type_sensors.add(new Type_sensor(1,"Temperature"));
 		att_type_sensors.add(new Type_sensor(2,"Humidity"));
-		att_type_sensors.add(new Type_sensor(3,"Motin"));
+		att_type_sensors.add(new Type_sensor(3,"Motion"));
 		att_type_sensors.add(new Type_sensor(4,"Position"));
-		att_type_sensors.add(new Type_sensor(5,"Brigtness"));
+		att_type_sensors.add(new Type_sensor(5,"Brightness"));
 		att_type_sensors.add(new Type_sensor(6,"Occupancy"));
 		for (int i = 0 ; i<att_type_sensors.size(); i++) {
 			nameadd_comboBox.addItem(att_type_sensors.get(i));
 		}
-		/**
-		nameadd_comboBox.addItem("smoke");
-		nameadd_comboBox.addItem("humidity");
-		nameadd_comboBox.addItem("motion");
-		nameadd_comboBox.addItem("position");
-		nameadd_comboBox.addItem("brightness");
-		nameadd_comboBox.addItem("occupancy");
-		**/
+	
 		nameadd_comboBox.setFont(police)								;
-		nameadd_comboBox.setPreferredSize(new Dimension(110, 30))		;
+		nameadd_comboBox.setPreferredSize(new Dimension(130, 30))		;
 		nameadd_comboBox.setForeground(Color.BLUE)						;
 		super.addform_panel.add(nameadd_label)							;
 		super.addform_panel.add(nameadd_comboBox)      					;
 		
 		sensor_min_textField.setFont(police)								;
-		sensor_min_textField .setPreferredSize(new Dimension(60,30))	;
+		sensor_min_textField .setPreferredSize(new Dimension(40,30))	;
 		sensor_min_textField .setForeground(Color.BLUE)						;
 		super.addform_panel.add(sensor_min_label)							;
 		super.addform_panel.add(sensor_min_textField );
 		
 		sensor_max_textField .setFont(police)								;
-		sensor_max_textField .setPreferredSize(new Dimension(60, 30))		;
+		sensor_max_textField .setPreferredSize(new Dimension(40, 30))		;
 		sensor_max_textField .setForeground(Color.BLUE)						;
 		super.addform_panel.add(sensor_max_label)							;
 		super.addform_panel.add(sensor_max_textField );
 		
 		address_mac_textField  .setFont(police)								;
-		address_mac_textField  .setPreferredSize(new Dimension(60, 30))		;
+		address_mac_textField  .setPreferredSize(new Dimension(130, 30))		;
 		address_mac_textField .setForeground(Color.BLUE)						;
 		super.addform_panel.add(	address_mac_label)							;
 		super.addform_panel.add(	address_mac_textField );
 		
 		address_ip_textField  .setFont(police)								;
-		address_ip_textField  .setPreferredSize(new Dimension(60, 30))		;
+		address_ip_textField  .setPreferredSize(new Dimension(120, 30))		;
 		address_ip_textField  .setForeground(Color.BLUE)						;
 		super.addform_panel.add(	address_ip_label)							;
 		super.addform_panel.add(address_ip_textField );
@@ -440,7 +433,7 @@ public class FrameSensor extends Frame<Sensor> {
 		
 		if ((pos_x.trim().equals("") || pos_y.trim().equals("") || sen_min.trim().equals("") || sen_max.trim().equals("") ||address_ip.trim().equals("") || address_mac.trim().equals(""))) {
 			JOptionPane.showMessageDialog(null, "You must put an entry in every field", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
-		} else if (!sen_min.matches("[0-9]") || (!sen_max.matches("[0-9]"))) { 
+		} else if (!sen_min.matches("[0-9]*") || (!sen_max.matches("[0-9]*"))) { 
 			JOptionPane.showMessageDialog(null, "You can only enter a number for your sensor's min and max", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
 		}    
 		else {
