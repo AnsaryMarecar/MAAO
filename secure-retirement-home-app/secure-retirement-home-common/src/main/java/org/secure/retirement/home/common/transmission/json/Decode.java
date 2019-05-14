@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.secure.retirement.home.common.Analysis;
+import org.secure.retirement.home.common.AnalysisMix;
 import org.secure.retirement.home.common.Historic;
 import org.secure.retirement.home.common.Historics;
 import org.secure.retirement.home.common.Room;
@@ -49,6 +51,11 @@ public class Decode {
 			  case "Type_sensor":
 				  val_object = objectMapper.readValue(param_todecode, Type_sensor[].class);
 			    break;
+			  case "Analysis":
+				 objectMapper.addMixIn(Analysis.class, AnalysisMix.class);
+				 val_object= objectMapper.readValue(param_todecode, Analysis[].class);
+				 System.out.println("sortie decode analysis");
+				  break;
 			  case "Sensor":
 				  to_decodeSensor(param_todecode);
 				   val_object = objectMapper.readValue(param_todecode, Sensor[].class);
@@ -59,6 +66,7 @@ public class Decode {
 				   System.out.println("to_decode>sensors>end");
 				break;
 			  case "Room":
+				  System.out.println(param_todecode);
 				  val_object = objectMapper.readValue(param_todecode, Room[].class);
 				    break;
 			  case "Historic":
@@ -121,6 +129,11 @@ public class Decode {
 	    }
 	    return historic_tab;
 	}
+	
+
+	
+	
+	
 	public static Sensors[] to_decodeSensors(String param_todecode, String param_class)throws IOException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		Sensors[] val_object = null;

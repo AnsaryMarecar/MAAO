@@ -82,7 +82,7 @@ public class FrameTableAnalysis extends Frame {
 		date.addItemListener(new ItemListen());
 		room.addItemListener(new ItemListen());
 		type_sensor.addItemListener(new ItemListen());
-
+		room.setEnabled(false);
 		// Adding ComboBox to the Left of the Frame
 		panFilter = new JPanel();
 		panFilter.setBackground(new Color(153, 190, 204));
@@ -204,7 +204,6 @@ public class FrameTableAnalysis extends Frame {
 			if (date.isSelected() == true) {
 				panDateFilt2.setVisible(true);
 				panDateFilt3.setVisible(true);
-				compareButton.setEnabled(true);
 			}
 			if (date.isSelected() == false) {
 				panDateFilt2.setVisible(false);
@@ -242,7 +241,7 @@ public class FrameTableAnalysis extends Frame {
 				}
 
 				if (strType.equals("All Type sensor")) {
-
+					;
 				} else {
 					table = "Analysis";
 				}
@@ -302,10 +301,7 @@ public class FrameTableAnalysis extends Frame {
 	@Override
 	public void add_table(Object obj) {
 		// TODO Auto-generated method stub
-		
-		System.out.println("FrameAnalaysis>add_table");
 		if ((Analysis) obj != null) {
-			System.out.println("FrameAnalysis>add_table_ifclose");
 			this.getW_dtm()
 					.addRow(new String[] { String.valueOf(((Analysis) obj).getSensor_mac()),
 							((Analysis) obj).getSensor_ip(),
@@ -314,14 +310,6 @@ public class FrameTableAnalysis extends Frame {
 							((Analysis) obj).getHistoric_datetime(),
 							((Analysis) obj).getHistoric_value()
 							});
-			
-			System.out.println(((Analysis) obj).getSensor_mac()+
-							((Analysis) obj).getSensor_ip()+
-							((Analysis) obj).getType_sensor_name()+
-							((Analysis) obj).getRoom_name()+
-							((Analysis) obj).getHistoric_datetime()+
-							((Analysis) obj).getHistoric_value()
-							);
 
 		}
 	}
@@ -336,10 +324,8 @@ public class FrameTableAnalysis extends Frame {
 	public void initialise_table(Object[] obj) {
 		
 		
-		if (type_sensor.isSelected()==false & date.isSelected()==false & room.isSelected()==false) {
-		for (int i = 0; i < obj.length; i++) {
-			System.out.println("salut");
-			System.out.println(obj[i]);
+		if (type_sensor.isSelected()==false & date.isSelected()==false ) {
+			for (int i = 0; i < obj.length; i++) {
 			this.add_table(obj[i]);
 		}}
 
