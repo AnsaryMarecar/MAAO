@@ -59,7 +59,7 @@ public class DAOAnalysis {
 										resultSet.getString("sensor_ip"),
 										resultSet.getString("type_sensor_name"),
 										resultSet.getString("room_name"),
-										resultSet.getDate("Historic_datetime"),
+										resultSet.getString("Historic_datetime"),
 										resultSet.getDouble("historic_value")));
 					} catch (Exception e1) {
 						System.out.println("E1: " + e1.getLocalizedMessage());

@@ -105,7 +105,7 @@ public class FrameTableAnalysis extends Frame {
 		panComboFilter.add(list_typesensor);
 		list_typesensor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				strType = list_typesensor.getSelectedItem().toString();
+			//	strType = list_typesensor.getSelectedItem().toString();
 			}
 		});
 		list_typesensor.setEnabled(false);
@@ -177,12 +177,12 @@ public class FrameTableAnalysis extends Frame {
 		tablePan.add(tablePanComp);
 
 		// table
-		this.getW_dtm().addColumn( "MacSensor");
-		this.getW_dtm().addColumn( "IPSensor");
-		this.getW_dtm().addColumn( "TypeSensor");
-		this.getW_dtm().addColumn( "Room");
-		this.getW_dtm().addColumn( "Date");
-		this.getW_dtm().addColumn( "HistoricValue");
+		this.getW_dtm().addColumn( "sensor_mac");
+		this.getW_dtm().addColumn( "sensor_ip");
+		this.getW_dtm().addColumn( "type_sensor_name");
+		this.getW_dtm().addColumn( "room_name");
+		this.getW_dtm().addColumn( "historic_datetime");
+		this.getW_dtm().addColumn( "historic_value");
 		this.call_initialise_table("Analysis");
 		
 		w_table = new JTable(this.getW_dtm()); 
@@ -309,8 +309,8 @@ public class FrameTableAnalysis extends Frame {
 						String.valueOf(((Analysis) obj).getSensor_mac()),
 						((Analysis) obj).getSensor_ip(),
 						((Analysis) obj).getType_sensor_name(),
-						((Analysis)obj).getRoom_name(),
-						((Analysis) obj).getHistoric_datetime().toString(),
+						((Analysis) obj).getRoom_name(),
+						((Analysis) obj).getHistoric_datetime(),
 						((Analysis) obj).getHistoric_value().toString()
 					}); 
 			

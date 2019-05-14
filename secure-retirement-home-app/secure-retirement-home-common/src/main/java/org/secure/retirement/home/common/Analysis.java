@@ -4,8 +4,7 @@ import java.util.Date;
 
 public class Analysis {
 	public Analysis(String sensor_mac, String sensor_ip, String type_sensor_name, String room_name,
-				Date historic_datetime, Double historic_value) {
-		super();
+				String historic_datetime, Double historic_value) {
 		this.sensor_mac = sensor_mac;
 		this.sensor_ip = sensor_ip;
 		this.type_sensor_name = type_sensor_name;
@@ -37,10 +36,10 @@ public class Analysis {
 	public void setRoom_name(String room_name) {
 		this.room_name = room_name;
 	}
-	public Date getHistoric_datetime() {
+	public String getHistoric_datetime() {
 		return historic_datetime;
 	}
-	public void setHistoric_datetime(Date historic_datetime) {
+	public void setHistoric_datetime(String historic_datetime) {
 		this.historic_datetime = historic_datetime;
 	}
 	public Double getHistoric_value() {
@@ -53,7 +52,7 @@ public class Analysis {
 	private String sensor_ip;
 	private String type_sensor_name;
 	private String room_name;
-	private Date historic_datetime;
+	private String historic_datetime;
 	private Double historic_value;
 	
 	
