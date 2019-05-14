@@ -2,7 +2,6 @@
  * 
  */
 package org.secure.retirement.home.simulator.client;
-
 import org.secure.retirement.home.simulator.frame.FrameSimulator;
 
 /**

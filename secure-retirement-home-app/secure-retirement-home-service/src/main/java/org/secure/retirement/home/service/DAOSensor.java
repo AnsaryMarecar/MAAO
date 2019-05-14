@@ -11,6 +11,7 @@ import secure.retirement.home.service.common.DAOFactory;
 import secure.retirement.home.service.common.DAOUtility;
 
 import org.secure.retirement.home.common.Sensor;
+import org.secure.retirement.home.common.Sensors;
 import org.secure.retirement.home.common.Type_sensor;
 import org.secure.retirement.home.common.exception.DAOException;
 import org.secure.retirement.home.common.transmission.information.Return_information;
@@ -240,6 +241,76 @@ public class DAOSensor implements DAO<Sensor>{
 	    
 	}	
 
+	public ArrayList<Sensors> presentDatas() throws SQLException {
+		ArrayList<Sensors> var_table						 ;
+		var_table = new ArrayList<Sensors>()	 			 ;
+		String SQL_SELECT = "SELECT "
+				+ "		sensor.sensor_id"
+				+ ",	sensor.sensor_ip"
+				+ ",	sensor.sensor_mac"
+				+ ",	sensor.sensor_min"
+				+ ",	sensor.sensor_max"
+				+ ",	sensor.sensor_positionX"
+				+ ",	sensor.sensor_positionY"
+				+ ",	type_sensor.type_sensor_interval"
+				+ ",	type_sensor.type_sensor_name"
+				+ ",	type_sensor.type_sensor_id "
+				+ "		from sensor join type_sensor "
+				+ "		where sensor.type_sensor_id=type_sensor.type_sensor_id";
+		Connection connexion = null;
+	    PreparedStatement preparedStatement = null;
+	    ResultSet resultSet = null;
+	    try {
+	    	try {
+	    		/* Get connection from the Factory */
+	    		connexion = daofactory.getConnection();
+	    	}catch(Exception e0) {
+	    		System.out.println("E0: "+e0.getLocalizedMessage());
+	    	}
+	    	try{
+		        preparedStatement = DAOUtility.initPreparedRequest(
+		        			connexion
+		        		,	SQL_SELECT
+		        		,	true
+		        		);
+	    	}catch(Exception e0B) {
+	    		System.out.println("E0B: "+e0B.getLocalizedMessage());
+	    	}
+	        try {
+		        resultSet = preparedStatement.executeQuery();
+		        System.out.println("status "+resultSet);
+		        
+		        while(resultSet.next()) {
+					try {
+		        	var_table.add(
+							
+							new Sensors(
+								resultSet.getInt("sensor_id")
+							,	resultSet.getInt("type_sensor_id")
+							,	resultSet.getDouble("sensor_min")
+							,	resultSet.getDouble("sensor_max")
+							,	resultSet.getString("sensor_mac")
+							,	resultSet.getString("sensor_ip")
+							,	resultSet.getDouble("sensor_positionX")
+							,	resultSet.getDouble("sensor_positionY")
+							)
+							);
+					}
+					catch(Exception e1) {
+						System.out.println("E1: "+e1.getLocalizedMessage());
+					}
+				} 
+		    }
+			catch(Exception e2) {
+				System.out.println("E2: "+e2.getLocalizedMessage());
+			}
+	    }
+	    catch(Exception e){
+	    	System.out.println("E: "+e.getLocalizedMessage());
+	    }
+		return var_table										 ;
+	}
+	
 	public ArrayList<Sensor> presentData() throws SQLException {
 		ArrayList<Sensor> var_table						 ;
 		var_table = new ArrayList<Sensor>()	 			 ;
@@ -261,47 +332,47 @@ public class DAOSensor implements DAO<Sensor>{
 	    ResultSet resultSet = null;
 	    try {
 	    	try {
-	        /* Get connection from the Factory */
-	        connexion = daofactory.getConnection();
+	    		/* Get connection from the Factory */
+	    		connexion = daofactory.getConnection();
 	    	}catch(Exception e0) {
 	    		System.out.println("E0: "+e0.getLocalizedMessage());
 	    	}
 	    	try{
-	        preparedStatement = DAOUtility.initPreparedRequest(
-	        			connexion
-	        		,	SQL_SELECT
-	        		,	true
-	        		);
-	    }catch(Exception e0B) {
-    		System.out.println("E0B: "+e0B.getLocalizedMessage());
-    	}
+		        preparedStatement = DAOUtility.initPreparedRequest(
+		        			connexion
+		        		,	SQL_SELECT
+		        		,	true
+		        		);
+	    	}catch(Exception e0B) {
+	    		System.out.println("E0B: "+e0B.getLocalizedMessage());
+	    	}
 	        try {
-	        resultSet = preparedStatement.executeQuery();
-	        System.out.println("status "+resultSet);
-	        
-	        while(resultSet.next()) {
-				try {
-	        	var_table.add(
-						
-						new Sensor(
-							resultSet.getInt("sensor_id")
-						,	new Type_sensor(
-									resultSet.getInt("type_sensor_id")
-								,	resultSet.getString("type_sensor_name")
-								, 	resultSet.getInt("type_sensor_interval")
-								)
-						,	resultSet.getString("sensor_mac")
-						,	resultSet.getString("sensor_ip")
-						,	resultSet.getDouble("sensor_min")
-						,	resultSet.getDouble("sensor_max")
-						,	resultSet.getDouble("sensor_positionX")
-						,	resultSet.getDouble("sensor_positionY")
-						));
-				}
-				catch(Exception e1) {
-					System.out.println("E1: "+e1.getLocalizedMessage());
-				}
-			} 
+		        resultSet = preparedStatement.executeQuery();
+		        System.out.println("status "+resultSet);
+		        
+		        while(resultSet.next()) {
+					try {
+		        	var_table.add(
+							
+							new Sensor(
+								resultSet.getInt("sensor_id")
+							,	new Type_sensor(
+										resultSet.getInt("type_sensor_id")
+									,	resultSet.getString("type_sensor_name")
+									, 	resultSet.getInt("type_sensor_interval")
+									)
+							,	resultSet.getString("sensor_mac")
+							,	resultSet.getString("sensor_ip")
+							,	resultSet.getDouble("sensor_min")
+							,	resultSet.getDouble("sensor_max")
+							,	resultSet.getDouble("sensor_positionX")
+							,	resultSet.getDouble("sensor_positionY")
+							));
+					}
+					catch(Exception e1) {
+						System.out.println("E1: "+e1.getLocalizedMessage());
+					}
+				} 
 		    }
 			catch(Exception e2) {
 				System.out.println("E2: "+e2.getLocalizedMessage());
@@ -313,6 +384,7 @@ public class DAOSensor implements DAO<Sensor>{
 		return var_table										 ;
 	}
 	
+	
 	public void close() throws SQLException {
 		// TODO Auto-generated method stub		
 	}
@@ -321,8 +393,4 @@ public class DAOSensor implements DAO<Sensor>{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	
-
-
 }

@@ -58,7 +58,9 @@ public class ClientTransmission {
 					val_host
 				, 	val_port
 				, 	val_send_information_text
-				, 	val_data,param_element,param_frame
+				, 	val_data
+				,	param_element
+				,	param_frame
 				);
 		Thread t = new Thread(cc)																		;
 		t.start()																						;

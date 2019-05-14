@@ -5,7 +5,6 @@ package secure.retirement.home.service.common;
 
 import java.util.ArrayList;
 
-import org.secure.retirement.home.common.Analysis;
 import org.secure.retirement.home.common.Historic;
 import org.secure.retirement.home.common.Risk;
 import org.secure.retirement.home.common.Room;
@@ -15,7 +14,6 @@ import org.secure.retirement.home.common.Type_sensor;
 import org.secure.retirement.home.common.transmission.information.Return_information;
 import org.secure.retirement.home.common.transmission.information.Send_information;
 import org.secure.retirement.home.common.transmission.json.Decode;
-import org.secure.retirement.home.service.DAOAnalysis;
 import org.secure.retirement.home.service.DAORoom;
 import org.secure.retirement.home.service.DAOSensor;
 import org.secure.retirement.home.service.DAOType_sensor;
@@ -35,7 +33,7 @@ public class ActionDecision {
 		// TODO Auto-generated method stub
 
 	}
-
+	
 	public static ArrayList<?> Actions( ArrayList<?> elements,DAOFactory daof, Send_information[] val_send_information, ArrayList<?> val_jsontext ) {
 		
 		
@@ -167,9 +165,11 @@ public class ActionDecision {
 			      if(val_send_information[0].getSend_information_crud_action().toString().equals("SELECT ALL")) {	
 			  			System.out.println("select all");
 			  			try {
+			  				System.out.println("select all>try");
 			  				Thread.sleep(500);
-			  				elements = element_dao.presentData();
+			  				elements = element_dao.presentDatas();
 			  			}catch (Exception e) {
+			  				System.out.println("select all>catch");
 			  				e.printStackTrace();
 			  			}
 			  	   }
@@ -237,30 +237,7 @@ public class ActionDecision {
 				e1.printStackTrace();
 			}
 		}
-		  else if(val_send_information[0].getSend_information_table().toString().equals("Analysis")) {
-			  DAOAnalysis element_dao;   
-			  try {
-				  element_dao = new DAOAnalysis(daof);
-				  Analysis[] anal = null;
-				  try {
-			  		anal = (Analysis[]) Decode.to_decode(val_jsontext.get(1).toString(), "Analysis");
-				  }catch(Exception e) {
-					  System.out.println(val_send_information[0].getSend_information_crud_action().toString()+" e: "+e.getLocalizedMessage());
-				  }
-			      if(val_send_information[0].getSend_information_crud_action().toString().equals("SELECT ALL")) {	
-			  			try {
-			  				Thread.sleep(500);
-			  				elements = element_dao.presentData();
-			  			}catch (Exception e) {
-			  				e.printStackTrace();
-			  			}
-			  	   }
-			      } catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-		  }
-		else if(val_send_information[0].getSend_information_table().toString().equals("Sensors")) {
+		else if(val_send_information[0].getSend_information_table().toString().equals("Sensor")) {
 		   DAOSensor element_dao;   
 		  try {
 			  element_dao = new DAOSensor(daof);
@@ -298,6 +275,35 @@ public class ActionDecision {
 			e1.printStackTrace();
 		}
 	}
+		  else if(val_send_information[0].getSend_information_table().toString().equals("Historics")) {
+			  DAOHistoric element_dao;   
+			  try {
+				  element_dao = new DAOHistoric(daof);
+				  String[] historics= null;
+				  try {
+			  		historics = (String[]) Decode.to_decode(val_jsontext.get(1).toString(), "Historics");
+				  }catch(Exception e) {
+					  System.out.println(val_send_information[0].getSend_information_crud_action().toString()+" e: "+e.getLocalizedMessage());
+				  }
+			      if(val_send_information[0].getSend_information_crud_action().toString().equals("SELECT ALL")) {	
+			  			System.out.println("select all");
+			  			try {
+			  				System.out.println("select all>try");
+			  				Thread.sleep(500);
+			  				elements = element_dao.presentDatas();
+			  			}catch (Exception e) {
+			  				System.out.println("select all>catch");
+			  				e.printStackTrace();
+			  			}
+			  	   }
+			  }
+			      catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		  }
 		return elements;
+		  
 	}
-}
+	}
+

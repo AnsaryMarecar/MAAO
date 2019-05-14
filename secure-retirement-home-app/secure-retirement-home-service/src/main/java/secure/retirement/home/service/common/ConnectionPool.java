@@ -1,14 +1,17 @@
 package secure.retirement.home.service.common;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import org.secure.retirement.home.common.Sensor;
+import org.secure.retirement.home.common.exception.DAOConfigurationException;
 import org.secure.retirement.home.service.DAOSensor;
 import org.secure.retirement.home.service.cache.GuavaCache;
 import org.secure.retirement.home.service.simulation.SimulateFailure;
@@ -16,13 +19,18 @@ import org.secure.retirement.home.service.simulation.SimulateFailure;
 public class ConnectionPool {
 
    //Initializ default value
-   private int 				att_port 		 = 2345			;
-   private String 			att_host 		 = "127.0.0.1"	;
-   //private String 		att_host		 = "10.10.5.1"	;
-   private ServerSocket 	att_server 		 = null			;
-   private boolean 			att_isRunning 	 = true			;
-   private static ArrayList<Sensor> att_sensors 	 = null	;
-   private static GuavaCache 		[]att_cache;
+   private int 						att_port 		 ;
+   private String 					att_host 		 ;
+   
+   private static final String FILE_PROPERTIES	 = "connection.properties";
+   private static final String PROPERTY_PORT	 = "port";
+   private static final String PROPERTY_HOST	 = "host";
+   
+   //private String 				att_host		 = "10.10.5.1"	;
+   private ServerSocket 			att_server 		 = null			;
+   private boolean 					att_isRunning 	 = true			;
+   private static ArrayList<Sensor> att_sensors 	 = null			;
+   private static GuavaCache 		[]att_cache						;
    
    public ConnectionPool(){
 	   this.setAtt_server();
@@ -40,6 +48,24 @@ public class ConnectionPool {
 	/**
 	 */
 	public void setAtt_server() {
+		Properties 	var_properties 	= new Properties()									;
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader()		;
+        InputStream fileProperties = classLoader.getResourceAsStream(FILE_PROPERTIES )	;        
+        if ( fileProperties == null ) {
+            throw new DAOConfigurationException( "the file:  " + FILE_PROPERTIES + " does not exist." );
+        }
+        else {
+	        //attribute value
+	        try {
+	            var_properties.load( fileProperties )										;
+	            att_port 	= Integer.parseInt(var_properties.getProperty( PROPERTY_PORT))	;
+	            att_host 	= (String) var_properties.getProperty( PROPERTY_HOST )			;
+	            System.out.println("att_port:"+att_port+" att_host:"+att_host);
+	         } 
+	        catch ( Exception exp ) {
+	            throw new DAOConfigurationException( " we have difficulty to charge the file : " + FILE_PROPERTIES, exp );
+	        }
+        }
 		try {
 			this.att_server = new ServerSocket(att_port, 100, InetAddress.getByName(att_host));
 		} catch (UnknownHostException e) {
@@ -115,10 +141,10 @@ public class ConnectionPool {
       t.start();
    }
    public void testFailure() {
-	 /** SimulateFailure t = new SimulateFailure("Simulate Failure"
+	  SimulateFailure t = new SimulateFailure("Simulate Failure"
 			   ,JDBCConnectionPool.getConnection()
 			   );
-	  t.start(); **/
+	  t.start(); 
    }
    public void close(){
 	   att_isRunning = false;

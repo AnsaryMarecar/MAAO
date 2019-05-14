@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
@@ -367,8 +368,18 @@ public class FrameRoom extends Frame<Room> {
 
 	public static void main (String[] args) {
 		FrameRoom framerome = new FrameRoom();
-		framerome.setVisible(false);
+		framerome.setVisible(true);
 		System.out.println("FRAMEHome was launched");
+		
+	}
+
+
+
+
+
+	@Override
+	public void initialise(String param_json, String param_class) throws IOException {
+		// TODO Auto-generated method stub
 		
 	}
 }

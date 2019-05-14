@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,6 +27,9 @@ import javax.swing.event.MenuListener;
 import org.secure.retirement.home.client.ClientTransmission;
 import org.secure.retirement.home.common.Room;
 import org.secure.retirement.home.common.Sensor;
+import org.secure.retirement.home.common.Sensors;
+import org.secure.retirement.home.common.Type_sensor;
+import org.secure.retirement.home.common.transmission.json.Decode;
 
 
 
@@ -33,9 +39,9 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 		
 		private JPanel pan1, pan3, pan4, pan5;
 		private JButton add, update, delete;
-		private JLabel jlabel,jlabel1, jlabel2,jlabel3, jlabel4, jlabel5, jlabel6;
+		private JLabel jlabel,jlabel1, jlabel4, jlabel5, jlabel6;
 		
-		
+		public static ArrayList<Sensor> att_sensors; 
 		
 		private JMenuBar menuBar = new JMenuBar();
 		private JMenu settings = new JMenu("Settings");
@@ -46,7 +52,7 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 		private JMenuItem settings_sensors = new JMenuItem("Set a sensor");
 		
 		 private JPanel pan2;
-		  public static double position_x, position_y;
+		  public static double position_x, position_y,x,y;
 		    Graphics g;
 			public static int room_id, x_min, x_max, y_min, y_max;
 			public static int [] tabId = new int [40];
@@ -56,6 +62,11 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 			public static int [] taby = new int [40];
 			public static int [] tabyy = new int [40];
 			public static String [] tabName= new String [40];
+			public static double [] tabsensor_x = new double [40];
+			public static double [] tabsensor_y = new double [40];
+			
+			
+			
 		   
 		    
 		public FrameSensorMap() {
@@ -75,8 +86,6 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 			update= new JButton ("UPDATE");
 			delete = new JButton ("DELETE");
 			jlabel1 = new JLabel("Danger");
-			jlabel2= new JLabel("Middle");
-			jlabel3= new JLabel("Low");
 			jlabel4= new JLabel("Normal");
 			jlabel5= new JLabel("No Reponse");
 			jlabel6 = new JLabel("Etat");
@@ -162,10 +171,6 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 			pan3.setLayout(new FlowLayout());
 			jlabel1.setOpaque(true);
 			jlabel1.setBackground(Color.RED);
-			jlabel2.setOpaque(true);
-			jlabel2.setBackground(Color.ORANGE);
-			jlabel3.setOpaque(true);
-			jlabel3.setBackground(Color.yellow);
 			jlabel4.setOpaque(true);
 			jlabel4.setBackground(Color.green);
 			jlabel5.setOpaque(true);
@@ -173,8 +178,6 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 			
 			
 			pan3.add(jlabel1);
-			pan3.add(jlabel2);
-			pan3.add(jlabel3);
 			pan3.add(jlabel4);
 			pan3.add(jlabel5);
 			
@@ -191,48 +194,36 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 			update.addActionListener(this);
 			delete.addActionListener(this);
 		
+			//FrameSensorMap f = new FrameSensorMap();
+			
 			this.setLocationRelativeTo(null);
 			this.setVisible(true);
-			
-			
-	
 			
 		}
 		public void actionPerformed(ActionEvent event) {
 			//à mettre dans la classe de melissa 
 			if(event.getSource()==add) {
-			
-	FrameSensor f= new FrameSensor();
-	
+				FrameSensor f= new FrameSensor();
 			}
 
 			if(event.getSource()==update) {
-				
-					
-				
-								
 			}
 
 			if(event.getSource()==delete) {
-				 {
-					 
-			 FrameSensorMap f = new FrameSensorMap();
-				}
-								
+				pan2.repaint();								
 			}
-			
-		
-		
 		}
-		   public void mouseClicked(MouseEvent e) {
+		public void mouseClicked(MouseEvent e) {
 		    	  double x,y;
 		          x = e.getX();
 		          y = e.getY();
 		          position_x=x; position_y=y;
 		          jlabel6.setText(" " +position_x + " " +position_y);
 		         
-		          System.out.println( pan2.getHeight());
-		          if (position_x>= 180 && position_x <=1000 && position_y >= 0 && position_y<= 200 ) {
+		          if (position_x>= 180 && position_x <=500 && position_y >= 0 && position_y<= 200 ) {
+		        	  JOptionPane.showMessageDialog(null, "Sorry, but you can't add sensor in this zone", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
+		          }
+		          if (position_x>= 700 && position_x <=1000 && position_y >= 0 && position_y<= 200 ) {
 		        	  JOptionPane.showMessageDialog(null, "Sorry, but you can't add sensor in this zone", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
 		          }
 		          if (e.getClickCount()!=1) {
@@ -247,25 +238,20 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 		                /** Bouton du MILIEU */   JOptionPane.showMessageDialog(null, "Sorry, but you should to do left-click", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
 		        }
 		          
-		   }
-		 
-			  public void mousePressed(MouseEvent e) {}
-		    public void mouseEntered(MouseEvent e) {
+		   } 
+		   public void mousePressed(MouseEvent e) {}
+		   public void mouseEntered(MouseEvent e) {
 		    	if (e.getX()==position_x && e.getY()==position_y) {
-		  pan2.setToolTipText("jkbjk");
+		    		pan2.setToolTipText("jkbjk");
 		    	}
-		    	}  
+		   }  
 		    
 		    public void mouseExited(MouseEvent e){}
 			public void mouseReleased(MouseEvent e) {}
 			
 	public static void main(String [] args) {
 		FrameSensorMap f = new FrameSensorMap();
-		f.setVisible(true);
-	
-		
-	
-		
+		f.setVisible(true);	
 	}
 	@Override
 	public boolean add_action() {
@@ -308,16 +294,55 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 			tabxx[i]=x_max;
 			taby[i]=y_min;
 			tabyy[i]=y_max;
-			
 		}
 		
 	}
-	
-	public void initialise_table(Sensor[] param_sensor) {
+	/**
+	 * @param sensor_id
+	 * @param type_sensor
+	 * @param sensor_min
+	 * @param sensor_max
+	 * @param sensor_mac
+	 * @param sensor_ip
+	 * @param room_id
+	 * @param sensor_status
+	 * @param sensor_positionX
+	 * @param sensor_positionY
+	 */
+	public void initialise_tableSensors(Sensors[] param_sensor) {
 		// TODO Auto-generated method stub
+		//this.getAtt_sensors()
+		//att_sensors= new ArrayList<Sensor>();
 		for(int i = 0 ; i<param_sensor.length; i++) {
-			System.out.println(param_sensor);
+			x=param_sensor[i].getSensor_positionX();
+			y=param_sensor[i].getSensor_positionY();
+			
+			tabsensor_x[i]=x;
+			tabsensor_y[i]=y;
+			System.out.println(" tabsensor_x[i]: " +tabsensor_x[i]+ "  y :  "+tabsensor_y[i]);
 		}
+		}
+		
+		public void initialise_tableHistorics(String[] param) {
+			// TODO Auto-generated method stub
+			for(int i = 0 ; i<param.length; i++) {
+				System.out.println("on recois la valeur :"+ param[i]);
+			}
+			/*
+			att_sensors.get(i);
+			
+			Type_sensor ts = new Type_sensor();
+			att_sensors.add(new Sensor(
+					att_sensors.get(i).getSensor_id()
+				,	ts
+				,	att_sensors.get(i).getSensor_min()
+				,	att_sensors.get(i).getSensor_max()
+				,	att_sensors.get(i).getSensor_mac()
+				,	att_sensors.get(i).getSensor_ip()
+				,	att_sensors.get(i).getSensor_positionX()
+				,   att_sensors.get(i).getSensor_positionY()));
+			System.out.println("" +att_sensors.get(i));
+		}*/
 
 		
 	}
@@ -331,17 +356,63 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 		// TODO Auto-generated method stub
 		
 	}
-	
 	public void call_initialise_table() {
 		try {
-			ClientTransmission.transmission("Sensor", "SELECT ALL", null, this);	
+			System.out.println("sensors select all");
+			ClientTransmission.transmission("Sensors", "SELECT ALL", null, this);	
 		} catch (Exception e) {
 			e.printStackTrace()											;
 		}
 		try {
+			System.out.println("room select all");
 			ClientTransmission.transmission("Room", "SELECT ALL", null, this);	
 		} catch (Exception e) {
 			e.printStackTrace()											;
+		}
+		try {
+			System.out.println("historics select all");
+			ClientTransmission.transmission("Historics", "SELECT ALL", null, this);	
+		} catch (Exception e) {
+			e.printStackTrace()											;
+		}
+		
+	}
+	
+	/**
+	 * @return the att_sensors
+	 */
+	public static ArrayList<Sensor> getAtt_sensors() {
+		return att_sensors;
+	}
+	/**
+	 * @param att_sensors the att_sensors to set
+	 */
+	public static void setAtt_sensors(ArrayList<Sensor> att_sensors) {
+		att_sensors = att_sensors;
+	}
+	
+	@Override
+	public void initialise(String param_json, String param_class) throws IOException {
+		// TODO Auto-generated method stub
+		//Object[] val_object;
+		//val_object =  
+		switch(param_class) {
+		case "Sensors":
+			System.out.println("swith sensors begin" );
+			this.initialise_tableSensors(Decode.to_decodeSensors(param_json, param_class));
+			System.out.println("swith sensors end");
+			break;
+		case "Room":
+			System.out.println("swith room begin");
+			//this.initialise_table((Room[]) val_object);
+			System.out.println("swith room end");
+			break;
+		case "Historics":
+			System.out.println("swith Historics begin je veux decoder");
+			
+			this.initialise_tableHistorics(Decode.to_decodeHistorics(param_json));
+			System.out.println("swith historics end fin ");
+			break;
 		}
 		
 	}

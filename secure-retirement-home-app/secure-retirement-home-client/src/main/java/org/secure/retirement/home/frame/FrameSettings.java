@@ -11,6 +11,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.AbstractButton;
@@ -182,5 +183,12 @@ public class FrameSettings extends Frame<Sensor> implements ActionListener{
 	public void update_table() {
 		// TODO Auto-generated method stub
 
+	}
+
+
+	@Override
+	public void initialise(String param_json, String param_class) throws IOException {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import org.secure.retirement.home.simulator.client.Simulation;
 
@@ -18,38 +17,32 @@ import org.secure.retirement.home.simulator.client.Simulation;
  *
  */
 public class FrameSimulator extends JFrame implements ActionListener{
-	
-	//Panel 
-		private JPanel	top_panel		= new JPanel()					;
-		private JPanel	bottom_panel	= new JPanel()					;
-		private JButton button_stop 	= new JButton("Stop")			;
-		private JButton button_launch = new JButton("Launch")			;
+	 
+	private JButton button_risk 	= new JButton("Test Risk")			;
+	private JButton button_launch 	= new JButton("Lauch simulation")	;
+	private JButton button_failure 	= new JButton("Test Failure")		;
 	/**
 	 * 
 	 */
 	public FrameSimulator() {
 		// TODO Auto-generated constructor stub
 		//Generality
-		this.setSize(120, 120)									 		;
+		this.setSize(350, 150)									 		;
 		this.setLocationRelativeTo(null)						 		; 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)		 		;
 		
 		
-		//principal placement
 		this.setLayout(new BorderLayout())								;
-		
-		//north placement
-		this.top_panel.add(button_launch);
-		this.getContentPane().add(top_panel	, BorderLayout.NORTH	)	;
-		
-		//south placement
-		this.bottom_panel.add(button_stop);
-		this.getContentPane().add(bottom_panel	, BorderLayout.SOUTH)	;
-		
+		//center placement
+		this.getContentPane().add(button_launch, BorderLayout.CENTER)	;
+		//left placement
+		this.getContentPane().add(button_risk, BorderLayout.LINE_START)	;
+		//right placement
+		this.getContentPane().add(button_failure, BorderLayout.LINE_END);
 		//Action listener for Button
-	    this.button_stop.addActionListener		(this)	 				;
+	    this.button_risk.addActionListener		(this)	 				;
+	    this.button_failure.addActionListener	(this)	 				;
 	    this.button_launch.addActionListener	(this)	 				;
-		
 		this.setVisible( true )											;
 	}
 	
@@ -58,14 +51,25 @@ public class FrameSimulator extends JFrame implements ActionListener{
 		Object source = param_actionevent.getSource();
 		Thread t;
 		if (source == button_launch){
+			for(int i=1; i<10;i++) {
+				Simulation val_simulation = new Simulation(this, i);
+				t = new Thread(val_simulation);
+				t.start();
+			}
+		}
+		else if (source == button_risk) {
 			for(int i=1; i<3;i++) {
 				Simulation val_simulation = new Simulation(this, i);
 				t = new Thread(val_simulation);
 				t.start();
 			}
 		}
-		else if (source == button_stop) {
-			//t.stop();
+		else if (source == button_failure) {
+			for(int i=1; i<3;i++) {
+				Simulation val_simulation = new Simulation(this, i);
+				t = new Thread(val_simulation);
+				t.start();
+			}
 		}
 	}
 
