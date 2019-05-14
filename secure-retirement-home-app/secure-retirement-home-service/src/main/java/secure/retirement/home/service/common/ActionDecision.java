@@ -275,7 +275,35 @@ public class ActionDecision {
 			e1.printStackTrace();
 		}
 	}
-		
+		  else if(val_send_information[0].getSend_information_table().toString().equals("Historics")) {
+			  DAOHistoric element_dao;   
+			  try {
+				  element_dao = new DAOHistoric(daof);
+				  String[] historics= null;
+				  try {
+			  		historics = (String[]) Decode.to_decode(val_jsontext.get(1).toString(), "Historics");
+				  }catch(Exception e) {
+					  System.out.println(val_send_information[0].getSend_information_crud_action().toString()+" e: "+e.getLocalizedMessage());
+				  }
+			      if(val_send_information[0].getSend_information_crud_action().toString().equals("SELECT ALL")) {	
+			  			System.out.println("select all");
+			  			try {
+			  				System.out.println("select all>try");
+			  				Thread.sleep(500);
+			  				elements = element_dao.presentDatas();
+			  			}catch (Exception e) {
+			  				System.out.println("select all>catch");
+			  				e.printStackTrace();
+			  			}
+			  	   }
+			  }
+			      catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		  }
 		return elements;
+		  
 	}
-}
+	}
+

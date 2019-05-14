@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.secure.retirement.home.common.Historic;
+import org.secure.retirement.home.common.Sensors;
 import org.secure.retirement.home.common.exception.DAOException;
 import org.secure.retirement.home.common.transmission.information.Return_information;
 
@@ -255,6 +256,72 @@ public class DAOHistoric implements DAO<Historic> {
 			    }
 				return to_return;
 	}
+
+	public ArrayList<String> presentDatas() throws SQLException {
+		ArrayList<String> var_table						 ;
+		var_table = new ArrayList<String>()	 			 ;
+		String SQL_SELECT = "SELECT "
+				+ "		historic.historic_id"
+				+ ",	sensor.sensor_id"
+				+ ",	max(historic_datetime)"
+				+ ",	risk.risk_id"
+				+ ",	type_sensor.type_sensor_interval"
+				+ "		from historic left join risk  "
+				+ "		on historic.historic_id = risk.historic_id "
+				+ "		right join sensor "
+				+ "		on sensor.sensor_id = historic.sensor_id"
+				+ "		left join type_sensor "
+				+ "	    on sensor.type_sensor_id = type_sensor.type_sensor_id"
+				+ "     group by sensor.sensor_id";
+		
+		Connection connexion = null;
+	    PreparedStatement preparedStatement = null;
+	    ResultSet resultSet = null;
+	    try {
+	    	try {
+	    		/* Get connection from the Factory */
+	    		connexion = daofactory.getConnection();
+	    	}catch(Exception e0) {
+	    		System.out.println("E0: "+e0.getLocalizedMessage());
+	    	}
+	    	try{
+		        preparedStatement = DAOUtility.initPreparedRequest(
+		        			connexion
+		        		,	SQL_SELECT
+		        		,	true
+		        		);
+	    	}catch(Exception e0B) {
+	    		System.out.println("E0B: "+e0B.getLocalizedMessage());
+	    	}
+	        try {
+		        resultSet = preparedStatement.executeQuery();
+		        System.out.println("status "+resultSet);
+		        
+		        while(resultSet.next()) {
+					try {
+					String value=resultSet.getInt("historic_id")
+							+";"+resultSet.getInt("sensor_id")
+							+";"+resultSet.getString("max(historic_datetime)")
+							+";"+resultSet.getInt("risk_id")
+							+";"+resultSet.getInt("type_sensor_interval");
+						
+		        	var_table.add(value);
+					}
+					catch(Exception e1) {
+						System.out.println("E1: "+e1.getLocalizedMessage());
+					}
+				} 
+		    }
+			catch(Exception e2) {
+				System.out.println("E2: "+e2.getLocalizedMessage());
+			}
+	    }
+	    catch(Exception e){
+	    	System.out.println("E: "+e.getLocalizedMessage());
+	    }
+		return var_table										 ;
+	}
+	
 
 	public Historic find(int id) throws SQLException {
 		// TODO Auto-generated method stub

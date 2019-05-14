@@ -220,10 +220,12 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 		          position_x=x; position_y=y;
 		          jlabel6.setText(" " +position_x + " " +position_y);
 		         
-		          System.out.println( pan2.getHeight());
-		         /* if ( ) {
+		          if (position_x>= 180 && position_x <=500 && position_y >= 0 && position_y<= 200 ) {
 		        	  JOptionPane.showMessageDialog(null, "Sorry, but you can't add sensor in this zone", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
-		          }*/
+		          }
+		          if (position_x>= 700 && position_x <=1000 && position_y >= 0 && position_y<= 200 ) {
+		        	  JOptionPane.showMessageDialog(null, "Sorry, but you can't add sensor in this zone", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
+		          }
 		          if (e.getClickCount()!=1) {
 		        	  System.out.println(e.getClickCount());
 		        	  JOptionPane.showMessageDialog(null, "Sorry, but you have already click once", "MAAO - Error message", JOptionPane.ERROR_MESSAGE);
@@ -319,6 +321,13 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 			tabsensor_y[i]=y;
 			System.out.println(" tabsensor_x[i]: " +tabsensor_x[i]+ "  y :  "+tabsensor_y[i]);
 		}
+		}
+		
+		public void initialise_tableHistorics(String[] param) {
+			// TODO Auto-generated method stub
+			for(int i = 0 ; i<param.length; i++) {
+				System.out.println("on recois la valeur :"+ param[i]);
+			}
 			/*
 			att_sensors.get(i);
 			
@@ -360,6 +369,12 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 		} catch (Exception e) {
 			e.printStackTrace()											;
 		}
+		try {
+			System.out.println("historics select all");
+			ClientTransmission.transmission("Historics", "SELECT ALL", null, this);	
+		} catch (Exception e) {
+			e.printStackTrace()											;
+		}
 		
 	}
 	
@@ -391,6 +406,12 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 			System.out.println("swith room begin");
 			//this.initialise_table((Room[]) val_object);
 			System.out.println("swith room end");
+			break;
+		case "Historics":
+			System.out.println("swith Historics begin je veux decoder");
+			
+			this.initialise_tableHistorics(Decode.to_decodeHistorics(param_json));
+			System.out.println("swith historics end fin ");
 			break;
 		}
 		

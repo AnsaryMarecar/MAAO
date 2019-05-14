@@ -66,7 +66,14 @@ public class ClientConnection implements Runnable{
         	   	if(att_class=="Sensors") {
         	   		System.out.println("clientconnection>try>sensors");
         	   		att_frame.initialise(response, att_class);
-        	   	}else {
+        	   	}
+        	   	else if(att_class=="Historics") {
+        	   		System.out.println("clientconnection>try>Historics");
+        	   		att_frame.initialise(response, att_class);
+        	   	}
+        	
+        	   	else {
+        	   		System.out.println("clientconnection>try>else");
         	   		Object[] val_object =  Decode.to_decode(response, att_class); 
         	   		att_frame.initialise_table(val_object); 
         	   	}

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.secure.retirement.home.common.Historic;
+import org.secure.retirement.home.common.Historics;
 import org.secure.retirement.home.common.Room;
 import org.secure.retirement.home.common.Sensor;
 import org.secure.retirement.home.common.Sensors;
@@ -63,6 +64,12 @@ public class Decode {
 			  case "Historic":
 				    val_object = to_decodeHistoric(param_todecode);
 				  break;
+			  case "Historics":
+				  System.out.println("to_decode>historics>begin");
+				  to_decodeHistorics(param_todecode);
+				  //val_object = to_decodeHistorics(param_todecode);
+				   System.out.println("to_decode>historics>end");
+				  break;
 			  case "Failure":
 				    // code block
 				    break;
@@ -87,10 +94,20 @@ public class Decode {
 
 	}
 	
+	public static String[] to_decodeHistorics(String param_todecode) throws IOException {
+		System.out.println("********************************************");
+		System.out.println("param_todecode: "+param_todecode);
+		param_todecode = remove_harmful_character(param_todecode);
+	    String[] val_array = param_todecode.split(";");
+		System.out.println("val_array: "+val_array.toString());
+		ArrayList<String> list_string = new ArrayList<String>(Arrays.asList(val_array));
+		System.out.println("********************************************");
+		System.out.println("nom 0 : "+list_string.get(0));
+		return val_array; 
+	}
+	
 	public static Object[] to_decodeHistoric(String param_todecode)throws IOException {
-	    param_todecode = param_todecode.replace("[","");
-	    param_todecode = param_todecode.replace("]","");
-	    param_todecode = param_todecode.replaceAll("\"","");
+		param_todecode = remove_harmful_character(param_todecode);
 	    String[] parts = param_todecode.split("/");
 	    int val_iter = 0;
 	    int val_length = parts.length/2;
@@ -111,5 +128,11 @@ public class Decode {
 		val_object = objectMapper.readValue(param_todecode, Sensors[].class);
 		System.out.println("to_decode>sensors>end");
 		return val_object;
+	}
+	public static String remove_harmful_character(String param_todecode) {
+		param_todecode = param_todecode.replace("[","");
+	    param_todecode = param_todecode.replace("]","");
+	    param_todecode = param_todecode.replaceAll("\"","");
+	    return param_todecode;
 	}
 }

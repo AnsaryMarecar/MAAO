@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -377,5 +378,11 @@ public class FrameTableAnalysis extends Frame {
 				this.add_table(obj[i]);
 			}
 	}
+	}
+
+	@Override
+	public void initialise(String param_json, String param_class) throws IOException {
+		// TODO Auto-generated method stub
+		
 	}
 }
