@@ -40,7 +40,6 @@ public class DAORisk implements DAO<Risk> {
 	}
 
 	public Return_information create(Risk param_risk) throws SQLException {
-		System.out.println("create");
 		Return_information val_return_information = Return_information.att_notfoud;
 		try {
 			String SQL_INSERT = "";
@@ -57,8 +56,6 @@ public class DAORisk implements DAO<Risk> {
 			try {
 				/* Get connection from the Factory */
 				val_connection = daofactory.getConnection();
-				System.out.println(" execute  ");
-				System.out.println("param_risk.getSensor().getSensor_id()"+param_risk.getSensor().getSensor_id());
 				if (param_risk.getHistoric()!=null) {
 					preparedStatement = DAOUtility.initPreparedRequest(
 							val_connection
@@ -83,10 +80,8 @@ public class DAORisk implements DAO<Risk> {
 					throw new DAOException( "Insertion error" );
 				}
 				else {
-					System.out.println("else");
 					/* take the generated id */
 					try{
-						System.out.println("generate key");
 						resultSet = preparedStatement.getGeneratedKeys();
 					}
 					catch(Exception e) {

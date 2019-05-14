@@ -52,16 +52,16 @@ public class FrameSimulator extends JFrame implements ActionListener{
 		Object source = param_actionevent.getSource();
 		Thread t;
 		if (source == button_launch){
-				Simulation val_simulation = new Simulation(this, 1)		;
-				t = new Thread(val_simulation);
-				t.start();
-		}
-		else if (source == button_risk) {
 			for(int i=1; i<3;i++) {
-				Simulation val_simulation = new Simulation(this, 2)		;
+				Simulation val_simulation = new Simulation(this, i)		;
 				t = new Thread(val_simulation);
 				t.start();
 			}
+		}
+		else if (source == button_risk) {
+				Simulation val_simulation = new Simulation(this, 1)		;
+				t = new Thread(val_simulation);
+				t.start();
 		}
 		else if (source == button_failure) {
 			for(int i=1; i<3;i++) {

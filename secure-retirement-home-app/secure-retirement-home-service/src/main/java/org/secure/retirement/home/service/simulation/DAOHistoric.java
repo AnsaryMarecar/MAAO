@@ -50,13 +50,13 @@ public class DAOHistoric implements DAO<Historic> {
 				);
 				status = preparedStatement.executeUpdate();
 				if( status == 0 ) {
-					System.out.println("error execute  ");
 					val_return_information = Return_information.att_db_cannot_insert;
 					throw new DAOException( "Insertion error" );
 				}
 				else {
-					/* take the generated id */
+				/* take the generated id */
 					try{
+
 						resultSet = preparedStatement.getGeneratedKeys();
 					}
 					catch(Exception e) {
@@ -98,6 +98,7 @@ public class DAOHistoric implements DAO<Historic> {
 			try {
 				/* Get connection from the Factory */
 				connexion = daofactory.getConnection();
+				
 				preparedStatement = DAOUtility.initPreparedRequest(
 					connexion
 					,	SQL_INSERT
@@ -118,16 +119,14 @@ public class DAOHistoric implements DAO<Historic> {
 					}
 					catch(Exception e) {
 						val_return_information = Return_information.att_notfoud.toString();
-						System.out.println("error");
+
 					}
 					if ( resultSet.next() ) {
 						 param_historic.setHistoric_id(resultSet.getInt( 1 ));
 						 val_return_information = String.valueOf(param_historic.getHistoric_id());
-						//to_return = -4;
 					} 
 					else {
 						val_return_information = Return_information.att_db_not_return.toString();
-						System.out.println(" insertion id is not return to us  ");
 						throw new DAOException( "insertion id is not return to us" );
 					}
 				}
@@ -147,7 +146,7 @@ public class DAOHistoric implements DAO<Historic> {
 	public String addFailure(Historic param_historic) throws SQLException {
 		// TODO Auto-generated method stub
 		System.out.println(param_historic.toString());
-		System.out.println("create");
+		System.out.println("create failure");
 		String val_return_information = Return_information.att_notfoud.toString();
 		try {
 			String SQL_INSERT = "INSERT INTO historic (historic_datetime, sensor_id) VALUES (NOW(),?)";
