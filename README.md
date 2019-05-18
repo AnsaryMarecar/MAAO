@@ -1,13 +1,7 @@
 # SAFE RETIREMENT HOME Project
  SAFE RETIREMENT HOME is a JAVA-based project for Retirement Home. 
- We are actually in the release 2 of the project 
- For the moment its key features are:
- - Multi-user can be connected at the same time restricted by a connectionPool
- - Users can see all the type sensors of the retirement Home
- - Users can update a type sensors of the retirement Home
- - Users can delete a type sensors of the retirement Home
- - Users can add a type sensors of the retirement Home 
- 
+ We are actually in the release 3 of the project 
+
 More information and screenshots can be inserted in the future.
 This projected is created by students Information Systems at <a href="http://esipe.u-pec.fr/accueil-fr/accueil-esipe-creteil-805697.kjsp">ESIPE engineering school</a>.
 
