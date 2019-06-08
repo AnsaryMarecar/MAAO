@@ -241,9 +241,11 @@ public class FrameTableAnalysis extends Frame {
 				}
 
 				if (strType.equals("All Type sensor")) {
-					;
+					System.out.println("All sensors");
 				} else {
 					table = "Analysis";
+					call_initialise_table("Analysis", "SELECT ALL");
+					
 				}
 
 			}
@@ -302,6 +304,8 @@ public class FrameTableAnalysis extends Frame {
 	public void add_table(Object obj) {
 		// TODO Auto-generated method stub
 		if ((Analysis) obj != null) {
+			if (strType==null || strType.contentEquals("All type sensor")) {
+				System.out.println("je suis la");
 			this.getW_dtm()
 					.addRow(new String[] { String.valueOf(((Analysis) obj).getSensor_mac()),
 							((Analysis) obj).getSensor_ip(),
@@ -310,7 +314,19 @@ public class FrameTableAnalysis extends Frame {
 							((Analysis) obj).getHistoric_datetime(),
 							((Analysis) obj).getHistoric_value()
 							});
-
+			}
+			else {
+				if ((((Analysis) obj).getType_sensor_name()).equals(strType)) {
+					this.getW_dtm()
+					.addRow(new String[] { String.valueOf(((Analysis) obj).getSensor_mac()),
+							((Analysis) obj).getSensor_ip(),
+							((Analysis) obj).getType_sensor_name(),
+							((Analysis) obj).getRoom_name(),
+							((Analysis) obj).getHistoric_datetime(),
+							((Analysis) obj).getHistoric_value()
+							});
+				}
+			}
 		}
 	}
 
