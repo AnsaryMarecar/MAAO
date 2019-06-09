@@ -87,6 +87,14 @@ public class ActionDecision {
 			  				e.printStackTrace();
 			  			}
 			  	   }
+			      else if (val_send_information[0].getSend_information_crud_action().toString().equals("SELECT COUNT")) {	
+			  			try {
+			  				Thread.sleep(500);
+			  				elements = element_dao.presentCount();
+			  			}catch (Exception e) {
+			  				e.printStackTrace();
+			  			}
+			  	   }
 			      } catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

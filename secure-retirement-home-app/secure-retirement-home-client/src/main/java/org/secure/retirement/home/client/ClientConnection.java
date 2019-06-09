@@ -1,6 +1,7 @@
 package org.secure.retirement.home.client;
 
 import java.io.BufferedInputStream;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -70,6 +71,10 @@ public class ClientConnection implements Runnable{
         	   	else if(att_class=="Historics") {
         	   		System.out.println("clientconnection>try>Historics");
         	   		att_frame.initialise(response, att_class);
+        	   	}
+        	   	else if (att_class=="Analysis") {
+
+        	   		System.out.println("clientconnection>try>Analysis");
         	   	}
         	
         	   	else {

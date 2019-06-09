@@ -51,11 +51,7 @@ public class Decode {
 			  case "Type_sensor":
 				  val_object = objectMapper.readValue(param_todecode, Type_sensor[].class);
 			    break;
-			  case "Analysis":
-				 objectMapper.addMixIn(Analysis.class, AnalysisMix.class);
-				 val_object= objectMapper.readValue(param_todecode, Analysis[].class);
-				 System.out.println("sortie decode analysis");
-				  break;
+			
 			  case "Sensor":
 				  to_decodeSensor(param_todecode);
 				   val_object = objectMapper.readValue(param_todecode, Sensor[].class);
@@ -81,6 +77,15 @@ public class Decode {
 			  case "Failure":
 				    // code block
 				    break;
+			  case "Analysis":
+				  System.out.println("Decode>Analysis>beforeinitializObjectMapper");
+					 objectMapper.addMixIn(Analysis.class, AnalysisMix.class);
+					 System.out.println("Decode>Analysis>afterInitializObjectMapper");
+					 try {
+					 val_object= objectMapper.readValue(param_todecode, Analysis[].class);
+					 }catch(Exception e) {System.out.println("exception lors du parsing :"+ e);System.out.println(param_todecode);}
+					 System.out.println("Decode>Analysis>AfterInitializVal_object");
+					 break;
 			  default:
 			    // code block
 			}

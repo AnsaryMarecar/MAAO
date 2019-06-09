@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public abstract class AnalysisMix {
 	
 	
-	   AnalysisMix(@JsonProperty("sensor_mac") String sensor_name,
+	   AnalysisMix(@JsonProperty("sensor_mac") String sensor_mac,
             @JsonProperty("sensor_ip") String sensor_ip,
             @JsonProperty("type_sensor_name") String type_sensor_name,
 	   		@JsonProperty("room_name") String room_name,

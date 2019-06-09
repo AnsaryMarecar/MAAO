@@ -35,8 +35,13 @@ public class FrameTableAnalysis extends Frame {
 	private JCalendar cal, cal2, cal3, cal4;
 	private JPanel panFilter, panComboFilter, panDateFilt, panDateFilt2, panDateFilt3, panCompare, panObjectComp,
 			panObjectCompDate1, panObjectCompDate2, tablePanPrincip, tablePanComp, tablePan;
+	
+	
+	private JPanel numbSensor, numbType_sensor, numbDate, numbAll;
 	private JButton validate1, validate2, compareButton;
 	private JLabel label1, label2, label3, label4;
+	
+	private JLabel lbNumbSensor, lbNumbSensor2, lbNumbAll, lbNumbAll2, lbNumbType_sensor, lbNumbType_sensor2, lbNumbDate, lbNumbDate2;
 	// ComboBox
 	private JComboBox list_typesensor = new JComboBox();
 	private JComboBox list_room = new JComboBox();
@@ -168,6 +173,8 @@ public class FrameTableAnalysis extends Frame {
 		tablePan.add(tablePanPrincip);
 		tablePan.add(tablePanComp);
 
+		
+		/*
 		// table
 		this.getW_dtm().addColumn("sensor_mac");
 		this.getW_dtm().addColumn("sensor_ip");
@@ -179,7 +186,35 @@ public class FrameTableAnalysis extends Frame {
 
 		w_table = new JTable(this.getW_dtm());
 		tablePanPrincip.add(super.getW_table());
-
+		*/
+		tablePanPrincip.setLayout(new GridLayout(4,1, 20, 20));
+		
+		
+		tablePanPrincip.add(numbAll= new JPanel());
+		numbAll.add(lbNumbAll= new JLabel("Total number out of the interval"));
+		numbAll.add(lbNumbAll2=new JLabel());
+		
+		
+		tablePanPrincip.add(numbType_sensor=new JPanel());
+		numbType_sensor.add(lbNumbType_sensor=new JLabel("Sensors not in their interval"));
+		numbType_sensor.add(lbNumbType_sensor2= new JLabel());
+		this.getW_dtm().addColumn("sensor_mac");
+		this.getW_dtm().addColumn("numbers out of interval");
+		this.call_initialise_table("Analysis", "SELECT COUNT");
+		w_table = new JTable(this.getW_dtm());
+		numbType_sensor.add(super.getW_table());
+		
+		tablePanPrincip.add(numbSensor=new JPanel());
+		numbSensor.add(lbNumbSensor=new JLabel());
+		numbSensor.add(lbNumbSensor2=new JLabel());
+		
+		
+		tablePanPrincip.add(numbDate=new JPanel());
+		numbDate.add(lbNumbDate=new JLabel());
+		numbDate.add(lbNumbDate2=new JLabel());
+		
+		
+		
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
@@ -208,7 +243,7 @@ public class FrameTableAnalysis extends Frame {
 			if (date.isSelected() == false) {
 				panDateFilt2.setVisible(false);
 				panDateFilt3.setVisible(false);
-				compareButton.setEnabled(false);
+				compareButton.setEnabled(true);
 			}
 
 			if (room.isSelected() == true & list_room.getItemCount() < 1) {

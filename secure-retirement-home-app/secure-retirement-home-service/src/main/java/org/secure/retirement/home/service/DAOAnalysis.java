@@ -30,7 +30,9 @@ public class DAOAnalysis {
 				+ "		type_sensor ts," + "		room r," + "		historic h	"
 				+ "		where s.sensor_positionX BETWEEN " + "r.x_min and r.x_max "
 				+ "and s.sensor_positionY BETWEEN r.y_min and r.y_max " + "and s.type_sensor_id=ts.type_sensor_id "
-				+ "and s.sensor_id=h.sensor_id";
+				+ "and s.sensor_id=h.sensor_id"
+				+"group by historic_id";
+
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -49,7 +51,6 @@ public class DAOAnalysis {
 			try {
 				resultSet = preparedStatement.executeQuery();
 				System.out.println("status " + resultSet);
-
 				while (resultSet.next()) {
 					try {
 						var_table.add(
@@ -63,7 +64,7 @@ public class DAOAnalysis {
 										resultSet.getString("historic_value")));
 					} catch (Exception e1) {
 						System.out.println("E1: " + e1.getLocalizedMessage());
-					}
+					} 
 				}
 			} catch (Exception e2) {
 				System.out.println("E2: " + e2.getLocalizedMessage());
@@ -73,6 +74,54 @@ public class DAOAnalysis {
 		}
 		return var_table;
 	}
+	
+	public ArrayList<Analysis> presentCount() throws SQLException {
+		ArrayList<Analysis> var_table;
+		var_table = new ArrayList<Analysis>();
+		String SQL_SELECT = "select s.sensor_mac ,count(*) as countAnal "
+				+ "from historic h,sensor s "
+				+ "where s.sensor_id=h.sensor_id "
+				+ "and h.historic_value not between s.sensor_min and s.sensor_max  "
+				+ "group by s.sensor_id";
+		 
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			try {
+				/* Get connection from the Factory */
+				connexion = daofactory.getConnection();
+			} catch (Exception e0) {
+				System.out.println("E0: " + e0.getLocalizedMessage());
+			}
+			try {
+				preparedStatement = DAOUtility.initPreparedRequest(connexion, SQL_SELECT, true);
+			} catch (Exception e0B) {
+				System.out.println("E0B: " + e0B.getLocalizedMessage());
+			}
+			try {
+				resultSet = preparedStatement.executeQuery();
+				System.out.println("status " + resultSet);
+				while (resultSet.next()) {
+					try {
+						var_table.add(
+
+								new Analysis(
+										resultSet.getString("sensor_mac"),
+										resultSet.getString("countAnal")));
+					} catch (Exception e1) {
+						System.out.println("E1: " + e1.getLocalizedMessage());
+					} 
+				}
+			} catch (Exception e2) {
+				System.out.println("E2: " + e2.getLocalizedMessage());
+			}
+		} catch (Exception e) {
+			System.out.println("E: " + e.getLocalizedMessage());
+		}
+		return var_table;
+	}
+	
 
 	public void close() throws SQLException {
 		// TODO Auto-generated method stub

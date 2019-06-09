@@ -9,6 +9,7 @@ public class Analysis {
 	private String room_name=null;
 	private String historic_datetime=null;
 	private String historic_value=null;
+	private String countAnal=null;
 	
 	public Analysis(String sensor_mac, String sensor_ip, String type_sensor_name, String room_name,
 		String historic_datetime, String historic_value) {
@@ -20,6 +21,14 @@ public class Analysis {
 		this.historic_datetime = historic_datetime;
 		this.historic_value = historic_value;
 	}
+	
+	public Analysis (String sensor_mac, String countAnal) {
+		super();
+		this.sensor_mac=sensor_mac;
+		this.countAnal=countAnal;
+	}
+	
+	
 	public String getSensor_mac() {
 		return sensor_mac;
 	}
