@@ -78,12 +78,17 @@ public class Decode {
 				    // code block
 				    break;
 			  case "Analysis":
+				  
 				  System.out.println("Decode>Analysis>beforeinitializObjectMapper");
 					 objectMapper.addMixIn(Analysis.class, AnalysisMix.class);
 					 System.out.println("Decode>Analysis>afterInitializObjectMapper");
-					 try {
+					try {
+					System.out.println("param_todecode : "+ param_todecode);
 					 val_object= objectMapper.readValue(param_todecode, Analysis[].class);
-					 }catch(Exception e) {System.out.println("exception lors du parsing :"+ e);System.out.println(param_todecode);}
+					 }
+					 catch(Exception e) {
+						 System.out.println("exception lors du parsing :"+ e);System.out.println(param_todecode);
+					 }
 					 System.out.println("Decode>Analysis>AfterInitializVal_object");
 					 break;
 			  default:
