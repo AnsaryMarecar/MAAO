@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import org.secure.retirement.home.client.ClientTransmission;
 import org.secure.retirement.home.common.Analysis;
@@ -35,13 +36,13 @@ public class FrameTableAnalysis extends Frame {
 	private JCalendar cal, cal2, cal3, cal4;
 	private JPanel panFilter, panComboFilter, panDateFilt, panDateFilt2, panDateFilt3, panCompare, panObjectComp,
 			panObjectCompDate1, panObjectCompDate2, tablePanPrincip, tablePanComp, tablePan;
-	
-	
+
 	private JPanel numbSensor, numbType_sensor, numbDate, numbAll;
 	private JButton validate1, validate2, compareButton;
 	private JLabel label1, label2, label3, label4;
-	
-	private JLabel lbNumbSensor, lbNumbSensor2, lbNumbAll, lbNumbAll2, lbNumbType_sensor, lbNumbType_sensor2, lbNumbDate, lbNumbDate2;
+
+	private JLabel lbNumbSensor, lbNumbSensor2, lbNumbAll, lbNumbAll2, lbNumbType_sensor, lbNumbType_sensor2,
+			lbNumbDate, lbNumbDate2;
 	// ComboBox
 	private JComboBox list_typesensor = new JComboBox();
 	private JComboBox list_room = new JComboBox();
@@ -50,6 +51,7 @@ public class FrameTableAnalysis extends Frame {
 	private JCheckBox date = new JCheckBox("Date");
 	private JCheckBox room = new JCheckBox("Room");
 	private JCheckBox type_sensor = new JCheckBox("Type Sensors");
+	private JCheckBox sensorSelect = new JCheckBox("count by sensor");
 
 	private ArrayList<Room> arrRoom = new ArrayList<Room>();
 	private ArrayList<Type_sensor> typeSensor = new ArrayList<Type_sensor>();
@@ -58,6 +60,42 @@ public class FrameTableAnalysis extends Frame {
 	private String table = null;
 	private String strRoom = null;
 	private String strType = null;
+
+	private JTable w_table1 = new JTable();
+	private DefaultTableModel w_dtm1 = new DefaultTableModel() {
+		@Override
+		public boolean isCellEditable(int row, int column) {
+			// all cells false
+			return false;
+		}
+	};
+
+	private JTable w_table2 = new JTable();
+	private DefaultTableModel w_dtm2 = new DefaultTableModel() {
+		@Override
+		public boolean isCellEditable(int row, int column) {
+			// all cells false
+			return false;
+		}
+	};
+
+	private JTable w_table3 = new JTable();
+	private DefaultTableModel w_dtm3 = new DefaultTableModel() {
+		@Override
+		public boolean isCellEditable(int row, int column) {
+			// all cells false
+			return false;
+		}
+	};
+
+	private JTable w_table4 = new JTable();
+	private DefaultTableModel w_dtm4 = new DefaultTableModel() {
+		@Override
+		public boolean isCellEditable(int row, int column) {
+			// all cells false
+			return false;
+		}
+	};
 
 	public FrameTableAnalysis() {
 		super();
@@ -75,6 +113,9 @@ public class FrameTableAnalysis extends Frame {
 		type_sensor.setForeground(Color.WHITE);
 		type_sensor.setBackground(new Color(153, 190, 204));
 
+		sensorSelect.setForeground(Color.WHITE);
+		sensorSelect.setBackground(new Color(153, 190, 204));
+
 		menu_panel.setBackground(new Color(153, 190, 204));
 		left_panel.setBackground(new Color(153, 190, 204));
 
@@ -82,12 +123,13 @@ public class FrameTableAnalysis extends Frame {
 		menu_panel.add(date);
 		menu_panel.add(room);
 		menu_panel.add(type_sensor);
+		menu_panel.add(sensorSelect);
 
 		// Item Listener for JCheckBox
 		date.addItemListener(new ItemListen());
 		room.addItemListener(new ItemListen());
 		type_sensor.addItemListener(new ItemListen());
-		room.setEnabled(false);
+		sensorSelect.addItemListener(new ItemListen());
 		// Adding ComboBox to the Left of the Frame
 		panFilter = new JPanel();
 		panFilter.setBackground(new Color(153, 190, 204));
@@ -173,48 +215,45 @@ public class FrameTableAnalysis extends Frame {
 		tablePan.add(tablePanPrincip);
 		tablePan.add(tablePanComp);
 
-		
 		/*
-		// table
-		this.getW_dtm().addColumn("sensor_mac");
-		this.getW_dtm().addColumn("sensor_ip");
-		this.getW_dtm().addColumn("type_sensor_name");
-		this.getW_dtm().addColumn("room_name");
-		this.getW_dtm().addColumn("historic_datetime");
-		this.getW_dtm().addColumn("historic_value");
-		this.call_initialise_table("Analysis", "SELECT ALL");
+		 * // table this.getW_dtm().addColumn("sensor_mac");
+		 * this.getW_dtm().addColumn("sensor_ip");
+		 * this.getW_dtm().addColumn("type_sensor_name");
+		 * this.getW_dtm().addColumn("room_name");
+		 * this.getW_dtm().addColumn("historic_datetime");
+		 * this.getW_dtm().addColumn("historic_value");
+		 * this.call_initialise_table("Analysis", "SELECT ALL");
+		 * 
+		 * w_table = new JTable(this.getW_dtm());
+		 * tablePanPrincip.add(super.getW_table());
+		 */
+		tablePanPrincip.setLayout(new GridLayout(4, 1, 20, 20));
 
-		w_table = new JTable(this.getW_dtm());
-		tablePanPrincip.add(super.getW_table());
-		*/
-		tablePanPrincip.setLayout(new GridLayout(4,1, 20, 20));
-		
-		
-		tablePanPrincip.add(numbAll= new JPanel());
-		numbAll.add(lbNumbAll= new JLabel("Total number out of the interval"));
-		numbAll.add(lbNumbAll2=new JLabel());
-		
-		
-		tablePanPrincip.add(numbType_sensor=new JPanel());
-		numbType_sensor.add(lbNumbType_sensor=new JLabel("Sensors not in their interval"));
-		numbType_sensor.add(lbNumbType_sensor2= new JLabel());
-		this.getW_dtm().addColumn("sensor_mac");
-		this.getW_dtm().addColumn("numbers out of interval");
-		this.call_initialise_table("Analysis", "SELECT COUNT");
-		w_table = new JTable(this.getW_dtm());
-		numbType_sensor.add(super.getW_table());
-		
-		tablePanPrincip.add(numbSensor=new JPanel());
-		numbSensor.add(lbNumbSensor=new JLabel());
-		numbSensor.add(lbNumbSensor2=new JLabel());
-		
-		
-		tablePanPrincip.add(numbDate=new JPanel());
-		numbDate.add(lbNumbDate=new JLabel());
-		numbDate.add(lbNumbDate2=new JLabel());
-		
-		
-		
+		tablePanPrincip.add(numbAll = new JPanel());
+		numbAll.add(lbNumbAll = new JLabel("Total number out of the interval"));
+		numbAll.add(lbNumbAll2 = new JLabel());
+		this.call_initialise_table("Analysis", "SELECT COUNT *");
+		w_dtm2.addColumn("Total number out of interval");
+		w_table2 = new JTable(w_dtm2);
+		numbAll.add(w_table2);
+
+		tablePanPrincip.add(numbType_sensor = new JPanel());
+		numbType_sensor.setLayout(new GridLayout(2, 1));
+		numbType_sensor.add(lbNumbType_sensor = new JLabel("Sensors not in their interval"));
+		numbType_sensor.add(lbNumbType_sensor2 = new JLabel());
+		w_dtm1.addColumn("sensor_mac");
+		w_dtm1.addColumn("Number out of interval");
+		w_table1 = new JTable(w_dtm1);
+		numbType_sensor.add(w_table1);
+
+		tablePanPrincip.add(numbSensor = new JPanel());
+		numbSensor.add(lbNumbSensor = new JLabel());
+		numbSensor.add(lbNumbSensor2 = new JLabel());
+
+		tablePanPrincip.add(numbDate = new JPanel());
+		numbDate.add(lbNumbDate = new JLabel());
+		numbDate.add(lbNumbDate2 = new JLabel());
+
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
@@ -234,6 +273,10 @@ public class FrameTableAnalysis extends Frame {
 			if (type_sensor.isSelected() == false) {
 				list_typesensor.removeAllItems();
 				list_typesensor.setEnabled(false);
+			}
+
+			if (sensorSelect.isSelected() == true) {
+				call_initialise_table("Analysis", "SELECT COUNT");
 			}
 
 			if (date.isSelected() == true) {
@@ -273,14 +316,6 @@ public class FrameTableAnalysis extends Frame {
 				if (date.isSelected()) {
 					String date1 = cal.getDate();
 					String date2 = cal2.getDate();
-				}
-
-				if (strType.equals("All Type sensor")) {
-					System.out.println("All sensors");
-				} else {
-					table = "Analysis";
-					call_initialise_table("Analysis", "SELECT ALL");
-					
 				}
 
 			}
@@ -337,33 +372,26 @@ public class FrameTableAnalysis extends Frame {
 
 	@Override
 	public void add_table(Object obj) {
+
 		// TODO Auto-generated method stub
-		if ((Analysis) obj != null) {
-			if (strType==null || strType.contentEquals("All type sensor")) {
-				System.out.println("je suis la");
-			this.getW_dtm()
-					.addRow(new String[] { String.valueOf(((Analysis) obj).getSensor_mac()),
-							((Analysis) obj).getSensor_ip(),
-							((Analysis) obj).getType_sensor_name(),
-							((Analysis) obj).getRoom_name(),
-							((Analysis) obj).getHistoric_datetime(),
-							((Analysis) obj).getHistoric_value()
-							});
-			}
-			else {
-				if ((((Analysis) obj).getType_sensor_name()).equals(strType)) {
-					this.getW_dtm()
-					.addRow(new String[] { String.valueOf(((Analysis) obj).getSensor_mac()),
-							((Analysis) obj).getSensor_ip(),
-							((Analysis) obj).getType_sensor_name(),
-							((Analysis) obj).getRoom_name(),
-							((Analysis) obj).getHistoric_datetime(),
-							((Analysis) obj).getHistoric_value()
-							});
-				}
-			}
+		if ((Analysis) obj != null & !((Analysis) obj).getCountAnal().equals(null)) {
+			w_dtm1.addRow(
+					new String[] { String.valueOf(((Analysis) obj).getSensor_mac()), ((Analysis) obj).getCountAnal() });
+		} else if ((Analysis) obj != null & !((Analysis) obj).getCountAll().equals(null)) {
+			w_dtm2.addRow(
+					new String[] { String.valueOf(((Analysis) obj).getCountAll()) });
 		}
+
 	}
+
+	/*
+	 * else { if ((((Analysis)obj).getType_sensor_name()).equals(strType)) {
+	 * this.getW_dtm() .addRow(new String[] { String.valueOf(((Analysis)
+	 * obj).getSensor_mac()), ((Analysis)obj).getSensor_ip(), ((Analysis)
+	 * obj).getType_sensor_name(), ((Analysis)obj).getRoom_name(), ((Analysis)
+	 * obj).getHistoric_datetime(), ((Analysis) obj).getHistoric_value() }); } } }
+	 * 
+	 */
 
 	@Override
 	public void update_table() {
@@ -373,12 +401,10 @@ public class FrameTableAnalysis extends Frame {
 
 	@Override
 	public void initialise_table(Object[] obj) {
-		
-		
-		if (type_sensor.isSelected()==false & date.isSelected()==false ) {
-			for (int i = 0; i < obj.length; i++) {
+
+		for (int i = 0; i < obj.length; i++) {
 			this.add_table(obj[i]);
-		}}
+		}
 
 		if (type_sensor.isSelected() == true & list_typesensor.getItemCount() < 1) {
 			list_typesensor.removeAllItems();
@@ -387,23 +413,34 @@ public class FrameTableAnalysis extends Frame {
 				typeSensor.add((Type_sensor) obj[i]);
 				this.list_typesensor.addItem(typeSensor.get(i).getType_sensor_name());
 			}
+		}
 
-			if (room.isSelected() == true & list_room.getItemCount() < 1) {
-				list_room.removeAllItems();
-				list_room.addItem("All rooms");
-				for (int i = 0; i < obj.length; i++) {
-					arrRoom.add((Room) obj[i]);
+		if (room.isSelected() == true & list_room.getItemCount() < 1) {
+			list_room.removeAllItems();
+			list_room.addItem("All rooms");
+			for (int i = 0; i < obj.length; i++) {
+				arrRoom.add((Room) obj[i]);
+
+				// TODO VERIFICATION TO NOT INSERT INEXISTANT ROOM
+				if (!arrRoom.get(i).getRoom_name().equals(null) || !arrRoom.get(i).getRoom_name().equals("")) {
+					System.out.println(arrRoom.get(i));
 					this.list_room.addItem(arrRoom.get(i).getRoom_name());
 				}
-			}
 
-				
+			}
 		}
+
+		if (!strType.equals(null)) {
+			for (int i = 0; i < obj.length; i++) {
+				this.add_table(obj[i]);
+			}
+		}
+
 	}
 
 	@Override
 	public void initialise(String param_json, String param_class) throws IOException {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

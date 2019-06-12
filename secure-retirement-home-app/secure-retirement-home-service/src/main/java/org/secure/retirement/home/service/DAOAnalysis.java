@@ -25,13 +25,7 @@ public class DAOAnalysis {
 	public ArrayList<Analysis> presentData() throws SQLException {
 		ArrayList<Analysis> var_table;
 		var_table = new ArrayList<Analysis>();
-		String SQL_SELECT = "SELECT " + "		s.sensor_mac" + ",	s.sensor_ip" + ",	ts.type_sensor_name"
-				+ ",	r.room_name" + ",	h.historic_datetime" + ",	h.historic_value" + "		from sensor s, "
-				+ "		type_sensor ts," + "		room r," + "		historic h	"
-				+ "		where s.sensor_positionX BETWEEN " + "r.x_min and r.x_max "
-				+ "and s.sensor_positionY BETWEEN r.y_min and r.y_max " + "and s.type_sensor_id=ts.type_sensor_id "
-				+ "and s.sensor_id=h.sensor_id"
-				+"group by historic_id";
+		String SQL_SELECT = "select count(*) as countAll from historic h, sensor s where h.sensor_id=s.sensor_id and h.historic_value not between s.sensor_min and s.sensor_max";
 
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
@@ -56,13 +50,16 @@ public class DAOAnalysis {
 						var_table.add(
 
 								new Analysis(
-										resultSet.getString("sensor_mac"),
-										resultSet.getString("sensor_ip"),
-										resultSet.getString("type_sensor_name"),
-										resultSet.getString("room_name"),
-										resultSet.getString("Historic_datetime"),
-										resultSet.getString("historic_value")));
-					} catch (Exception e1) {
+										null,
+										null,
+										null,
+										null,
+										null,
+										null,
+										null,
+										resultSet.getString("countAll")));
+										
+					}  catch (Exception e1) {
 						System.out.println("E1: " + e1.getLocalizedMessage());
 					} 
 				}
@@ -100,16 +97,30 @@ public class DAOAnalysis {
 				System.out.println("E0B: " + e0B.getLocalizedMessage());
 			}
 			try {
+
+				System.out.println("DAOAnalysis>SELECTCOUNT>TRY EXECUTE QUERY");
 				resultSet = preparedStatement.executeQuery();
 				System.out.println("status " + resultSet);
+			
 				while (resultSet.next()) {
 					try {
+
+						System.out.println("DAOAnalysis>SELECTCOUNT>TRY EXECUTE QUERY");
 						var_table.add(
 
 								new Analysis(
 										resultSet.getString("sensor_mac"),
-										resultSet.getString("countAnal")));
-					} catch (Exception e1) {
+										null,
+										null,
+										null,
+										null,
+										null,
+										resultSet.getString("countAnal"),
+										null));
+										
+					} 
+					
+					catch (Exception e1) {
 						System.out.println("E1: " + e1.getLocalizedMessage());
 					} 
 				}

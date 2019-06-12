@@ -79,7 +79,7 @@ public class ActionDecision {
 				  }catch(Exception e) {
 					  System.out.println(val_send_information[0].getSend_information_crud_action().toString()+" e: "+e.getLocalizedMessage());
 				  }
-			      if(val_send_information[0].getSend_information_crud_action().toString().equals("SELECT ALL")) {	
+			      if(val_send_information[0].getSend_information_crud_action().toString().equals("SELECT COUNT *")) {	
 			  			try {
 			  				Thread.sleep(500);
 			  				elements = element_dao.presentData();

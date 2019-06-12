@@ -72,10 +72,6 @@ public class ClientConnection implements Runnable{
         	   		System.out.println("clientconnection>try>Historics");
         	   		att_frame.initialise(response, att_class);
         	   	}
-        	   	else if (att_class=="Analysis") {
-
-        	   		System.out.println("clientconnection>try>Analysis");
-        	   	}
         	
         	   	else {
         	   		System.out.println("clientconnection>try>else");
@@ -83,6 +79,7 @@ public class ClientConnection implements Runnable{
         	   		att_frame.initialise_table(val_object); 
         	   	}
         	  }catch(Exception ex1) {
+        		  System.out.println("att_class =" + att_class);
         		  System.out.println("ex1: "+ex1.getMessage());
         	  }
         	  
