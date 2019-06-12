@@ -232,7 +232,7 @@ public class FrameTableAnalysis extends Frame {
 		tablePanPrincip.add(numbAll = new JPanel());
 		numbAll.add(lbNumbAll = new JLabel("Total number out of the interval"));
 		numbAll.add(lbNumbAll2 = new JLabel());
-		this.call_initialise_table("Analysis", "SELECT COUNT *");
+		call_initialise_table("Analysis", "SELECT COUNT *");
 		w_dtm2.addColumn("Total number out of interval");
 		w_table2 = new JTable(w_dtm2);
 		numbAll.add(w_table2);
@@ -430,11 +430,7 @@ public class FrameTableAnalysis extends Frame {
 			}
 		}
 
-		if (!strType.equals(null)) {
-			for (int i = 0; i < obj.length; i++) {
-				this.add_table(obj[i]);
-			}
-		}
+	
 
 	}
 

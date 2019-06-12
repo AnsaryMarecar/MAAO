@@ -76,7 +76,15 @@ public class ClientConnection implements Runnable{
         	   	else {
         	   		System.out.println("clientconnection>try>else");
         	   		Object[] val_object =  Decode.to_decode(response, att_class); 
+        	   		System.out.println(val_object);
+        	   		System.out.println(att_frame);
+        	   		try {
         	   		att_frame.initialise_table(val_object); 
+        	   		}
+        	   		catch(Exception e) {
+        	   			System.out.println(e);
+        	   		}
+        	   		System.out.println("ClientConnection>try>else>afterInitialise");
         	   	}
         	  }catch(Exception ex1) {
         		  System.out.println("att_class =" + att_class);
