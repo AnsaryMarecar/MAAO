@@ -63,7 +63,7 @@ public class ClientConnection implements Runnable{
         	  try {
         		response = read()												 ;
         	   	System.out.println(" answer received: " + response+" Att_class: "+att_class)	; 
-        	   	
+        	 /*  	
         	   	if(att_class=="Sensors") {
         	   		System.out.println("clientconnection>try>sensors");
         	   		att_frame.initialise(response, att_class);
@@ -71,21 +71,23 @@ public class ClientConnection implements Runnable{
         	   	else if(att_class=="Historics") {
         	   		System.out.println("clientconnection>try>Historics");
         	   		att_frame.initialise(response, att_class);
-        	   	}
+        	   	}*/
         	
-        	   	else {
+        	 //  	else {
         	   		System.out.println("clientconnection>try>else");
         	   		Object[] val_object =  Decode.to_decode(response, att_class); 
         	   		System.out.println(val_object);
         	   		System.out.println(att_frame);
         	   		try {
+        	   			
         	   		att_frame.initialise_table(val_object); 
+
+        	   		System.out.println("ClientConnection>try>else>afterInitialise");
         	   		}
         	   		catch(Exception e) {
-        	   			System.out.println(e);
+        	   			System.out.println("Problem at Client Connection " +e);
         	   		}
-        	   		System.out.println("ClientConnection>try>else>afterInitialise");
-        	   	}
+        	//   	}
         	  }catch(Exception ex1) {
         		  System.out.println("att_class =" + att_class);
         		  System.out.println("ex1: "+ex1.getMessage());

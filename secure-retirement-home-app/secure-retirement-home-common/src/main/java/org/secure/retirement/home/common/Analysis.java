@@ -11,6 +11,16 @@ public class Analysis {
 	private String historic_value=null;
 	private String countAnal=null;
 	private String countAll=null;
+	private String countType=null;
+	
+	
+	public String getCountType() {
+		return countType;
+	}
+
+	public void setCountType(String countType) {
+		this.countType = countType;
+	}
 	
 	
 	
@@ -42,7 +52,7 @@ public class Analysis {
 	
 	
 	public Analysis(String sensor_mac, String sensor_ip, String type_sensor_name, String room_name,
-		String historic_datetime, String historic_value, String countAnal, String countAll) {
+		String historic_datetime, String historic_value, String countAnal, String countAll, String countType) {
 		super();
 		this.sensor_mac = sensor_mac;
 		this.sensor_ip = sensor_ip;
@@ -52,6 +62,7 @@ public class Analysis {
 		this.historic_value = historic_value;
 		this.countAnal=countAnal;
 		this.countAll=countAll;
+		this.countType=countType;
 	}
 	
 	

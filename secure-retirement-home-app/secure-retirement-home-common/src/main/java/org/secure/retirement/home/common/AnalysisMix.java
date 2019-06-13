@@ -11,7 +11,8 @@ public abstract class AnalysisMix {
 			@JsonProperty("historic_datetime") String historic_datetime, 
             @JsonProperty("historic_value") String historic_value,
 			@JsonProperty("countAnal") String countAnal,
-			@JsonProperty("countAll") String countAll){}
+			@JsonProperty("countAll") String countAll,
+			@JsonProperty("countType") String countType){}
 	   
 	   
    

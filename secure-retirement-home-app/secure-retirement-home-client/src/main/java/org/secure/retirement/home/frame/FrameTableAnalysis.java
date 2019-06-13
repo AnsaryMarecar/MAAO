@@ -61,6 +61,12 @@ public class FrameTableAnalysis extends Frame {
 	private String strRoom = null;
 	private String strType = null;
 
+	// Int that permits to know what to activate or not
+	private static int countAll = 0;
+	private static int countSensorA = 0;
+	private static int countSensorB = 0;
+	private static int validateCount = 0;
+
 	private JTable w_table1 = new JTable();
 	private DefaultTableModel w_dtm1 = new DefaultTableModel() {
 		@Override
@@ -197,8 +203,8 @@ public class FrameTableAnalysis extends Frame {
 
 		// Panel which will contain the tables
 		tablePan = new JPanel();
-		tablePan.setLayout(new GridLayout(2, 1));
 		tablePan.setBackground(new Color(191, 195, 210));
+		tablePan.setLayout(new BorderLayout());
 		component_panel.add(tablePan, BorderLayout.CENTER);
 
 		// The principal table of datas will be there
@@ -213,31 +219,19 @@ public class FrameTableAnalysis extends Frame {
 
 		// Adding the two panel of data's to the frame
 		tablePan.add(tablePanPrincip);
-		tablePan.add(tablePanComp);
 
-		/*
-		 * // table this.getW_dtm().addColumn("sensor_mac");
-		 * this.getW_dtm().addColumn("sensor_ip");
-		 * this.getW_dtm().addColumn("type_sensor_name");
-		 * this.getW_dtm().addColumn("room_name");
-		 * this.getW_dtm().addColumn("historic_datetime");
-		 * this.getW_dtm().addColumn("historic_value");
-		 * this.call_initialise_table("Analysis", "SELECT ALL");
-		 * 
-		 * w_table = new JTable(this.getW_dtm());
-		 * tablePanPrincip.add(super.getW_table());
-		 */
 		tablePanPrincip.setLayout(new GridLayout(4, 1, 20, 20));
 
 		tablePanPrincip.add(numbAll = new JPanel());
-		numbAll.add(lbNumbAll = new JLabel("Total number out of the interval"));
-		numbAll.add(lbNumbAll2 = new JLabel());
+		numbAll.setLayout(new BorderLayout());
 		call_initialise_table("Analysis", "SELECT COUNT *");
-		w_dtm2.addColumn("Total number out of interval");
+		w_dtm2.addColumn("Total Number out of interval");
+		w_dtm2.addColumn("Number");
 		w_table2 = new JTable(w_dtm2);
-		numbAll.add(w_table2);
+		numbAll.add(w_table2, BorderLayout.NORTH);
+		numbAll.add(numbType_sensor = new JPanel(), BorderLayout.CENTER);
 
-		tablePanPrincip.add(numbType_sensor = new JPanel());
+		// tablePanPrincip.add(numbType_sensor = new JPanel());
 		numbType_sensor.setLayout(new GridLayout(2, 1));
 		numbType_sensor.add(lbNumbType_sensor = new JLabel("Sensors not in their interval"));
 		numbType_sensor.add(lbNumbType_sensor2 = new JLabel());
@@ -247,8 +241,12 @@ public class FrameTableAnalysis extends Frame {
 		numbType_sensor.add(w_table1);
 
 		tablePanPrincip.add(numbSensor = new JPanel());
-		numbSensor.add(lbNumbSensor = new JLabel());
-		numbSensor.add(lbNumbSensor2 = new JLabel());
+		numbSensor.setLayout(new GridLayout(2, 1));
+		numbSensor.add(lbNumbSensor = new JLabel("Number of values out of interval order by type_sensor"));
+		w_dtm3.addColumn("Type sensor name");
+		w_dtm3.addColumn("Values Type sensor");
+		w_table3 = new JTable(w_dtm3);
+		numbSensor.add(w_table3);
 
 		tablePanPrincip.add(numbDate = new JPanel());
 		numbDate.add(lbNumbDate = new JLabel());
@@ -266,6 +264,7 @@ public class FrameTableAnalysis extends Frame {
 
 			// Sensor CheckBox Actions
 			if (type_sensor.isSelected() == true & list_typesensor.getItemCount() < 1) {
+				countSensorA = 0;
 				list_typesensor.setEnabled(true);
 				table = "Type_sensor";
 				call_initialise_table(table, "SELECT ALL");
@@ -274,9 +273,17 @@ public class FrameTableAnalysis extends Frame {
 				list_typesensor.removeAllItems();
 				list_typesensor.setEnabled(false);
 			}
-
-			if (sensorSelect.isSelected() == true) {
+			if (sensorSelect.isSelected() == true & countSensorA==0) {
+				countSensorA = 1;
 				call_initialise_table("Analysis", "SELECT COUNT");
+			}
+			if (sensorSelect.isSelected() == false) {
+				countSensorA=0;
+				int n = w_dtm1.getRowCount();
+				for (int i = n - 1; i >= 0; --i) {
+					w_dtm1.removeRow(i);
+				}
+
 			}
 
 			if (date.isSelected() == true) {
@@ -290,6 +297,7 @@ public class FrameTableAnalysis extends Frame {
 			}
 
 			if (room.isSelected() == true & list_room.getItemCount() < 1) {
+				countSensorA = 0;
 				list_room.setEnabled(true);
 				table = "Room";
 				call_initialise_table(table, "SELECT ALL");
@@ -308,6 +316,8 @@ public class FrameTableAnalysis extends Frame {
 				// we get the value selected in the jcombobox if its enable
 				if (list_typesensor.isEnabled()) {
 					strType = list_typesensor.getSelectedItem().toString();
+					validateCount = 1;
+					call_initialise_table("Analysis", "SELECT COUNT TYPE");
 				}
 				if (list_room.isEnabled()) {
 					strRoom = list_room.getSelectedItem().toString();
@@ -318,12 +328,6 @@ public class FrameTableAnalysis extends Frame {
 					String date2 = cal2.getDate();
 				}
 
-			}
-
-			if ("Do comparaison".equals(e.getActionCommand())) {
-				tablePanComp.setVisible(true);
-				String date3 = cal4.getDate();
-				String date4 = cal3.getDate();
 			}
 		}
 
@@ -374,24 +378,41 @@ public class FrameTableAnalysis extends Frame {
 	public void add_table(Object obj) {
 
 		// TODO Auto-generated method stub
-		if ((Analysis) obj != null & !((Analysis) obj).getCountAnal().equals(null)) {
-			w_dtm1.addRow(
-					new String[] { String.valueOf(((Analysis) obj).getSensor_mac()), ((Analysis) obj).getCountAnal() });
-		} else if ((Analysis) obj != null & !((Analysis) obj).getCountAll().equals(null)) {
-			w_dtm2.addRow(
-					new String[] { String.valueOf(((Analysis) obj).getCountAll()) });
+		System.out.println("FrameTableAnalysis> add_table");
+		if ((Analysis) obj != null) {
+
+			System.out.println("FrameTableAnalysis> add_table>Analysis Object is not null");
+
+			System.out.println("FrameTableAnalysis> add_table> countAll =" + countAll);
+			System.out.println("FrameTableAnalysis> add_table> countSensorA =" + countSensorA);
+			System.out.println("FrameTableAnalysis> add_table> countSensorB =" + countSensorB);
+			
+			//First JTable
+			if (countAll<1) {
+				System.out.println("FrameTableAnalysis> add_table> count C =1");
+				w_dtm2.addRow(new String[] { ("Total values out of interval"),
+						String.valueOf(((Analysis) obj).getCountAll()) });
+
+			}
+
+			
+			//Third JTable (contain values ordered by type_sensor)
+			if (validateCount == 1) {
+				w_dtm3.addRow(new String[] { String.valueOf(((Analysis) obj).getType_sensor_name()),
+						((Analysis) obj).getCountType() });
+			}
+			
+			
+			//Second JTable (contain value ordered by sensors
+			if (countSensorA==1) {
+				w_dtm1.addRow(new String[] { String.valueOf(((Analysis) obj).getSensor_mac()),
+						((Analysis) obj).getCountAnal() });
+			}
+			
+			
+
 		}
-
 	}
-
-	/*
-	 * else { if ((((Analysis)obj).getType_sensor_name()).equals(strType)) {
-	 * this.getW_dtm() .addRow(new String[] { String.valueOf(((Analysis)
-	 * obj).getSensor_mac()), ((Analysis)obj).getSensor_ip(), ((Analysis)
-	 * obj).getType_sensor_name(), ((Analysis)obj).getRoom_name(), ((Analysis)
-	 * obj).getHistoric_datetime(), ((Analysis) obj).getHistoric_value() }); } } }
-	 * 
-	 */
 
 	@Override
 	public void update_table() {
@@ -402,10 +423,44 @@ public class FrameTableAnalysis extends Frame {
 	@Override
 	public void initialise_table(Object[] obj) {
 
-		for (int i = 0; i < obj.length; i++) {
-			this.add_table(obj[i]);
+		System.out.println("FrameTableAnalysis> initialise_table");
+
+		// To instantiate the first JTable that contains the total numbers of value out
+		// of interval
+		if (countAll == 0) {
+			System.out.println("U are in CountAll condition on initialise_table");
+			for (int i = 0; i < obj.length; i++) {
+				System.out.println("FrameTableAnalysis> initialise_table>countAll =" + countAll);
+				this.add_table(obj[i]);
+				countAll = 1;
+			}
 		}
 
+		// To instantiante the second JTable which will contain the number of value out
+		// of interval group by sensors
+		if (countSensorA == 1) {
+
+			for (int i = 0; i < obj.length; i++) {
+				System.out.println("FrameTableAnalysis> initialise_table>countSensorA =" + countSensorA + "countSensorB"
+						+ countSensorB);
+				this.add_table(obj[i]);
+			}
+		}
+
+		System.out.println("validateCount =" + validateCount);
+		if (validateCount == 1) {
+
+			for (int i = 0; i < obj.length; i++) {
+				System.out.println("validateCountt =" + validateCount);
+				this.add_table(obj[i]);
+				if (i == obj.length - 1) {
+					validateCount = 0;
+				}
+			}
+			System.out.println("validateCount =" + validateCount);
+		}
+
+		// Instantiate the checkBox with database's data
 		if (type_sensor.isSelected() == true & list_typesensor.getItemCount() < 1) {
 			list_typesensor.removeAllItems();
 			list_typesensor.addItem("All Type sensor");
@@ -426,11 +481,8 @@ public class FrameTableAnalysis extends Frame {
 					System.out.println(arrRoom.get(i));
 					this.list_room.addItem(arrRoom.get(i).getRoom_name());
 				}
-
 			}
 		}
-
-	
 
 	}
 
