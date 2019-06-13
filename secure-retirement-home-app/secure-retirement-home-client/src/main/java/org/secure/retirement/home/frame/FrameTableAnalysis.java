@@ -273,12 +273,14 @@ public class FrameTableAnalysis extends Frame {
 				list_typesensor.removeAllItems();
 				list_typesensor.setEnabled(false);
 			}
-			if (sensorSelect.isSelected() == true & countSensorA==0) {
+			if (sensorSelect.isSelected() == true & countSensorB==0) {
 				countSensorA = 1;
+				countSensorB=1;
 				call_initialise_table("Analysis", "SELECT COUNT");
 			}
 			if (sensorSelect.isSelected() == false) {
 				countSensorA=0;
+				countSensorB=0;
 				int n = w_dtm1.getRowCount();
 				for (int i = n - 1; i >= 0; --i) {
 					w_dtm1.removeRow(i);
@@ -313,6 +315,10 @@ public class FrameTableAnalysis extends Frame {
 		public void actionPerformed(ActionEvent e) {
 			if ("validate".equals(e.getActionCommand())) {
 				tablePanPrincip.setVisible(true);
+				int n = w_dtm3.getRowCount();
+				for (int i = n - 1; i >= 0; --i) {
+					w_dtm3.removeRow(i);
+				}
 				// we get the value selected in the jcombobox if its enable
 				if (list_typesensor.isEnabled()) {
 					strType = list_typesensor.getSelectedItem().toString();
@@ -398,8 +404,16 @@ public class FrameTableAnalysis extends Frame {
 			
 			//Third JTable (contain values ordered by type_sensor)
 			if (validateCount == 1) {
-				w_dtm3.addRow(new String[] { String.valueOf(((Analysis) obj).getType_sensor_name()),
+				if (strType.equals("All Type sensor")) {
+					w_dtm3.addRow(new String[] { String.valueOf(((Analysis) obj).getType_sensor_name()),
 						((Analysis) obj).getCountType() });
+				}
+				else {
+					if (strType.equals(((Analysis)obj).getType_sensor_name())) {
+						w_dtm3.addRow(new String[] { String.valueOf(((Analysis) obj).getType_sensor_name()),
+								((Analysis) obj).getCountType() });
+					}
+				}
 			}
 			
 			
