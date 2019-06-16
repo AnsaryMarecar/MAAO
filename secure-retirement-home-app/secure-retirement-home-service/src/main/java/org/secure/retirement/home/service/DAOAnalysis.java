@@ -58,7 +58,8 @@ public class DAOAnalysis {
 										null,
 										null,
 										resultSet.getString("countAll"),
-										null));
+										null,
+										null,null));
 										
 					}  catch (Exception e1) {
 						System.out.println("E1: " + e1.getLocalizedMessage());
@@ -109,7 +110,60 @@ public class DAOAnalysis {
 										null,
 										null,
 										null,
-										resultSet.getString("countType")));
+										resultSet.getString("countType"),
+										null,null));
+										
+					}  catch (Exception e1) {
+						System.out.println("E1: " + e1.getLocalizedMessage());
+					} 
+				}
+			} catch (Exception e2) {
+				System.out.println("E2: " + e2.getLocalizedMessage());
+			}
+		} catch (Exception e) {
+			System.out.println("E: " + e.getLocalizedMessage());
+		}
+		return var_table;
+	}
+	
+	public ArrayList<Analysis> presentCountRoom() throws SQLException {
+		ArrayList<Analysis> var_table;
+		var_table = new ArrayList<Analysis>();
+		String SQL_SELECT = "select ts.type_sensor_name, count(*) as countType from historic h, sensor s, type_sensor ts where h.sensor_id=s.sensor_id and h.historic_value not between s.sensor_min and s.sensor_max and s.type_sensor_id=ts.type_sensor_id group by type_sensor_name";
+
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			try {
+				/* Get connection from the Factory */
+				connexion = daofactory.getConnection();
+			} catch (Exception e0) {
+				System.out.println("E0: " + e0.getLocalizedMessage());
+			}
+			try {
+				preparedStatement = DAOUtility.initPreparedRequest(connexion, SQL_SELECT, true);
+			} catch (Exception e0B) {
+				System.out.println("E0B: " + e0B.getLocalizedMessage());
+			}
+			try {
+				resultSet = preparedStatement.executeQuery();
+				System.out.println("status " + resultSet);
+				while (resultSet.next()) {
+					try {
+						var_table.add(
+
+								new Analysis(
+										null,
+										null,
+										null,
+										resultSet.getString("room_name"),
+										null,
+										null,
+										null,
+										null,
+										null,
+										resultSet.getString("countRoom"),null));
 										
 					}  catch (Exception e1) {
 						System.out.println("E1: " + e1.getLocalizedMessage());
@@ -169,7 +223,75 @@ public class DAOAnalysis {
 										null,
 										resultSet.getString("countAnal"),
 										null,
-										null));
+										null,
+										null,null));
+										
+					} 
+					
+					catch (Exception e1) {
+						System.out.println("E1: " + e1.getLocalizedMessage());
+					} 
+				}
+			} catch (Exception e2) {
+				System.out.println("E2: " + e2.getLocalizedMessage());
+			}
+		} catch (Exception e) {
+			System.out.println("E: " + e.getLocalizedMessage());
+		}
+		return var_table;
+	}
+	
+	public ArrayList<Analysis> presentDate(Analysis anal1, Analysis anal2) throws SQLException {
+		ArrayList<Analysis> var_table=new ArrayList<Analysis>();
+		System.out.println(anal1.getHistoric_datetime());
+		System.out.println(anal2.getHistoric_datetime());
+		String SQL_SELECT = "select count(*)as countDate from historic h, sensor s where s.sensor_id=h.sensor_id and historic_datetime between ? and ? and h.historic_value not between s.sensor_min and s.sensor_max";
+		 
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			try {
+				/* Get connection from the Factory */
+				connexion = daofactory.getConnection();
+			} catch (Exception e0) {
+				System.out.println("E0: " + e0.getLocalizedMessage());
+			}
+			try {
+				preparedStatement = DAOUtility.initPreparedRequest( 
+        			connexion
+        		,	SQL_SELECT
+        		,	true
+        		,	anal1.getHistoric_datetime(),
+        		anal2.getHistoric_datetime()
+        		);
+			} catch (Exception e0B) {
+				System.out.println("E0B: " + e0B.getLocalizedMessage());
+			}
+			try {
+
+				System.out.println("DAOAnalysis>SELECTCOUNT>TRY EXECUTE QUERY");
+				resultSet = preparedStatement.executeQuery();
+				System.out.println("status " + resultSet);
+			
+				while (resultSet.next()) {
+					try {
+
+						System.out.println("DAOAnalysis>SELECTCOUNT>TRY EXECUTE QUERY");
+						var_table.add(
+
+								new Analysis(
+										null,
+										null,
+										null,
+										null,
+										null,
+										null,
+										null,
+										null,
+										null,
+										null, 
+										resultSet.getString("countDate")));
 										
 					} 
 					

@@ -309,12 +309,6 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 		} catch (Exception e) {
 			e.printStackTrace()											;
 		}
-		try {
-			System.out.println("historics select all");
-			ClientTransmission.transmission("Historics", "SELECT ALL", null, this);	
-		} catch (Exception e) {
-			e.printStackTrace()											;
-		}
 		
 	}
 	
@@ -344,12 +338,6 @@ public class FrameSensorMap extends Frame<Room>implements ActionListener, MouseL
 			System.out.println("swith room begin");
 			//this.initialise_table((Room[]) val_object);
 			System.out.println("swith room end");
-			break;
-		case "Historics":
-			System.out.println("swith Historics begin je veux decoder");
-			
-			this.initialise_tableHistorics(Decode.to_decodeHistorics(param_json));
-			System.out.println("swith historics end fin ");
 			break;
 		}
 		

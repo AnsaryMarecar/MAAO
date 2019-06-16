@@ -102,7 +102,24 @@ public class ActionDecision {
 			  			}catch (Exception e) {
 			  				e.printStackTrace();
 			  			}
+			  	   }			    
+			      else if (val_send_information[0].getSend_information_crud_action().toString().equals("SELECT COUNT ROOM")) {	
+			  			try {
+			  				Thread.sleep(500);
+			  				elements = element_dao.presentCountRoom();
+			  			}catch (Exception e) {
+			  				e.printStackTrace();
+			  			}
 			  	   }
+			      else if (val_send_information[0].getSend_information_crud_action().toString().equals("SELECT DATE")) {	
+			  			try {
+			  				Thread.sleep(500);
+			  				elements = element_dao.presentDate(anal[0], anal[1]);
+			  			}catch (Exception e) {
+			  				e.printStackTrace();
+			  			}
+			  	   }
+			      
 			      } catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

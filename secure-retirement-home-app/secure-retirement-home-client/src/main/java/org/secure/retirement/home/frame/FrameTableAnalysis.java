@@ -1,6 +1,7 @@
 package org.secure.retirement.home.frame;
 
 import java.awt.BorderLayout;
+import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -11,6 +12,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,6 +23,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -31,41 +34,53 @@ import org.secure.retirement.home.common.Room;
 import org.secure.retirement.home.common.Sensor;
 import org.secure.retirement.home.common.Type_sensor;
 
+import com.toedter.calendar.JCalendar;
+
 public class FrameTableAnalysis extends Frame {
 
-	private JCalendar cal, cal2, cal3, cal4;
-	private JPanel panFilter, panComboFilter, panDateFilt, panDateFilt2, panDateFilt3, panCompare, panObjectComp,
-			panObjectCompDate1, panObjectCompDate2, tablePanPrincip, tablePanComp, tablePan;
+	private JCalendar jcal, jcal2;
 
-	private JPanel numbSensor, numbType_sensor, numbDate, numbAll;
-	private JButton validate1, validate2, compareButton;
+	private Calendar cal, cal2, cal3, cal4;
+	private JPanel panFilter, panComboFilter, panDateFilt, panDateFilt2, panDateFilt3, tablePanPrincip, tablePan;
+
+	private JPanel numbSensor, numbType_sensor, numbRoom, numbDate, numbAll;
+	private JButton validate1, validate2;
 	private JLabel label1, label2, label3, label4;
 
-	private JLabel lbNumbSensor, lbNumbSensor2, lbNumbAll, lbNumbAll2, lbNumbType_sensor, lbNumbType_sensor2,
-			lbNumbDate, lbNumbDate2;
 	// ComboBox
 	private JComboBox list_typesensor = new JComboBox();
-	private JComboBox list_room = new JComboBox();
 
 	// CheckBox
 	private JCheckBox date = new JCheckBox("Date");
-	private JCheckBox room = new JCheckBox("Room");
 	private JCheckBox type_sensor = new JCheckBox("Type Sensors");
 	private JCheckBox sensorSelect = new JCheckBox("count by sensor");
 
-	private ArrayList<Room> arrRoom = new ArrayList<Room>();
-	private ArrayList<Type_sensor> typeSensor = new ArrayList<Type_sensor>();
+	private JLabel bJcal1, bJcal2;
 
-	private String date1 = null, date2 = null, date3 = null, date4 = null;
+	private ArrayList<Type_sensor> typeSensor = new ArrayList<Type_sensor>();
+	private ArrayList<Analysis> arrAnalysis;
+
+	private Date date1 = null, date2 = null;
+
 	private String table = null;
-	private String strRoom = null;
 	private String strType = null;
+	private String sDate1 = null;
+	private String sDate2 = null;
 
 	// Int that permits to know what to activate or not
+
+	// For the First JTable
 	private static int countAll = 0;
+
+	// For the second JTable
 	private static int countSensorA = 0;
 	private static int countSensorB = 0;
+
+	// For the third JTable
 	private static int validateCount = 0;
+
+	// For the fourth JTable
+	private static int dateCount = 0;
 
 	private JTable w_table1 = new JTable();
 	private DefaultTableModel w_dtm1 = new DefaultTableModel() {
@@ -103,6 +118,15 @@ public class FrameTableAnalysis extends Frame {
 		}
 	};
 
+	private JTable w_table5 = new JTable();
+	private DefaultTableModel w_dtm5 = new DefaultTableModel() {
+		@Override
+		public boolean isCellEditable(int row, int column) {
+			// all cells false
+			return false;
+		}
+	};
+
 	public FrameTableAnalysis() {
 		super();
 		this.setTitle("Analyse");
@@ -113,8 +137,6 @@ public class FrameTableAnalysis extends Frame {
 		date.setForeground(Color.WHITE);
 		date.setBackground(new Color(153, 190, 204));
 
-		room.setForeground(Color.WHITE);
-		room.setBackground(new Color(153, 190, 204));
 
 		type_sensor.setForeground(Color.WHITE);
 		type_sensor.setBackground(new Color(153, 190, 204));
@@ -123,17 +145,15 @@ public class FrameTableAnalysis extends Frame {
 		sensorSelect.setBackground(new Color(153, 190, 204));
 
 		menu_panel.setBackground(new Color(153, 190, 204));
-		left_panel.setBackground(new Color(153, 190, 204));
+		left_panel.setBackground(new Color(0, 190, 204));
 
 		// Adding CheckBox to the top of the Frame
 		menu_panel.add(date);
-		menu_panel.add(room);
 		menu_panel.add(type_sensor);
 		menu_panel.add(sensorSelect);
 
 		// Item Listener for JCheckBox
 		date.addItemListener(new ItemListen());
-		room.addItemListener(new ItemListen());
 		type_sensor.addItemListener(new ItemListen());
 		sensorSelect.addItemListener(new ItemListen());
 		// Adding ComboBox to the Left of the Frame
@@ -143,59 +163,48 @@ public class FrameTableAnalysis extends Frame {
 		panDateFilt.setBackground(new Color(153, 190, 204));
 		panComboFilter = new JPanel();
 		panComboFilter.setBackground(new Color(153, 190, 204));
-		panCompare = new JPanel();
-		panCompare.setBackground(new Color(153, 190, 204));
-		panObjectComp = new JPanel();
-		panObjectComp.setBackground(new Color(153, 190, 204));
 
-		left_panel.setLayout(new GridLayout(3, 1));
+		left_panel.setLayout(new BorderLayout());
 		left_panel.add(panFilter);
-		left_panel.add(panCompare);
-		left_panel.add(panObjectComp);
 
-		panFilter.setLayout(new GridLayout(2, 1));
-		panFilter.add(panComboFilter);
-		panFilter.add(panDateFilt);
+		panFilter.setLayout(new BorderLayout());
+		panFilter.add(panComboFilter, BorderLayout.NORTH);
+		panFilter.add(panDateFilt, BorderLayout.CENTER);
 
 		panComboFilter.add(list_typesensor);
+		panComboFilter.add(validate2=new JButton("Go"));
 		list_typesensor.setEnabled(false);
 
-		panComboFilter.add(list_room);
-		list_room.setEnabled(false);
-
-		panDateFilt.setLayout(new GridLayout(5, 1));
-		panDateFilt.add(label1 = new JLabel("From"));
+		panDateFilt.setLayout(new GridLayout(3, 1));
 		panDateFilt.add(panDateFilt2 = new JPanel());
-		cal = new JCalendar(panDateFilt2);
-		panDateFilt.add(label2 = new JLabel("To"));
 		panDateFilt.add(panDateFilt3 = new JPanel());
-		cal2 = new JCalendar(panDateFilt3);
-		panDateFilt.add(validate1 = new JButton("validate"));
-		validate1.addActionListener(new ButtonListener());
+
+		panDateFilt2.setLayout(new GridLayout(2, 1));
+		panDateFilt2.setBackground(new Color(153, 190, 204));
+		panDateFilt2.add(bJcal1 = new JLabel("FROM"));
+		jcal = new JCalendar();
+		panDateFilt2.add(jcal);
+
+		panDateFilt3.setLayout(new GridLayout(2, 1));
+		panDateFilt3.setBackground(new Color(153, 190, 204));
+		panDateFilt3.add(bJcal2 = new JLabel("TO"));
+		jcal2 = new JCalendar();
+		panDateFilt3.add(jcal2);
+
 		panDateFilt2.setVisible(false);
 		panDateFilt3.setVisible(false);
-		// Add button Compare to its pan
-		compareButton = new JButton("Compare");
-		compareButton.addActionListener(new ButtonListener() {
-			public void actionPerformed(ActionEvent e) {
-				panObjectComp.setVisible(true);
-			}
-		});
-		panCompare.add(compareButton);
-		compareButton.setEnabled(false);
 
-		// Adding Component to panObjectComp which will appear after pushing button
-		// compare
-		panObjectComp.setLayout(new GridLayout(5, 1));
-		panObjectComp.add(label3 = new JLabel("From"));
-		panObjectComp.add(panObjectCompDate1 = new JPanel());
-		cal3 = new JCalendar(panObjectCompDate1);
-		panObjectComp.add(label4 = new JLabel("To"));
-		panObjectComp.add(panObjectCompDate2 = new JPanel());
-		cal4 = new JCalendar(panObjectCompDate2);
-		panObjectComp.add(validate2 = new JButton("Do comparaison"));
-		validate2.addActionListener(new ButtonListener());
-		panObjectComp.setVisible(false);
+		JPanel valPan = new JPanel();
+		JPanel valpan2 = new JPanel();
+		valPan.setLayout(new GridLayout(2, 1));
+		valPan.setBackground(new Color(153, 190, 204));
+		valPan.add(valpan2);
+		valpan2.setLayout(new BorderLayout());
+		valpan2.setBackground(new Color(153, 190, 204));
+		valpan2.add(validate1 = new JButton("validate"), BorderLayout.NORTH);
+		validate1.addActionListener(new ButtonListener());
+
+		panDateFilt.add(valPan);
 
 		// Adding the Left panel with all filters at the left of the screen
 
@@ -212,10 +221,6 @@ public class FrameTableAnalysis extends Frame {
 		tablePanPrincip.setLayout(new BorderLayout());
 		tablePanPrincip.setBackground(new Color(215, 240, 245));
 
-		// If users want to compare datas by date it will be there
-		tablePanComp = new JPanel();
-		tablePanComp.setBackground(new Color(200, 210, 240));
-		tablePanComp.setVisible(false);
 
 		// Adding the two panel of data's to the frame
 		tablePan.add(tablePanPrincip);
@@ -228,29 +233,34 @@ public class FrameTableAnalysis extends Frame {
 		w_dtm2.addColumn("Total Number out of interval");
 		w_dtm2.addColumn("Number");
 		w_table2 = new JTable(w_dtm2);
-		numbAll.add(w_table2, BorderLayout.NORTH);
-		numbAll.add(numbType_sensor = new JPanel(), BorderLayout.CENTER);
+		JScrollPane sc1=new JScrollPane(w_table2);
+		numbAll.add(sc1, BorderLayout.NORTH);
 
-		// tablePanPrincip.add(numbType_sensor = new JPanel());
-		numbType_sensor.setLayout(new GridLayout(2, 1));
-		numbType_sensor.add(lbNumbType_sensor = new JLabel("Sensors not in their interval"));
-		numbType_sensor.add(lbNumbType_sensor2 = new JLabel());
+		tablePanPrincip.add(numbType_sensor = new JPanel());
+		numbType_sensor.setLayout(new BorderLayout());
 		w_dtm1.addColumn("sensor_mac");
 		w_dtm1.addColumn("Number out of interval");
 		w_table1 = new JTable(w_dtm1);
-		numbType_sensor.add(w_table1);
-
+		JScrollPane sc=new JScrollPane(w_table1);
+		numbType_sensor.add(sc);
+		
 		tablePanPrincip.add(numbSensor = new JPanel());
-		numbSensor.setLayout(new GridLayout(2, 1));
-		numbSensor.add(lbNumbSensor = new JLabel("Number of values out of interval order by type_sensor"));
+		numbSensor.setLayout(new BorderLayout());
 		w_dtm3.addColumn("Type sensor name");
 		w_dtm3.addColumn("Values Type sensor");
 		w_table3 = new JTable(w_dtm3);
-		numbSensor.add(w_table3);
+		JScrollPane sc3= new JScrollPane(w_table3);
+		numbSensor.add(sc3);
+
 
 		tablePanPrincip.add(numbDate = new JPanel());
-		numbDate.add(lbNumbDate = new JLabel());
-		numbDate.add(lbNumbDate2 = new JLabel());
+		numbDate.setLayout(new BorderLayout());
+		w_dtm5.addColumn("FROM");
+		w_dtm5.addColumn("TO");
+		w_dtm5.addColumn("Value");
+		w_table5 = new JTable(w_dtm5);
+		JScrollPane sc4= new JScrollPane(w_table5);
+		numbDate.add(sc4);
 
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setLocationRelativeTo(null);
@@ -272,16 +282,18 @@ public class FrameTableAnalysis extends Frame {
 			if (type_sensor.isSelected() == false) {
 				list_typesensor.removeAllItems();
 				list_typesensor.setEnabled(false);
+				validateCount=0;
 			}
-			if (sensorSelect.isSelected() == true & countSensorB==0) {
+			if (sensorSelect.isSelected() == true & countSensorB == 0) {
 				countSensorA = 1;
-				countSensorB=1;
+				countSensorB = 1;
 				call_initialise_table("Analysis", "SELECT COUNT");
 			}
 			if (sensorSelect.isSelected() == false) {
-				countSensorA=0;
-				countSensorB=0;
+				countSensorA = 0;
+				countSensorB = 0;
 				int n = w_dtm1.getRowCount();
+				System.out.println("suppression ligne tableau typesensor");
 				for (int i = n - 1; i >= 0; --i) {
 					w_dtm1.removeRow(i);
 				}
@@ -295,25 +307,17 @@ public class FrameTableAnalysis extends Frame {
 			if (date.isSelected() == false) {
 				panDateFilt2.setVisible(false);
 				panDateFilt3.setVisible(false);
-				compareButton.setEnabled(true);
+
 			}
 
-			if (room.isSelected() == true & list_room.getItemCount() < 1) {
-				countSensorA = 0;
-				list_room.setEnabled(true);
-				table = "Room";
-				call_initialise_table(table, "SELECT ALL");
-			}
-			if (room.isSelected() == false) {
-				list_room.removeAllItems();
-				list_room.setEnabled(false);
-			}
+			
 		}
 	}
 
 	class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if ("validate".equals(e.getActionCommand())) {
+			if ("Go".equals(e.getActionCommand())) {
+
 				tablePanPrincip.setVisible(true);
 				int n = w_dtm3.getRowCount();
 				for (int i = n - 1; i >= 0; --i) {
@@ -325,13 +329,36 @@ public class FrameTableAnalysis extends Frame {
 					validateCount = 1;
 					call_initialise_table("Analysis", "SELECT COUNT TYPE");
 				}
-				if (list_room.isEnabled()) {
-					strRoom = list_room.getSelectedItem().toString();
-				}
+			}
+			
+			else if ("validate".equals(e.getActionCommand())) {
+
+				tablePanPrincip.setVisible(true);
 				// We get the two date
 				if (date.isSelected()) {
-					String date1 = cal.getDate();
-					String date2 = cal2.getDate();
+
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
+
+					Date date1 = jcal.getDate();
+					sDate1 = sdf.format(date1);
+					Analysis anal1 = new Analysis(null, null, null, null, sDate1, null, null, null, null, null, null);
+
+					Date date2 = jcal2.getDate();
+					sDate2 = sdf.format(date2);
+					Analysis anal2 = new Analysis(null, null, null, null, sDate2, null, null, null, null, null, null);
+
+					arrAnalysis = new ArrayList<Analysis>();
+					arrAnalysis.add(anal1);
+					arrAnalysis.add(anal2);
+
+					if (date2.before(date1)) {
+						JOptionPane pan1 = new JOptionPane();
+						pan1.showMessageDialog(null, "Please choose a good date interval", "error",
+								JOptionPane.ERROR_MESSAGE);
+					} else {
+						call_initialiseDate("Analysis", "SELECT DATE", arrAnalysis);
+						dateCount = 1;
+					}
 				}
 
 			}
@@ -342,6 +369,14 @@ public class FrameTableAnalysis extends Frame {
 	public void call_initialise_table(String table, String action) {
 		try {
 			ClientTransmission.transmission(table, action, null, this);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void call_initialiseDate(String table, String action, ArrayList<Analysis> arrAnalysis) {
+		try {
+			ClientTransmission.transmission(table, action, arrAnalysis, this);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -387,44 +422,43 @@ public class FrameTableAnalysis extends Frame {
 		System.out.println("FrameTableAnalysis> add_table");
 		if ((Analysis) obj != null) {
 
-			System.out.println("FrameTableAnalysis> add_table>Analysis Object is not null");
-
-			System.out.println("FrameTableAnalysis> add_table> countAll =" + countAll);
-			System.out.println("FrameTableAnalysis> add_table> countSensorA =" + countSensorA);
-			System.out.println("FrameTableAnalysis> add_table> countSensorB =" + countSensorB);
-			
-			//First JTable
-			if (countAll<1) {
-				System.out.println("FrameTableAnalysis> add_table> count C =1");
+			// First JTable
+			if (countAll < 1) {
 				w_dtm2.addRow(new String[] { ("Total values out of interval"),
 						String.valueOf(((Analysis) obj).getCountAll()) });
 
 			}
 
-			
-			//Third JTable (contain values ordered by type_sensor)
+			// Third JTable (contain values ordered by type_sensor)
 			if (validateCount == 1) {
-				if (strType.equals("All Type sensor")) {
-					w_dtm3.addRow(new String[] { String.valueOf(((Analysis) obj).getType_sensor_name()),
-						((Analysis) obj).getCountType() });
-				}
-				else {
-					if (strType.equals(((Analysis)obj).getType_sensor_name())) {
+
+				System.out.println("validecount = " + validateCount);
+				if (!((Analysis) obj).getCountType().equals(null)) {
+					if (strType.equals("All Type sensor")) {
 						w_dtm3.addRow(new String[] { String.valueOf(((Analysis) obj).getType_sensor_name()),
 								((Analysis) obj).getCountType() });
+					} else {
+						if (strType.equals(((Analysis) obj).getType_sensor_name())) {
+							w_dtm3.addRow(new String[] { String.valueOf(((Analysis) obj).getType_sensor_name()),
+									((Analysis) obj).getCountType() });
+						}
 					}
 				}
+
+				System.out.println("validecount = " + validateCount);
+				
 			}
 			
-			
-			//Second JTable (contain value ordered by sensors
-			if (countSensorA==1) {
+			if (dateCount == 1) {
+				w_dtm5.addRow(new String[] { sDate1, sDate2, ((Analysis) obj).getCountDate() });
+			}
+
+
+			// Second JTable (contain value ordered by sensors
+			if (countSensorA == 1) {
 				w_dtm1.addRow(new String[] { String.valueOf(((Analysis) obj).getSensor_mac()),
 						((Analysis) obj).getCountAnal() });
 			}
-			
-			
-
 		}
 	}
 
@@ -439,41 +473,44 @@ public class FrameTableAnalysis extends Frame {
 
 		System.out.println("FrameTableAnalysis> initialise_table");
 
-		// To instantiate the first JTable that contains the total numbers of value out
-		// of interval
-		if (countAll == 0) {
-			System.out.println("U are in CountAll condition on initialise_table");
-			for (int i = 0; i < obj.length; i++) {
-				System.out.println("FrameTableAnalysis> initialise_table>countAll =" + countAll);
-				this.add_table(obj[i]);
-				countAll = 1;
-			}
-		}
-
-		// To instantiante the second JTable which will contain the number of value out
-		// of interval group by sensors
-		if (countSensorA == 1) {
-
-			for (int i = 0; i < obj.length; i++) {
-				System.out.println("FrameTableAnalysis> initialise_table>countSensorA =" + countSensorA + "countSensorB"
-						+ countSensorB);
-				this.add_table(obj[i]);
-			}
-		}
-
-		System.out.println("validateCount =" + validateCount);
-		if (validateCount == 1) {
-
-			for (int i = 0; i < obj.length; i++) {
-				System.out.println("validateCountt =" + validateCount);
-				this.add_table(obj[i]);
-				if (i == obj.length - 1) {
-					validateCount = 0;
+			// To instantiate the first JTable that contains the total numbers of value out
+			// of interval
+			if (countAll == 0) {
+				for (int i = 0; i < obj.length; i++) {
+					this.add_table(obj[i]);
+					countAll = 1;
 				}
 			}
-			System.out.println("validateCount =" + validateCount);
-		}
 
+			// To instantiante the second JTable which will contain the number of value out
+			// of interval group by sensors
+			if (countSensorA == 1 & countSensorB == 1) {
+
+				for (int i = 0; i < obj.length; i++) {
+					this.add_table(obj[i]);
+				}
+			}
+
+			if (validateCount == 1) {
+
+				for (int i = 0; i < obj.length; i++) {
+					this.add_table(obj[i]);
+					if (i == obj.length - 1) {
+						validateCount = 0;
+					}
+				}
+				validateCount = 0;
+			}
+			
+			
+			if (dateCount == 1) {
+
+				for (int i = 0; i < obj.length; i++) {
+					this.add_table(obj[i]);
+				}
+			}
+
+		
 		// Instantiate the checkBox with database's data
 		if (type_sensor.isSelected() == true & list_typesensor.getItemCount() < 1) {
 			list_typesensor.removeAllItems();
@@ -481,20 +518,6 @@ public class FrameTableAnalysis extends Frame {
 			for (int i = 0; i < obj.length; i++) {
 				typeSensor.add((Type_sensor) obj[i]);
 				this.list_typesensor.addItem(typeSensor.get(i).getType_sensor_name());
-			}
-		}
-
-		if (room.isSelected() == true & list_room.getItemCount() < 1) {
-			list_room.removeAllItems();
-			list_room.addItem("All rooms");
-			for (int i = 0; i < obj.length; i++) {
-				arrRoom.add((Room) obj[i]);
-
-				// TODO VERIFICATION TO NOT INSERT INEXISTANT ROOM
-				if (!arrRoom.get(i).getRoom_name().equals(null) || !arrRoom.get(i).getRoom_name().equals("")) {
-					System.out.println(arrRoom.get(i));
-					this.list_room.addItem(arrRoom.get(i).getRoom_name());
-				}
 			}
 		}
 

@@ -12,6 +12,23 @@ public class Analysis {
 	private String countAnal=null;
 	private String countAll=null;
 	private String countType=null;
+	private String countRoom=null;
+	public String getCountDate() {
+		return countDate;
+	}
+
+	public void setCountDate(String countDate) {
+		this.countDate = countDate;
+	}
+	private String countDate=null;
+	
+	public String getCountRoom() {
+		return countRoom;
+	}
+
+	public void setCountRoom(String countRoom) {
+		this.countRoom = countRoom;
+	}
 	
 	
 	public String getCountType() {
@@ -52,7 +69,7 @@ public class Analysis {
 	
 	
 	public Analysis(String sensor_mac, String sensor_ip, String type_sensor_name, String room_name,
-		String historic_datetime, String historic_value, String countAnal, String countAll, String countType) {
+		String historic_datetime, String historic_value, String countAnal, String countAll, String countType, String countRoom, String countDate) {
 		super();
 		this.sensor_mac = sensor_mac;
 		this.sensor_ip = sensor_ip;
@@ -63,6 +80,8 @@ public class Analysis {
 		this.countAnal=countAnal;
 		this.countAll=countAll;
 		this.countType=countType;
+		this.countRoom=countRoom;
+		this.countDate=countDate;
 	}
 	
 	

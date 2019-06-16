@@ -17,7 +17,6 @@ class MyPanel extends JPanel{
 			int y=(int)FrameSensorMap.tabsensor_y[i];
 			int min = (int) FrameSensorMap.tabsensor_min[i];
 			int max= (int) FrameSensorMap.tabsensor_max[i];
-			int value = FrameSensorMap.tabhistoric_value[i];
 			
 				g.setColor(Color.GRAY);
 				g.fillOval(x, y, 10, 10);
