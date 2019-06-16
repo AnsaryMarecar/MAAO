@@ -432,8 +432,6 @@ public class FrameTableAnalysis extends Frame {
 
 			// Third JTable (contain values ordered by type_sensor)
 			if (validateCount == 1) {
-
-				System.out.println("validecount = " + validateCount);
 				if (!((Analysis) obj).getCountType().equals(null)) {
 					if (strType.equals("All Type sensor")) {
 						w_dtm3.addRow(new String[] { String.valueOf(((Analysis) obj).getType_sensor_name()),
@@ -445,9 +443,6 @@ public class FrameTableAnalysis extends Frame {
 						}
 					}
 				}
-
-				System.out.println("validecount = " + validateCount);
-				
 			}
 			
 			if (dateCount == 1) {
@@ -456,7 +451,7 @@ public class FrameTableAnalysis extends Frame {
 
 
 			// Second JTable (contain value ordered by sensors
-			if (countSensorA == 1) {
+			if (countSensorA == 1 & countSensorB==1) {
 				w_dtm1.addRow(new String[] { String.valueOf(((Analysis) obj).getSensor_mac()),
 						((Analysis) obj).getCountAnal() });
 			}
@@ -471,9 +466,6 @@ public class FrameTableAnalysis extends Frame {
 
 	@Override
 	public void initialise_table(Object[] obj) {
-
-		System.out.println("FrameTableAnalysis> initialise_table");
-
 			// To instantiate the first JTable that contains the total numbers of value out
 			// of interval
 			if (countAll == 0) {
@@ -485,11 +477,13 @@ public class FrameTableAnalysis extends Frame {
 
 			// To instantiante the second JTable which will contain the number of value out
 			// of interval group by sensors
-			if (countSensorA == 1 & countSensorB == 1) {
+			if (countSensorA == 1) {
 
 				for (int i = 0; i < obj.length; i++) {
 					this.add_table(obj[i]);
 				}
+				countSensorA=0;
+				countSensorB=1;
 			}
 
 			if (validateCount == 1) {
