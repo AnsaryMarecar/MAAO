@@ -174,6 +174,7 @@ public class FrameTableAnalysis extends Frame {
 		panComboFilter.add(list_typesensor);
 		panComboFilter.add(validate2=new JButton("Go"));
 		list_typesensor.setEnabled(false);
+		validate2.addActionListener(new ButtonListener());
 
 		panDateFilt.setLayout(new GridLayout(3, 1));
 		panDateFilt.add(panDateFilt2 = new JPanel());
@@ -275,6 +276,8 @@ public class FrameTableAnalysis extends Frame {
 			// Sensor CheckBox Actions
 			if (type_sensor.isSelected() == true & list_typesensor.getItemCount() < 1) {
 				countSensorA = 0;
+				validateCount=0;
+				dateCount=0;
 				list_typesensor.setEnabled(true);
 				table = "Type_sensor";
 				call_initialise_table(table, "SELECT ALL");
@@ -293,7 +296,6 @@ public class FrameTableAnalysis extends Frame {
 				countSensorA = 0;
 				countSensorB = 0;
 				int n = w_dtm1.getRowCount();
-				System.out.println("suppression ligne tableau typesensor");
 				for (int i = n - 1; i >= 0; --i) {
 					w_dtm1.removeRow(i);
 				}
@@ -317,8 +319,7 @@ public class FrameTableAnalysis extends Frame {
 	class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if ("Go".equals(e.getActionCommand())) {
-
-				tablePanPrincip.setVisible(true);
+				dateCount=0;
 				int n = w_dtm3.getRowCount();
 				for (int i = n - 1; i >= 0; --i) {
 					w_dtm3.removeRow(i);
@@ -328,12 +329,12 @@ public class FrameTableAnalysis extends Frame {
 					strType = list_typesensor.getSelectedItem().toString();
 					validateCount = 1;
 					call_initialise_table("Analysis", "SELECT COUNT TYPE");
+					
 				}
 			}
 			
 			else if ("validate".equals(e.getActionCommand())) {
-
-				tablePanPrincip.setVisible(true);
+				validateCount=0;
 				// We get the two date
 				if (date.isSelected()) {
 
