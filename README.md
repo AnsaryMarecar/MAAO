@@ -1,9 +1,11 @@
+# NOT MAINTAINED
+
 # SAFE RETIREMENT HOME Project
  SAFE RETIREMENT HOME is a JAVA-based project for Retirement Home. 
  We are actually in the release 3 of the project 
 
 More information and screenshots can be inserted in the future.
-This projected is created by students Information Systems at <a href="http://esipe.u-pec.fr/accueil-fr/accueil-esipe-creteil-805697.kjsp">ESIPE engineering school</a>.
+This projected was created by students in Engineering School.
 
 # Installation
 If you want to run an instance of MAAO project, we recommand to you to :
@@ -82,7 +84,7 @@ Before commiting, we test everithings in an `homologation` branch : <a href="htt
 
 # Contact Information
 For contact us, please contact use by e-mail at : 
-- ansary.marecar@etu.u-pec.fr (for external communication),
+- ansary.marecar@edu.esiee.fr (for external communication),
 - oussama.bouachrine@etu.u-pec.fr,
-- amine.maza@etu.u-pec.fr,
+- amine.maza@esiea.fr,
 - melissa.oussadi@etu.u-pec.fr.
